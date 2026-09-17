@@ -22,8 +22,8 @@
       "Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
     font-size:16px; line-height:1.5;
   }
+  body.no-scroll { overflow:hidden; }
 
-  /* 인앱 경고 */
   .inapp-banner {
     display:none; background:var(--warn-bg);
     border-bottom:2px solid var(--warn-border);
@@ -32,9 +32,7 @@
     font-size:13.5px; line-height:1.55;
   }
   .inapp-banner.show { display:block; }
-  .inapp-banner h3 {
-    margin:0 0 8px; font-size:14.5px; font-weight:800; color:#b8860b;
-  }
+  .inapp-banner h3 { margin:0 0 8px; font-size:14.5px; font-weight:800; color:#b8860b; }
   .inapp-banner ol { margin:6px 0 0; padding-left:20px; }
   .inapp-banner b { color:#b8860b; }
 
@@ -44,13 +42,8 @@
     background:linear-gradient(140deg,#17324f,#2f6fb0);
     color:#fff; text-align:center; padding:20px 16px 22px;
   }
-  .app-header h1 {
-    margin:0 0 6px; font-size:12px; letter-spacing:.16em;
-    font-weight:600; opacity:.9;
-  }
-  .app-header h2 {
-    margin:0; font-size:18px; font-weight:800; letter-spacing:.01em;
-  }
+  .app-header h1 { margin:0 0 6px; font-size:12px; letter-spacing:.16em; font-weight:600; opacity:.9; }
+  .app-header h2 { margin:0; font-size:18px; font-weight:800; letter-spacing:.01em; }
 
   .notice-box {
     background:var(--warn-bg); border-left:5px solid var(--warn-border);
@@ -73,34 +66,18 @@
   }
   .card-title i { font-style:normal; font-size:1.15rem; }
 
-  /* ============================================================
-     입력 행 : 라벨 왼쪽 + 입력칸 오른쪽 (한 줄에 하나씩)
-     ============================================================ */
   .row {
-    display:grid;
-    grid-template-columns: 110px 1fr;
-    gap:10px;
-    align-items:center;
-    margin-bottom:12px;
+    display:grid; grid-template-columns: 110px 1fr; gap:10px;
+    align-items:center; margin-bottom:12px;
   }
   .row:last-child { margin-bottom:0; }
-
   .row > label {
     font-size:13px; font-weight:700; color:var(--muted);
-    letter-spacing:.01em;
-    padding-right:4px;
-    line-height:1.3;
+    padding-right:4px; line-height:1.3;
   }
-
   @media (max-width:380px) {
-    .row {
-      grid-template-columns: 1fr;
-      gap:4px;
-    }
-    .row > label {
-      font-size:12px;
-      padding-top:4px;
-    }
+    .row { grid-template-columns: 1fr; gap:4px; }
+    .row > label { font-size:12px; padding-top:4px; }
   }
 
   input[type="text"], input[type="date"], select, textarea {
@@ -114,17 +91,10 @@
   textarea {
     resize:vertical; min-height:100px; padding-top:12px;
     font-family:inherit; line-height:1.5;
-    grid-column: 2; /* textarea가 row 안에 있을 때 */
   }
-  input[type="date"] {
-    /* iOS Safari 기본 스타일 정리 */
-    -webkit-appearance:none; appearance:none;
-    background-image:none;
-    padding-right:14px;
-  }
+  input[type="date"] { -webkit-appearance:none; appearance:none; }
   input[type="date"]::-webkit-calendar-picker-indicator {
     font-size:20px; cursor:pointer; opacity:.7;
-    margin-left:4px; margin-right:-4px;
   }
   select {
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2368788a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
@@ -136,12 +106,10 @@
     box-shadow:0 0 0 3px rgba(47,111,176,.15);
   }
 
-  /* ===== 가족 ===== */
   .family-empty {
     text-align:center; padding:22px 16px;
     background:var(--input-bg); border:2px dashed var(--line);
-    border-radius:12px; color:var(--muted); font-size:14px;
-    line-height:1.6;
+    border-radius:12px; color:var(--muted); font-size:14px; line-height:1.6;
   }
   .family-empty strong { color:var(--navy); display:block; margin-bottom:4px; font-size:15px; }
 
@@ -168,19 +136,14 @@
     padding:6px 10px; line-height:1; font-family:inherit;
     border-radius:8px;
   }
-  .remove-btn:active { background:#fdf0ee; }
-
   .family-member .row { grid-template-columns: 100px 1fr; margin-bottom:10px; }
   .family-member .row > label { font-size:12px; }
-  .family-member input,
-  .family-member select {
-    min-height:44px; padding:10px 12px; font-size:15px;
-    background:#fff;
+  .family-member input, .family-member select {
+    min-height:44px; padding:10px 12px; font-size:15px; background:#fff;
   }
 
   .add-family-buttons {
-    display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;
-    margin-top:8px;
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:8px;
   }
   @media (max-width:480px) { .add-family-buttons { grid-template-columns:1fr; } }
   .add-family-btn {
@@ -190,12 +153,8 @@
     cursor:pointer; transition:all .2s;
   }
   .add-family-btn:active { background:#eaf2fb; transform:scale(.98); }
-  .add-family-btn:disabled {
-    opacity:.4; cursor:not-allowed;
-    border-color:var(--line); color:var(--muted);
-  }
+  .add-family-btn:disabled { opacity:.4; cursor:not-allowed; border-color:var(--line); color:var(--muted); }
 
-  /* ===== 동의 ===== */
   .consent-box {
     background:var(--warn-bg); border-left:5px solid var(--warn-border);
     color:var(--warn-text); padding:14px 16px; border-radius:10px;
@@ -209,7 +168,6 @@
     font-size:14.5px; font-weight:700; color:var(--navy);
     margin:0 0 12px; line-height:1.5;
   }
-
   .radio-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .radio-label {
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -226,36 +184,33 @@
     border-color:var(--navy); background:#e8f0fa; color:var(--navy);
   }
 
-  /* ===== 서명 ===== */
-  .signature-wrapper {
-    position:relative; border:2px dashed var(--line);
-    border-radius:12px; background:#fff;
-    overflow:hidden;
-    /* touch-action none 은 캔버스에만 */
+  .signature-preview {
+    width:100%; min-height:120px;
+    background:#fff; border:2px dashed var(--line);
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; position:relative;
+    padding:8px;
+    transition:border-color .2s, background .2s;
   }
-  .signature-wrapper canvas {
-    display:block; width:100%; height:200px;
-    cursor:crosshair;
-    touch-action:none;   /* ★ 여기만 none */
+  .signature-preview:active { background:#f7fafd; }
+  .signature-preview.has-sig { border-style:solid; border-color:var(--navy2); }
+  .signature-preview img {
+    max-width:100%; max-height:110px;
+    object-fit:contain; display:block;
   }
-  .signature-placeholder {
-    position:absolute; top:50%; left:50%;
-    transform:translate(-50%,-50%); color:var(--muted);
-    font-size:0.95rem; pointer-events:none; opacity:.55;
-    text-align:center; width:100%;
+  .signature-preview .placeholder {
+    color:var(--muted); font-size:0.95rem; opacity:.7;
+    text-align:center; pointer-events:none;
   }
-  .signature-wrapper.signed .signature-placeholder { display:none; }
-  .sig-actions { display:flex; gap:8px; margin-top:10px; }
-  .clear-sig-btn {
-    padding:10px 18px; font-size:13.5px;
-    font-family:inherit; font-weight:700;
-    border:1.5px solid var(--line);
-    border-radius:10px; background:#fff;
-    color:var(--muted); cursor:pointer;
+  .signature-preview .edit-hint {
+    position:absolute; top:8px; right:10px;
+    font-size:11px; font-weight:800; letter-spacing:.04em;
+    color:var(--navy2); text-transform:uppercase;
+    background:#eaf2fb; padding:3px 8px; border-radius:6px;
+    pointer-events:none;
   }
-  .clear-sig-btn:active { background:#f5f7fa; }
 
-  /* ===== 하단 ===== */
   .bottom-bar {
     position:fixed; left:0; right:0; bottom:0; z-index:50;
     background:#fff; border-top:1px solid var(--line);
@@ -277,22 +232,94 @@
   }
   body.inapp .btn-row .primary { background:#94a3b3; border-color:#94a3b3; box-shadow:none; }
 
-  /* ===== 모달 ===== */
   .modal {
     display:none; position:fixed; inset:0; z-index:1000;
     background:rgba(10,20,35,0.7);
     backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
     align-items:center; justify-content:center;
-    padding:14px; padding-bottom:calc(14px + env(safe-area-inset-bottom));
+    padding:14px;
+    padding-bottom:calc(14px + env(safe-area-inset-bottom));
   }
   .modal.show { display:flex; }
   .modal-content {
     background:#fff; border-radius:18px;
-    max-width:440px; width:100%;
+    max-width:560px; width:100%;
     max-height:calc(100vh - 28px); overflow-y:auto;
     box-shadow:0 20px 60px rgba(0,0,0,.3);
     display:flex; flex-direction:column;
   }
+
+  .sig-modal-header {
+    padding:16px 18px 12px;
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; flex-shrink:0;
+  }
+  .sig-modal-header h3 { margin:0; font-size:16px; font-weight:800; color:var(--navy); }
+  .sig-modal-header .sub { font-size:12px; font-weight:600; color:var(--muted); margin-top:2px; }
+  .sig-modal-close {
+    background:none; border:none; color:var(--muted);
+    font-size:22px; line-height:1; cursor:pointer;
+    padding:4px 10px; font-family:inherit;
+  }
+  .sig-modal-body {
+    padding:14px 18px;
+    flex:1; display:flex; flex-direction:column; gap:10px;
+    min-height:0;
+  }
+  .sig-canvas-wrap {
+    position:relative; width:100%;
+    background:#fafbfd;
+    border:2px dashed var(--navy2);
+    border-radius:14px;
+    overflow:hidden;
+    touch-action:none;
+    height: min(50vh, 320px);
+    min-height: 220px;
+  }
+  .sig-canvas-wrap canvas {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    display:block;
+    touch-action:none;
+    cursor:crosshair;
+    -webkit-user-select:none; user-select:none;
+    -webkit-touch-callout:none;
+  }
+  .sig-canvas-wrap .sig-ph {
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    color:var(--muted); font-size:0.95rem; opacity:.55;
+    pointer-events:none; text-align:center; width:100%;
+  }
+  .sig-canvas-wrap.signed .sig-ph { display:none; }
+
+  .sig-modal-tip {
+    font-size:12.5px; color:var(--muted);
+    text-align:center; line-height:1.5;
+    padding:0 6px;
+  }
+  .sig-modal-actions {
+    display:flex; gap:8px;
+    padding:12px 18px calc(16px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line);
+    flex-shrink:0;
+    background:#fff;
+  }
+  .sig-modal-actions button {
+    flex:1; padding:15px 12px; border-radius:12px;
+    font-size:15px; font-weight:800; font-family:inherit;
+    cursor:pointer; border:1.5px solid transparent;
+    transition:transform .1s;
+  }
+  .sig-modal-actions button:active { transform:scale(.98); }
+  .sig-btn-clear { background:#fff; color:var(--muted); border-color:var(--line); }
+  .sig-btn-cancel { background:#f6f9fc; color:var(--navy); border-color:var(--line); }
+  .sig-btn-save {
+    background:var(--navy); color:#fff; border-color:var(--navy);
+    box-shadow:0 4px 12px rgba(27,58,92,.25);
+  }
+
   .submit-modal-icon { font-size:42px; text-align:center; margin:26px 0 8px; }
   .submit-modal-title {
     font-size:18px; font-weight:800; color:var(--navy);
@@ -332,12 +359,18 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용
+     인쇄 : 이미지 비율에 맞춘 커스텀 페이지 (712 : 1009)
      ============================================================ */
   .form-print { display:none; }
 
   @media print {
-    @page { size: Letter; margin: 0; }
+    /* ★ 이미지 비율에 정확히 맞춘 페이지 크기
+       712 / 1009 × 11in = 7.763in (세로를 11in 로 맞춤)
+       → 가로 7.763in × 세로 11in */
+    @page {
+      size: 7.763in 11in;
+      margin: 0;
+    }
     html, body {
       background:#fff !important; margin:0 !important;
       padding:0 !important; width:100%;
@@ -348,10 +381,12 @@
 
     .print-page {
       position:relative;
-      width: 8.5in;
+      /* 이미지 비율 유지 */
+      width: 7.763in;
       height: 11in;
       overflow:hidden;
       page-break-after: avoid;
+      margin: 0 auto;
     }
     .print-bg {
       position:absolute; top:0; left:0;
@@ -410,89 +445,58 @@
     <ul>
       <li>Fill in all fields. Take your time.</li>
       <li>Family information is optional — tap the buttons to add.</li>
-      <li>Please sign at the bottom with your finger.</li>
+      <li>Tap the <b>signature box</b> to open the signing popup.</li>
       <li>Tap <b>Complete (Save PDF)</b> at the end.</li>
     </ul>
   </div>
 
-  <!-- ===== 1. Personal ===== -->
   <div class="card">
     <div class="card-title"><i>👤</i> 1. Personal Information</div>
 
-    <div class="row">
-      <label for="firstName">First Name</label>
-      <input type="text" id="firstName" placeholder="First name" autocomplete="given-name">
-    </div>
-    <div class="row">
-      <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" placeholder="Last name" autocomplete="family-name">
-    </div>
-    <div class="row">
-      <label for="dob">Date of Birth</label>
-      <input type="date" id="dob">
-    </div>
-    <div class="row">
-      <label for="nationality">Nationality</label>
-      <input type="text" id="nationality" placeholder="Nationality">
-    </div>
-    <div class="row">
-      <label for="gender">Gender</label>
+    <div class="row"><label for="firstName">First Name</label>
+      <input type="text" id="firstName" placeholder="First name" autocomplete="given-name"></div>
+    <div class="row"><label for="lastName">Last Name</label>
+      <input type="text" id="lastName" placeholder="Last name" autocomplete="family-name"></div>
+    <div class="row"><label for="dob">Date of Birth</label>
+      <input type="date" id="dob"></div>
+    <div class="row"><label for="nationality">Nationality</label>
+      <input type="text" id="nationality" placeholder="Nationality"></div>
+    <div class="row"><label for="gender">Gender</label>
       <select id="gender">
         <option value="">Select</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
         <option value="Other">Other</option>
-      </select>
-    </div>
-    <div class="row">
-      <label for="salvationDate">Date of Salvation</label>
-      <input type="date" id="salvationDate">
-    </div>
-    <div class="row">
-      <label for="guidedBy">Guided By</label>
-      <input type="text" id="guidedBy" placeholder="Name of guide">
-    </div>
-    <div class="row">
-      <label for="relationship">Relationship to Guide</label>
-      <input type="text" id="relationship" placeholder="e.g., Friend, Family">
-    </div>
-    <div class="row">
-      <label for="entryDate">Date of Entry</label>
-      <input type="date" id="entryDate">
-    </div>
-    <div class="row">
-      <label for="occupation">Occupation</label>
-      <input type="text" id="occupation" placeholder="Occupation">
-    </div>
-    <div class="row">
-      <label for="departureDate">Departure Date</label>
-      <input type="date" id="departureDate">
-    </div>
-    <div class="row">
-      <label for="residency">Residency Status</label>
-      <input type="text" id="residency" placeholder="e.g., Citizen, PR, Visa">
-    </div>
-    <div class="row">
-      <label for="emailPhone">E-mail / Phone#</label>
-      <input type="text" id="emailPhone" placeholder="email / phone" autocomplete="email">
-    </div>
+      </select></div>
+    <div class="row"><label for="salvationDate">Date of Salvation</label>
+      <input type="date" id="salvationDate"></div>
+    <div class="row"><label for="guidedBy">Guided By</label>
+      <input type="text" id="guidedBy" placeholder="Name of guide"></div>
+    <div class="row"><label for="relationship">Relationship to Guide</label>
+      <input type="text" id="relationship" placeholder="e.g., Friend, Family"></div>
+    <div class="row"><label for="entryDate">Date of Entry</label>
+      <input type="date" id="entryDate"></div>
+    <div class="row"><label for="occupation">Occupation</label>
+      <input type="text" id="occupation" placeholder="Occupation"></div>
+    <div class="row"><label for="departureDate">Departure Date</label>
+      <input type="date" id="departureDate"></div>
+    <div class="row"><label for="residency">Residency Status</label>
+      <input type="text" id="residency" placeholder="e.g., Citizen, PR, Visa"></div>
+    <div class="row"><label for="emailPhone">E-mail / Phone#</label>
+      <input type="text" id="emailPhone" placeholder="email / phone" autocomplete="email"></div>
     <div class="row" style="align-items:flex-start;">
       <label for="address" style="padding-top:14px;">Address</label>
       <textarea id="address" rows="2" placeholder="Full address"></textarea>
     </div>
   </div>
 
-  <!-- ===== 2. Family ===== -->
   <div class="card">
     <div class="card-title"><i>👨‍👩‍👧‍👦</i> 2. Family Information</div>
-
     <div class="family-empty" id="familyEmpty">
       <strong>No family members added yet.</strong>
       Tap a button below to add as needed.
     </div>
-
     <div id="familyList"></div>
-
     <div class="add-family-buttons">
       <button type="button" class="add-family-btn" id="btnAddSpouse">＋ Spouse</button>
       <button type="button" class="add-family-btn" id="btnAddChild">＋ Child (0/4)</button>
@@ -500,7 +504,6 @@
     </div>
   </div>
 
-  <!-- ===== 3. Prayer ===== -->
   <div class="card">
     <div class="card-title"><i>🙏</i> 3. Prayer Requests &amp; Inquiries</div>
     <div class="row" style="align-items:flex-start;">
@@ -509,10 +512,8 @@
     </div>
   </div>
 
-  <!-- ===== Consent ===== -->
   <div class="card">
     <div class="card-title"><i>🔒</i> Consent to Collection and Use of Personal Information</div>
-
     <div class="consent-box">
       <ul>
         <li><strong>Purpose of Collection:</strong> Church register management, pastoral care and visitation, delivery of church news and announcements</li>
@@ -520,11 +521,9 @@
         <li><strong>Retention Period:</strong> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</li>
       </ul>
     </div>
-
     <div class="consent-question">
       Do you consent to the collection and use of personal information as stated above?
     </div>
-
     <div class="radio-row">
       <label class="radio-label">
         <input type="radio" name="consent" value="Agree" checked> Agree
@@ -535,28 +534,20 @@
     </div>
   </div>
 
-  <!-- ===== Signature ===== -->
   <div class="card">
     <div class="card-title"><i>✍️</i> Applicant (Name &amp; Signature)</div>
 
-    <div class="row">
-      <label for="applicantName">Applicant Name</label>
-      <input type="text" id="applicantName" placeholder="Enter your full name">
-    </div>
-    <div class="row">
-      <label for="signDate">Date</label>
-      <input type="date" id="signDate">
-    </div>
+    <div class="row"><label for="applicantName">Applicant Name</label>
+      <input type="text" id="applicantName" placeholder="Enter your full name"></div>
+    <div class="row"><label for="signDate">Date</label>
+      <input type="date" id="signDate"></div>
 
-    <div class="row" style="align-items:flex-start; grid-template-columns:1fr;">
-      <label style="padding:0 0 6px;">Signature (sign with finger)</label>
-      <div class="signature-wrapper" id="sigWrapper">
-        <canvas id="signatureCanvas"></canvas>
-        <div class="signature-placeholder">Tap & drag here to sign</div>
-      </div>
-      <div class="sig-actions">
-        <button type="button" class="clear-sig-btn" onclick="clearSignature()">Clear</button>
-      </div>
+    <div style="font-size:13px;font-weight:700;color:var(--muted);margin:14px 0 8px;">
+      Signature (tap to sign)
+    </div>
+    <div class="signature-preview" id="sigPreview">
+      <div class="placeholder">✍️ Tap here to sign</div>
+      <div class="edit-hint">Tap to sign</div>
     </div>
   </div>
 
@@ -568,7 +559,6 @@
   </div>
 </div>
 
-<!-- 인쇄용 -->
 <div class="form-print" id="formPrint">
   <div class="print-page">
     <img class="print-bg" src="form.png" alt="">
@@ -576,19 +566,43 @@
   </div>
 </div>
 
-<!-- 제출 모달 -->
+<div class="modal" id="sigModal">
+  <div class="modal-content">
+    <div class="sig-modal-header">
+      <div>
+        <h3>✍️ Signature</h3>
+        <div class="sub">Sign with your finger or mouse</div>
+      </div>
+      <button type="button" class="sig-modal-close" id="sigCloseBtn">✕</button>
+    </div>
+
+    <div class="sig-modal-body">
+      <div class="sig-canvas-wrap" id="sigCanvasWrap">
+        <canvas id="signatureCanvas"></canvas>
+        <div class="sig-ph">Sign here</div>
+      </div>
+      <div class="sig-modal-tip">
+        💡 Draw your signature inside the box above. Screen is locked while signing.
+      </div>
+    </div>
+
+    <div class="sig-modal-actions">
+      <button type="button" class="sig-btn-clear" id="sigClearBtn">Clear</button>
+      <button type="button" class="sig-btn-cancel" id="sigCancelBtn">Cancel</button>
+      <button type="button" class="sig-btn-save" id="sigSaveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="submitModal">
   <div class="modal-content">
     <div class="submit-modal-icon">📧</div>
     <h2 class="submit-modal-title">Submission Notice</h2>
-
     <div class="submit-modal-msg">
       <div class="ko">저장하신 <b>PDF 파일</b>을 이메일에 첨부하여 제출해 주세요.</div>
       <div class="en">Please submit the saved <b>PDF file</b> by attaching it to an email.</div>
     </div>
-
     <div class="submit-modal-email">hansoo2454@gmail.com</div>
-
     <div class="modal-actions">
       <a class="modal-btn primary" id="btnEmail" href="#">📨 Open Email App</a>
       <button type="button" class="modal-btn secondary" id="btnCopyEmail">📋 Copy Email Address</button>
@@ -605,70 +619,93 @@
   var MAX_CHILD = 4;
 
   /* ============================================================
-     좌표 (원본 이미지 %) — 대략적
+     ★ 이미지 실제 크기 : 712 × 1009 픽셀
+     → 픽셀 좌표를 % 로 자동 변환
+     ============================================================ */
+  var IMG_W = 712;
+  var IMG_H = 1009;
+
+  function px(x, y, w, h) {
+    return {
+      l: (x / IMG_W) * 100,
+      t: (y / IMG_H) * 100,
+      w: (w / IMG_W) * 100,
+      h: (h / IMG_H) * 100
+    };
+  }
+
+  /* ============================================================
+     좌표 (712×1009 이미지 기준 픽셀)
+     ─ 원본 스크린샷을 보고 각 필드의 라벨 오른쪽 빈칸 위치를 측정
      ============================================================ */
   var FIELDS = {
-    firstName:      { l: 22.0, t: 18.6, w: 26.5, h: 3.0 },
-    lastName:       { l: 69.0, t: 18.6, w: 24.0, h: 3.0 },
-    dob:            { l: 22.0, t: 21.9, w: 26.5, h: 3.0 },
-    nationality:    { l: 69.0, t: 21.9, w: 24.0, h: 3.0 },
-    gender:         { l: 22.0, t: 25.2, w: 26.5, h: 3.0 },
-    salvationDate:  { l: 69.0, t: 25.2, w: 24.0, h: 3.0 },
-    guidedBy:       { l: 22.0, t: 28.5, w: 26.5, h: 3.0 },
-    relationship:   { l: 69.0, t: 28.5, w: 24.0, h: 3.0 },
-    entryDate:      { l: 22.0, t: 31.8, w: 26.5, h: 3.0 },
-    occupation:     { l: 69.0, t: 31.8, w: 24.0, h: 3.0 },
-    departureDate:  { l: 22.0, t: 35.1, w: 26.5, h: 3.0 },
-    residency:      { l: 69.0, t: 35.1, w: 24.0, h: 3.0 },
-    emailPhone:     { l: 22.0, t: 38.4, w: 71.0, h: 3.0 },
-    address:        { l: 22.0, t: 41.7, w: 71.0, h: 3.0 },
+    /* 1. Personal Information (y: 168 ~ 434, 각 행 간격 38px) */
+    firstName:      px(230, 166, 215, 32),
+    lastName:       px(520, 166, 170, 32),
+    dob:            px(230, 204, 215, 32),
+    nationality:    px(520, 204, 170, 32),
+    gender:         px(230, 242, 215, 32),
+    salvationDate:  px(520, 242, 170, 32),
+    guidedBy:       px(230, 280, 215, 32),
+    relationship:   px(520, 280, 170, 32),
+    entryDate:      px(230, 318, 215, 32),
+    occupation:     px(520, 318, 170, 32),
+    departureDate:  px(230, 356, 215, 32),
+    residency:      px(520, 356, 170, 32),
+    emailPhone:     px(230, 394, 460, 32),
+    address:        px(230, 432, 460, 32),
 
-    famName_Spouse:      { l: 23.0, t: 51.5, w: 21.0, h: 2.8 },
-    famDob_Spouse:       { l: 45.0, t: 51.5, w: 14.0, h: 2.8 },
-    famLiving_Spouse:    { l: 60.0, t: 51.5, w: 13.0, h: 2.8 },
-    famSalvation_Spouse: { l: 74.0, t: 51.5, w: 13.0, h: 2.8 },
-    famRemarks_Spouse:   { l: 88.0, t: 51.5, w: 10.0, h: 2.8 },
+    /* 2. Family Information (Family 표: y 590~800, 행 간격 30px) */
+    famName_Spouse:      px(148, 620, 158, 28),
+    famDob_Spouse:       px(306, 620, 96, 28),
+    famLiving_Spouse:    px(402, 620, 90, 28),
+    famSalvation_Spouse: px(492, 620, 90, 28),
+    famRemarks_Spouse:   px(582, 620, 105, 28),
 
-    famName_Child1:      { l: 23.0, t: 54.5, w: 21.0, h: 2.8 },
-    famDob_Child1:       { l: 45.0, t: 54.5, w: 14.0, h: 2.8 },
-    famLiving_Child1:    { l: 60.0, t: 54.5, w: 13.0, h: 2.8 },
-    famSalvation_Child1: { l: 74.0, t: 54.5, w: 13.0, h: 2.8 },
-    famRemarks_Child1:   { l: 88.0, t: 54.5, w: 10.0, h: 2.8 },
+    famName_Child1:      px(148, 650, 158, 28),
+    famDob_Child1:       px(306, 650, 96, 28),
+    famLiving_Child1:    px(402, 650, 90, 28),
+    famSalvation_Child1: px(492, 650, 90, 28),
+    famRemarks_Child1:   px(582, 650, 105, 28),
 
-    famName_Child2:      { l: 23.0, t: 57.5, w: 21.0, h: 2.8 },
-    famDob_Child2:       { l: 45.0, t: 57.5, w: 14.0, h: 2.8 },
-    famLiving_Child2:    { l: 60.0, t: 57.5, w: 13.0, h: 2.8 },
-    famSalvation_Child2: { l: 74.0, t: 57.5, w: 13.0, h: 2.8 },
-    famRemarks_Child2:   { l: 88.0, t: 57.5, w: 10.0, h: 2.8 },
+    famName_Child2:      px(148, 680, 158, 28),
+    famDob_Child2:       px(306, 680, 96, 28),
+    famLiving_Child2:    px(402, 680, 90, 28),
+    famSalvation_Child2: px(492, 680, 90, 28),
+    famRemarks_Child2:   px(582, 680, 105, 28),
 
-    famName_Child3:      { l: 23.0, t: 60.5, w: 21.0, h: 2.8 },
-    famDob_Child3:       { l: 45.0, t: 60.5, w: 14.0, h: 2.8 },
-    famLiving_Child3:    { l: 60.0, t: 60.5, w: 13.0, h: 2.8 },
-    famSalvation_Child3: { l: 74.0, t: 60.5, w: 13.0, h: 2.8 },
-    famRemarks_Child3:   { l: 88.0, t: 60.5, w: 10.0, h: 2.8 },
+    famName_Child3:      px(148, 710, 158, 28),
+    famDob_Child3:       px(306, 710, 96, 28),
+    famLiving_Child3:    px(402, 710, 90, 28),
+    famSalvation_Child3: px(492, 710, 90, 28),
+    famRemarks_Child3:   px(582, 710, 105, 28),
 
-    famName_Child4:      { l: 23.0, t: 63.5, w: 21.0, h: 2.8 },
-    famDob_Child4:       { l: 45.0, t: 63.5, w: 14.0, h: 2.8 },
-    famLiving_Child4:    { l: 60.0, t: 63.5, w: 13.0, h: 2.8 },
-    famSalvation_Child4: { l: 74.0, t: 63.5, w: 13.0, h: 2.8 },
-    famRemarks_Child4:   { l: 88.0, t: 63.5, w: 10.0, h: 2.8 },
+    famName_Child4:      px(148, 740, 158, 28),
+    famDob_Child4:       px(306, 740, 96, 28),
+    famLiving_Child4:    px(402, 740, 90, 28),
+    famSalvation_Child4: px(492, 740, 90, 28),
+    famRemarks_Child4:   px(582, 740, 105, 28),
 
-    famName_Other:       { l: 23.0, t: 63.5, w: 21.0, h: 2.8 },
-    famDob_Other:        { l: 45.0, t: 63.5, w: 14.0, h: 2.8 },
-    famLiving_Other:     { l: 60.0, t: 63.5, w: 13.0, h: 2.8 },
-    famSalvation_Other:  { l: 74.0, t: 63.5, w: 13.0, h: 2.8 },
-    famRemarks_Other:    { l: 88.0, t: 63.5, w: 10.0, h: 2.8 },
+    famName_Other:       px(148, 770, 158, 28),
+    famDob_Other:        px(306, 770, 96, 28),
+    famLiving_Other:     px(402, 770, 90, 28),
+    famSalvation_Other:  px(492, 770, 90, 28),
+    famRemarks_Other:    px(582, 770, 105, 28),
 
-    prayerRequests: { l: 13.0, t: 67.5, w: 79.0, h: 6.5 },
+    /* 3. Prayer Requests (자유 영역, y 830 ~ 900) */
+    prayerRequests: px(85, 828, 555, 65),
 
-    checkAgree:    { l: 11.5, t: 86.2, w: 2.0,  h: 1.2 },
-    checkDisagree: { l: 25.0, t: 86.2, w: 2.0,  h: 1.2 },
+    /* Consent 체크박스 ([ ] Agree / [ ] Disagree) */
+    checkAgree:    px(88, 962, 22, 16),
+    checkDisagree: px(180, 962, 22, 16),
 
-    signDate:      { l: 15.5, t: 89.5, w: 25.0, h: 2.3 },
-    applicantName: { l: 12.0, t: 92.6, w: 35.0, h: 2.3 }
+    /* 서명 / 날짜 */
+    signDate:      px(118, 992, 175, 20),
+    applicantName: px(240, 1032, 220, 20)  /* 이미지 밖이면 자동 잘림 */
   };
 
-  var SIG_POS = { l: 30.0, t: 92.2, w: 40.0, h: 3.8 };
+  /* 서명 이미지 위치 (Applicant 라벨 아래) */
+  var SIG_POS = px(90, 1015, 300, 30);
 
   /* ============================================================
      값 수집
@@ -677,30 +714,24 @@
     var el = document.getElementById(id);
     return el ? (el.value || '').trim() : '';
   }
-
-  function formatDateForPrint(v) {
-    // type=date 는 "YYYY-MM-DD" 로 반환됨. 그대로 사용.
-    return v;
-  }
-
   function collectData() {
     var d = {
       firstName: getVal('firstName'),
       lastName: getVal('lastName'),
-      dob: formatDateForPrint(getVal('dob')),
+      dob: getVal('dob'),
       nationality: getVal('nationality'),
       gender: getVal('gender'),
-      salvationDate: formatDateForPrint(getVal('salvationDate')),
+      salvationDate: getVal('salvationDate'),
       guidedBy: getVal('guidedBy'),
       relationship: getVal('relationship'),
-      entryDate: formatDateForPrint(getVal('entryDate')),
+      entryDate: getVal('entryDate'),
       occupation: getVal('occupation'),
-      departureDate: formatDateForPrint(getVal('departureDate')),
+      departureDate: getVal('departureDate'),
       residency: getVal('residency'),
       emailPhone: getVal('emailPhone'),
       address: getVal('address'),
       prayerRequests: getVal('prayerRequests'),
-      signDate: formatDateForPrint(getVal('signDate')),
+      signDate: getVal('signDate'),
       applicantName: getVal('applicantName')
     };
     var c = document.querySelector('input[name="consent"]:checked');
@@ -715,9 +746,8 @@
       else if (type === 'Child') key = 'Child' + idx;
       else if (type === 'Other') key = 'Other';
       else return;
-
       d['famName_' + key]      = (m.querySelector('.fam-name') || {}).value || '';
-      d['famDob_' + key]       = formatDateForPrint((m.querySelector('.fam-dob') || {}).value || '');
+      d['famDob_' + key]       = (m.querySelector('.fam-dob') || {}).value || '';
       d['famLiving_' + key]    = (m.querySelector('.fam-living') || {}).value || '';
       d['famSalvation_' + key] = (m.querySelector('.fam-salvation') || {}).value || '';
       d['famRemarks_' + key]   = (m.querySelector('.fam-remarks') || {}).value || '';
@@ -726,7 +756,7 @@
   }
 
   /* ============================================================
-     인쇄 오버레이
+     인쇄용 오버레이
      ============================================================ */
   function buildPrintOverlay() {
     var container = document.getElementById('printOverlay');
@@ -738,24 +768,19 @@
       var f = FIELDS[k];
       var val = data[k] || '';
       if (!val) return;
-
       var el = document.createElement('div');
       el.className = 'p-ov';
-      el.style.left   = f.l + '%';
-      el.style.top    = f.t + '%';
-      el.style.width  = f.w + '%';
-      el.style.height = f.h + '%';
+      el.style.left = f.l + '%'; el.style.top = f.t + '%';
+      el.style.width = f.w + '%'; el.style.height = f.h + '%';
       el.textContent = val;
       container.appendChild(el);
     });
 
-    if (hasSigned) {
+    if (hasSigned && signatureDataUrl) {
       var sigWrap = document.createElement('div');
       sigWrap.className = 'p-ov-sig';
-      sigWrap.style.left   = SIG_POS.l + '%';
-      sigWrap.style.top    = SIG_POS.t + '%';
-      sigWrap.style.width  = SIG_POS.w + '%';
-      sigWrap.style.height = SIG_POS.h + '%';
+      sigWrap.style.left = SIG_POS.l + '%'; sigWrap.style.top = SIG_POS.t + '%';
+      sigWrap.style.width = SIG_POS.w + '%'; sigWrap.style.height = SIG_POS.h + '%';
       var img = document.createElement('img');
       img.src = signatureDataUrl;
       sigWrap.appendChild(img);
@@ -763,17 +788,13 @@
     }
 
     var ckField = data.consent === 'Agree' ? FIELDS.checkAgree
-                : data.consent === 'Disagree' ? FIELDS.checkDisagree
-                : null;
+                : data.consent === 'Disagree' ? FIELDS.checkDisagree : null;
     if (ckField) {
       var ck = document.createElement('div');
       ck.className = 'p-ov';
-      ck.style.left = ckField.l + '%';
-      ck.style.top  = ckField.t + '%';
-      ck.style.width = ckField.w + '%';
-      ck.style.height = ckField.h + '%';
-      ck.style.fontWeight = 'bold';
-      ck.style.fontSize = '12pt';
+      ck.style.left = ckField.l + '%'; ck.style.top = ckField.t + '%';
+      ck.style.width = ckField.w + '%'; ck.style.height = ckField.h + '%';
+      ck.style.fontWeight = 'bold'; ck.style.fontSize = '12pt';
       ck.style.justifyContent = 'center';
       ck.textContent = '✔';
       container.appendChild(ck);
@@ -781,40 +802,35 @@
   }
 
   /* ============================================================
-     서명 패드 (핵심 수정)
-     - resize 되어도 내용이 사라지지 않도록 함
-     - 저장 데이터를 별도 변수에 보관
+     서명
      ============================================================ */
+  var sigModal = document.getElementById('sigModal');
+  var sigCanvasWrap = document.getElementById('sigCanvasWrap');
+  var sigPreview = document.getElementById('sigPreview');
   var canvas = document.getElementById('signatureCanvas');
-  var wrapper = document.getElementById('sigWrapper');
   var ctx = canvas.getContext('2d');
   var isDrawing = false;
   var hasSigned = false;
-  var signatureDataUrl = '';   // ★ 서명 이미지 저장용
+  var signatureDataUrl = '';
 
-  function setupCanvasSize() {
-    var rect = wrapper.getBoundingClientRect();
-    if (rect.width === 0) return;
+  function fitCanvas() {
+    var rect = sigCanvasWrap.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
     var dpr = window.devicePixelRatio || 1;
-    canvas.width = rect.width * dpr;
-    canvas.height = 200 * dpr;
-    canvas.style.width = rect.width + 'px';
-    canvas.style.height = '200px';
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
     ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ctx.strokeStyle = '#1b3a5c';
-
-    // ★ 저장된 서명이 있으면 복원
     if (hasSigned && signatureDataUrl) {
       var img = new Image();
       img.onload = function () {
-        ctx.drawImage(img, 0, 0, canvas.width / dpr, canvas.height / dpr);
+        ctx.drawImage(img, 0, 0, rect.width, rect.height);
       };
       img.src = signatureDataUrl;
     }
   }
-
   function getPos(e) {
     var rect = canvas.getBoundingClientRect();
     var cx, cy;
@@ -822,35 +838,24 @@
     else { cx = e.clientX; cy = e.clientY; }
     return { x: cx - rect.left, y: cy - rect.top };
   }
-
   function startDraw(e) {
-    e.preventDefault(); isDrawing = true;
+    e.preventDefault(); e.stopPropagation();
+    isDrawing = true;
     var p = getPos(e);
     ctx.beginPath(); ctx.moveTo(p.x, p.y);
-    if (!hasSigned) {
-      hasSigned = true;
-      wrapper.classList.add('signed');
-    }
+    if (!hasSigned) { hasSigned = true; sigCanvasWrap.classList.add('signed'); }
   }
   function draw(e) {
-    if (!isDrawing) return; e.preventDefault();
+    if (!isDrawing) return;
+    e.preventDefault(); e.stopPropagation();
     var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke();
   }
   function stopDraw(e) {
     if (!isDrawing) return;
-    e.preventDefault();
-    isDrawing = false;
-    ctx.closePath();
-    // ★ 손을 떼면 현재 캔버스 상태를 저장
+    e.preventDefault(); e.stopPropagation();
+    isDrawing = false; ctx.closePath();
     signatureDataUrl = canvas.toDataURL('image/png');
   }
-
-  window.clearSignature = function () {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hasSigned = false;
-    signatureDataUrl = '';
-    wrapper.classList.remove('signed');
-  };
 
   canvas.addEventListener('mousedown', startDraw);
   canvas.addEventListener('mousemove', draw);
@@ -861,12 +866,48 @@
   canvas.addEventListener('touchend', stopDraw, { passive: false });
   canvas.addEventListener('touchcancel', stopDraw, { passive: false });
 
+  function openSigModal() {
+    sigModal.classList.add('show');
+    document.body.classList.add('no-scroll');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(fitCanvas);
+    });
+  }
+  function closeSigModal() {
+    sigModal.classList.remove('show');
+    document.body.classList.remove('no-scroll');
+  }
+  function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasSigned = false; signatureDataUrl = '';
+    sigCanvasWrap.classList.remove('signed');
+  }
+  function saveSignature() {
+    if (!hasSigned || !signatureDataUrl) {
+      sigPreview.classList.remove('has-sig');
+      sigPreview.innerHTML = '<div class="placeholder">✍️ Tap here to sign</div>' +
+                             '<div class="edit-hint">Tap to sign</div>';
+      closeSigModal();
+      return;
+    }
+    sigPreview.classList.add('has-sig');
+    sigPreview.innerHTML =
+      '<img src="' + signatureDataUrl + '" alt="Signature">' +
+      '<div class="edit-hint">Tap to edit</div>';
+    closeSigModal();
+  }
+
+  sigPreview.addEventListener('click', openSigModal);
+  document.getElementById('sigCloseBtn').addEventListener('click', closeSigModal);
+  document.getElementById('sigCancelBtn').addEventListener('click', closeSigModal);
+  document.getElementById('sigClearBtn').addEventListener('click', clearSignature);
+  document.getElementById('sigSaveBtn').addEventListener('click', saveSignature);
+  sigModal.addEventListener('click', function (e) { if (e.target === sigModal) closeSigModal(); });
+
   /* ============================================================
-     가족 추가/삭제
+     가족
      ============================================================ */
-  var childCounter = 0;
-  var otherCounter = 0;
-  var spouseAdded = false;
+  var childCounter = 0, otherCounter = 0, spouseAdded = false;
 
   function updateAddButtons() {
     document.getElementById('btnAddSpouse').disabled = spouseAdded;
@@ -874,103 +915,60 @@
     document.getElementById('btnAddChild').textContent =
       '＋ Child (' + childCounter + '/' + MAX_CHILD + ')';
   }
-
   function updateFamilyEmpty() {
     var list = document.getElementById('familyList');
-    var empty = document.getElementById('familyEmpty');
-    empty.style.display = list.children.length === 0 ? 'block' : 'none';
+    document.getElementById('familyEmpty').style.display =
+      list.children.length === 0 ? 'block' : 'none';
   }
-
   function createFamilyMember(type) {
-    var idx = 0;
-    var label = '';
-    var badge = '';
-    if (type === 'Spouse') {
-      label = 'Spouse'; badge = 'Spouse'; spouseAdded = true;
-    } else if (type === 'Child') {
-      childCounter++; idx = childCounter;
-      label = 'Child ' + idx; badge = 'Child ' + idx;
-    } else if (type === 'Other') {
-      otherCounter++; idx = otherCounter;
-      label = 'Other ' + idx; badge = 'Other';
-    }
-
+    var idx = 0, label = '', badge = '';
+    if (type === 'Spouse') { label = 'Spouse'; badge = 'Spouse'; spouseAdded = true; }
+    else if (type === 'Child') { childCounter++; idx = childCounter; label = 'Child ' + idx; badge = 'Child ' + idx; }
+    else if (type === 'Other') { otherCounter++; idx = otherCounter; label = 'Other ' + idx; badge = 'Other'; }
     var div = document.createElement('div');
     div.className = 'family-member';
-    div.dataset.type = type;
-    div.dataset.index = idx;
-
+    div.dataset.type = type; div.dataset.index = idx;
     div.innerHTML =
       '<div class="family-member-header">' +
         '<span class="badge">' + badge + '</span>' +
         '<span>' + label + '</span>' +
       '</div>' +
-      '<button type="button" class="remove-btn" title="Remove">✕</button>' +
-      '<div class="row">' +
-        '<label>Name</label>' +
-        '<input type="text" class="fam-name" placeholder="Full name">' +
-      '</div>' +
-      '<div class="row">' +
-        '<label>Date of Birth</label>' +
-        '<input type="date" class="fam-dob">' +
-      '</div>' +
-      '<div class="row">' +
-        '<label>Living Together</label>' +
-        '<select class="fam-living">' +
-          '<option value="">Select</option>' +
-          '<option value="Yes">Yes</option>' +
-          '<option value="No">No</option>' +
-        '</select>' +
-      '</div>' +
-      '<div class="row">' +
-        '<label>Salvation</label>' +
-        '<select class="fam-salvation">' +
-          '<option value="">Select</option>' +
-          '<option value="Yes">Yes</option>' +
-          '<option value="No">No</option>' +
-          '<option value="Unknown">Unknown</option>' +
-        '</select>' +
-      '</div>' +
-      '<div class="row">' +
-        '<label>Remarks</label>' +
-        '<input type="text" class="fam-remarks" placeholder="Remarks">' +
-      '</div>';
-
+      '<button type="button" class="remove-btn">✕</button>' +
+      '<div class="row"><label>Name</label><input type="text" class="fam-name" placeholder="Full name"></div>' +
+      '<div class="row"><label>Date of Birth</label><input type="date" class="fam-dob"></div>' +
+      '<div class="row"><label>Living Together</label>' +
+        '<select class="fam-living"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div>' +
+      '<div class="row"><label>Salvation</label>' +
+        '<select class="fam-salvation"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option><option value="Unknown">Unknown</option></select></div>' +
+      '<div class="row"><label>Remarks</label><input type="text" class="fam-remarks" placeholder="Remarks"></div>';
     div.querySelector('.remove-btn').addEventListener('click', function () {
       if (!confirm('Remove this family member?')) return;
       var t = div.dataset.type;
       if (t === 'Spouse') spouseAdded = false;
       else if (t === 'Child') childCounter = Math.max(0, childCounter - 1);
       else if (t === 'Other') otherCounter = Math.max(0, otherCounter - 1);
-      div.remove();
-      updateAddButtons();
-      updateFamilyEmpty();
+      div.remove(); updateAddButtons(); updateFamilyEmpty();
     });
-
     return div;
   }
-
   document.getElementById('btnAddSpouse').addEventListener('click', function () {
     if (spouseAdded) return;
     var m = createFamilyMember('Spouse');
     document.getElementById('familyList').appendChild(m);
-    updateAddButtons();
-    updateFamilyEmpty();
+    updateAddButtons(); updateFamilyEmpty();
     m.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
   document.getElementById('btnAddChild').addEventListener('click', function () {
     if (childCounter >= MAX_CHILD) return;
     var m = createFamilyMember('Child');
     document.getElementById('familyList').appendChild(m);
-    updateAddButtons();
-    updateFamilyEmpty();
+    updateAddButtons(); updateFamilyEmpty();
     m.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
   document.getElementById('btnAddOther').addEventListener('click', function () {
     var m = createFamilyMember('Other');
     document.getElementById('familyList').appendChild(m);
-    updateAddButtons();
-    updateFamilyEmpty();
+    updateAddButtons(); updateFamilyEmpty();
     m.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
@@ -990,11 +988,9 @@
     else if (/Twitter/i.test(ua)) name = 'X (Twitter)';
     else if (/Pinterest/i.test(ua)) name = 'Pinterest';
     if (name) return { inApp: true, name: name };
-
     var isIOS = /iPhone|iPad|iPod/i.test(ua);
     var isIOSReal = /Safari/i.test(ua) || /CriOS/i.test(ua) || /FxiOS/i.test(ua) || /EdgiOS/i.test(ua);
     if (isIOS && !isIOSReal) return { inApp: true, name: 'In-App Browser' };
-
     var isAndroid = /Android/i.test(ua);
     var isWebView = /;\s*wv\)/i.test(ua);
     var isChrome = /Chrome\/\d+/i.test(ua) && !isWebView;
@@ -1034,20 +1030,16 @@
       '&body=' + encodeURIComponent(bodyLines.join('\r\n'));
     btnEmail.setAttribute('href', url);
     submitModal.classList.add('show');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
   }
   function closeSubmitModal() {
     submitModal.classList.remove('show');
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
   }
   btnClose.addEventListener('click', closeSubmitModal);
   submitModal.addEventListener('click', function (e) {
     if (e.target === submitModal) closeSubmitModal();
   });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && submitModal.classList.contains('show')) closeSubmitModal();
-  });
-
   btnCopy.addEventListener('click', function () {
     var done = function () {
       var orig = btnCopy.textContent;
@@ -1067,11 +1059,16 @@
     cb && cb();
   }
 
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (sigModal.classList.contains('show')) closeSigModal();
+    if (submitModal.classList.contains('show')) closeSubmitModal();
+  });
+
   /* ============================================================
-     Complete 버튼
+     Complete
      ============================================================ */
   var pendingModal = false;
-
   document.getElementById('btnPrint').addEventListener('click', function () {
     var fn = getVal('firstName');
     var ln = getVal('lastName');
@@ -1086,8 +1083,8 @@
       return;
     }
     if (!hasSigned) {
-      alert('Please sign in the signature box.');
-      document.getElementById('sigWrapper').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      alert('Please add your signature. Tap the signature box.');
+      sigPreview.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     if (IN_APP) {
@@ -1099,17 +1096,12 @@
       document.getElementById('inappBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
-    // 최신 서명 저장
-    if (hasSigned) signatureDataUrl = canvas.toDataURL('image/png');
     buildPrintOverlay();
     pendingModal = true;
     setTimeout(function () { window.print(); }, 100);
   });
 
-  window.addEventListener('beforeprint', function () {
-    if (hasSigned) signatureDataUrl = canvas.toDataURL('image/png');
-    buildPrintOverlay();
-  });
+  window.addEventListener('beforeprint', buildPrintOverlay);
   window.addEventListener('afterprint', function () {
     if (!pendingModal) return;
     pendingModal = false;
@@ -1121,11 +1113,7 @@
     location.reload();
   });
 
-  /* ============================================================
-     초기화
-     ============================================================ */
   window.addEventListener('load', function () {
-    setupCanvasSize();
     var t = new Date();
     var iso = t.getFullYear() + '-' +
       String(t.getMonth() + 1).padStart(2, '0') + '-' +
@@ -1134,19 +1122,6 @@
     updateAddButtons();
     updateFamilyEmpty();
   });
-
-  /* 화면 회전 시에만 캔버스 재조정, 서명 유지 */
-  var resizeTimer = null;
-  window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
-      setupCanvasSize();
-    }, 200);
-  });
-  window.addEventListener('orientationchange', function () {
-    setTimeout(setupCanvasSize, 300);
-  });
-
 })();
 </script>
 </body>
