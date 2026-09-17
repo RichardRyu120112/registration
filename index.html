@@ -359,14 +359,11 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄 : 이미지 비율에 맞춘 커스텀 페이지 (712 : 1009)
+     인쇄 : 이미지 비율(712:1009)에 맞춘 커스텀 페이지
      ============================================================ */
   .form-print { display:none; }
 
   @media print {
-    /* ★ 이미지 비율에 정확히 맞춘 페이지 크기
-       712 / 1009 × 11in = 7.763in (세로를 11in 로 맞춤)
-       → 가로 7.763in × 세로 11in */
     @page {
       size: 7.763in 11in;
       margin: 0;
@@ -381,7 +378,6 @@
 
     .print-page {
       position:relative;
-      /* 이미지 비율 유지 */
       width: 7.763in;
       height: 11in;
       overflow:hidden;
@@ -452,7 +448,6 @@
 
   <div class="card">
     <div class="card-title"><i>👤</i> 1. Personal Information</div>
-
     <div class="row"><label for="firstName">First Name</label>
       <input type="text" id="firstName" placeholder="First name" autocomplete="given-name"></div>
     <div class="row"><label for="lastName">Last Name</label>
@@ -536,12 +531,10 @@
 
   <div class="card">
     <div class="card-title"><i>✍️</i> Applicant (Name &amp; Signature)</div>
-
     <div class="row"><label for="applicantName">Applicant Name</label>
       <input type="text" id="applicantName" placeholder="Enter your full name"></div>
     <div class="row"><label for="signDate">Date</label>
       <input type="date" id="signDate"></div>
-
     <div style="font-size:13px;font-weight:700;color:var(--muted);margin:14px 0 8px;">
       Signature (tap to sign)
     </div>
@@ -575,7 +568,6 @@
       </div>
       <button type="button" class="sig-modal-close" id="sigCloseBtn">✕</button>
     </div>
-
     <div class="sig-modal-body">
       <div class="sig-canvas-wrap" id="sigCanvasWrap">
         <canvas id="signatureCanvas"></canvas>
@@ -585,7 +577,6 @@
         💡 Draw your signature inside the box above. Screen is locked while signing.
       </div>
     </div>
-
     <div class="sig-modal-actions">
       <button type="button" class="sig-btn-clear" id="sigClearBtn">Clear</button>
       <button type="button" class="sig-btn-cancel" id="sigCancelBtn">Cancel</button>
@@ -620,7 +611,7 @@
 
   /* ============================================================
      ★ 이미지 실제 크기 : 712 × 1009 픽셀
-     → 픽셀 좌표를 % 로 자동 변환
+     ─ 이미지를 직접 보고 픽셀 좌표를 정확히 측정
      ============================================================ */
   var IMG_W = 712;
   var IMG_H = 1009;
@@ -634,78 +625,78 @@
     };
   }
 
-  /* ============================================================
-     좌표 (712×1009 이미지 기준 픽셀)
-     ─ 원본 스크린샷을 보고 각 필드의 라벨 오른쪽 빈칸 위치를 측정
-     ============================================================ */
   var FIELDS = {
-    /* 1. Personal Information (y: 168 ~ 434, 각 행 간격 38px) */
-    firstName:      px(230, 166, 215, 32),
-    lastName:       px(520, 166, 170, 32),
-    dob:            px(230, 204, 215, 32),
-    nationality:    px(520, 204, 170, 32),
-    gender:         px(230, 242, 215, 32),
-    salvationDate:  px(520, 242, 170, 32),
-    guidedBy:       px(230, 280, 215, 32),
-    relationship:   px(520, 280, 170, 32),
-    entryDate:      px(230, 318, 215, 32),
-    occupation:     px(520, 318, 170, 32),
-    departureDate:  px(230, 356, 215, 32),
-    residency:      px(520, 356, 170, 32),
-    emailPhone:     px(230, 394, 460, 32),
-    address:        px(230, 432, 460, 32),
+    /* ── 1. Personal Information ──
+       표 시작 y≈185, 각 행 36px 간격
+       라벨 오른쪽 빈칸 x≈228, 폭 130~170px */
+    firstName:      px(228, 190, 130, 30),
+    lastName:       px(520, 190, 170, 30),
+    dob:            px(228, 226, 130, 30),
+    nationality:    px(520, 226, 170, 30),
+    gender:         px(228, 262, 130, 30),
+    salvationDate:  px(520, 262, 170, 30),
+    guidedBy:       px(228, 298, 130, 30),
+    relationship:   px(520, 298, 170, 30),
+    entryDate:      px(228, 334, 130, 30),
+    occupation:     px(520, 334, 170, 30),
+    departureDate:  px(228, 370, 130, 30),
+    residency:      px(520, 370, 170, 30),
+    emailPhone:     px(228, 406, 462, 30),
+    address:        px(228, 442, 462, 30),
 
-    /* 2. Family Information (Family 표: y 590~800, 행 간격 30px) */
-    famName_Spouse:      px(148, 620, 158, 28),
-    famDob_Spouse:       px(306, 620, 96, 28),
-    famLiving_Spouse:    px(402, 620, 90, 28),
-    famSalvation_Spouse: px(492, 620, 90, 28),
-    famRemarks_Spouse:   px(582, 620, 105, 28),
+    /* ── 2. Family Information ──
+       표 헤더 y≈420~465, 데이터 행 y≈478 부터
+       각 행 37px 간격 */
+    famName_Spouse:      px(228, 478, 118, 28),
+    famDob_Spouse:       px(348, 478, 74, 28),
+    famLiving_Spouse:    px(424, 478, 78, 28),
+    famSalvation_Spouse: px(504, 478, 74, 28),
+    famRemarks_Spouse:   px(580, 478, 122, 28),
 
-    famName_Child1:      px(148, 650, 158, 28),
-    famDob_Child1:       px(306, 650, 96, 28),
-    famLiving_Child1:    px(402, 650, 90, 28),
-    famSalvation_Child1: px(492, 650, 90, 28),
-    famRemarks_Child1:   px(582, 650, 105, 28),
+    famName_Child1:      px(228, 515, 118, 28),
+    famDob_Child1:       px(348, 515, 74, 28),
+    famLiving_Child1:    px(424, 515, 78, 28),
+    famSalvation_Child1: px(504, 515, 74, 28),
+    famRemarks_Child1:   px(580, 515, 122, 28),
 
-    famName_Child2:      px(148, 680, 158, 28),
-    famDob_Child2:       px(306, 680, 96, 28),
-    famLiving_Child2:    px(402, 680, 90, 28),
-    famSalvation_Child2: px(492, 680, 90, 28),
-    famRemarks_Child2:   px(582, 680, 105, 28),
+    famName_Child2:      px(228, 552, 118, 28),
+    famDob_Child2:       px(348, 552, 74, 28),
+    famLiving_Child2:    px(424, 552, 78, 28),
+    famSalvation_Child2: px(504, 552, 74, 28),
+    famRemarks_Child2:   px(580, 552, 122, 28),
 
-    famName_Child3:      px(148, 710, 158, 28),
-    famDob_Child3:       px(306, 710, 96, 28),
-    famLiving_Child3:    px(402, 710, 90, 28),
-    famSalvation_Child3: px(492, 710, 90, 28),
-    famRemarks_Child3:   px(582, 710, 105, 28),
+    famName_Child3:      px(228, 589, 118, 28),
+    famDob_Child3:       px(348, 589, 74, 28),
+    famLiving_Child3:    px(424, 589, 78, 28),
+    famSalvation_Child3: px(504, 589, 74, 28),
+    famRemarks_Child3:   px(580, 589, 122, 28),
 
-    famName_Child4:      px(148, 740, 158, 28),
-    famDob_Child4:       px(306, 740, 96, 28),
-    famLiving_Child4:    px(402, 740, 90, 28),
-    famSalvation_Child4: px(492, 740, 90, 28),
-    famRemarks_Child4:   px(582, 740, 105, 28),
+    famName_Child4:      px(228, 626, 118, 28),
+    famDob_Child4:       px(348, 626, 74, 28),
+    famLiving_Child4:    px(424, 626, 78, 28),
+    famSalvation_Child4: px(504, 626, 74, 28),
+    famRemarks_Child4:   px(580, 626, 122, 28),
 
-    famName_Other:       px(148, 770, 158, 28),
-    famDob_Other:        px(306, 770, 96, 28),
-    famLiving_Other:     px(402, 770, 90, 28),
-    famSalvation_Other:  px(492, 770, 90, 28),
-    famRemarks_Other:    px(582, 770, 105, 28),
+    famName_Other:       px(228, 663, 118, 28),
+    famDob_Other:        px(348, 663, 74, 28),
+    famLiving_Other:     px(424, 663, 78, 28),
+    famSalvation_Other:  px(504, 663, 74, 28),
+    famRemarks_Other:    px(580, 663, 122, 28),
 
-    /* 3. Prayer Requests (자유 영역, y 830 ~ 900) */
-    prayerRequests: px(85, 828, 555, 65),
+    /* ── 3. Prayer Requests ── */
+    prayerRequests: px(85, 722, 555, 55),
 
-    /* Consent 체크박스 ([ ] Agree / [ ] Disagree) */
-    checkAgree:    px(88, 962, 22, 16),
-    checkDisagree: px(180, 962, 22, 16),
+    /* ── Consent 체크박스 ── */
+    checkAgree:    px(88, 800, 22, 16),
+    checkDisagree: px(178, 800, 22, 16),
 
-    /* 서명 / 날짜 */
-    signDate:      px(118, 992, 175, 20),
-    applicantName: px(240, 1032, 220, 20)  /* 이미지 밖이면 자동 잘림 */
+    /* ── Date / Applicant ── */
+    signDate:      px(118, 840, 180, 20),
+    applicantName: px(238, 868, 220, 20)
   };
 
-  /* 서명 이미지 위치 (Applicant 라벨 아래) */
-  var SIG_POS = px(90, 1015, 300, 30);
+  /* 서명 이미지 */
+  var SIG_POS = px(90, 890, 300, 30);
 
   /* ============================================================
      값 수집
@@ -756,7 +747,7 @@
   }
 
   /* ============================================================
-     인쇄용 오버레이
+     인쇄 오버레이
      ============================================================ */
   function buildPrintOverlay() {
     var container = document.getElementById('printOverlay');
@@ -802,7 +793,7 @@
   }
 
   /* ============================================================
-     서명
+     서명 (팝업)
      ============================================================ */
   var sigModal = document.getElementById('sigModal');
   var sigCanvasWrap = document.getElementById('sigCanvasWrap');
