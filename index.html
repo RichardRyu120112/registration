@@ -652,4 +652,420 @@
 
     <div class="submit-modal-actions">
       <a class="submit-btn email" id="btnEmail" href="#">📨 Open Email App</a>
-      <button type="button" class="submit-btn copy" id="btnCopyEmail">
+      <button type="button" class="submit-btn copy" id="btnCopyEmail">📋 Copy Email Address</button>
+      <button type="button" class="submit-btn close" id="btnCloseModal">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var EMAIL_TO = 'hansoo2454@gmail.com';
+  var MAX_CHILD = 4;
+
+  var inappBanner = document.getElementById('inappBanner');
+  var inappName = document.getElementById('inappName');
+
+  /* 인앱 브라우저 감지 */
+  function detectInApp() {
+    var ua = (navigator.userAgent || '') + ' ' + (navigator.vendor || '');
+    var name = null;
+    if (/KAKAOTALK/i.test(ua)) name = 'KakaoTalk';
+    else if (/Instagram/i.test(ua)) name = 'Instagram';
+    else if (/FBAN|FBAV|FB_IAB/i.test(ua)) name = 'Facebook';
+    else if (/Line\//i.test(ua)) name = 'LINE';
+    else if (/NAVER/i.test(ua)) name = 'Naver App';
+    else if (/DaumApps/i.test(ua)) name = 'Daum App';
+    else if (/SnapChat/i.test(ua)) name = 'Snapchat';
+    else if (/Twitter/i.test(ua)) name = 'X (Twitter)';
+    else if (/Pinterest/i.test(ua)) name = 'Pinterest';
+    if (name) return { inApp: true, name: name };
+
+    var isIOS = /iPhone|iPad|iPod/i.test(ua);
+    var isIOSReal = /Safari/i.test(ua) || /CriOS/i.test(ua) || /FxiOS/i.test(ua) || /EdgiOS/i.test(ua);
+    if (isIOS && !isIOSReal) return { inApp: true, name: 'In-App Browser' };
+
+    var isAndroid = /Android/i.test(ua);
+    var isWebView = /;\s*wv\)/i.test(ua);
+    var isChrome = /Chrome\/\d+/i.test(ua) && !isWebView;
+    if (isAndroid && isWebView && !isChrome) return { inApp: true, name: 'In-App Browser' };
+
+    return { inApp: false };
+  }
+
+  var state = detectInApp();
+  var IN_APP = state.inApp;
+  if (IN_APP) {
+    document.body.classList.add('inapp');
+    if (inappName && state.name) inappName.textContent = state.name;
+    if (inappBanner) inappBanner.classList.add('show');
+  }
+
+  /* ===== 가족 ===== */
+  var childCount = 0;
+  var otherCount = 0;
+  var spouseAdded = false;
+
+  function setFamily(has) {
+    var sec = document.getElementById('familySection');
+    var yes = document.getElementById('familyYes');
+    var no = document.getElementById('familyNo');
+    if (has) {
+      sec.classList.add('visible');
+      yes.classList.add('active');
+      no.classList.remove('active');
+    } else {
+      sec.classList.remove('visible');
+      no.classList.add('active');
+      yes.classList.remove('active');
+    }
+  }
+
+  function makeFamilyBlock(labelText, relationship) {
+    var wrap = document.createElement('div');
+    wrap.className = 'family-member';
+    wrap.dataset.relation = relationship;
+    wrap.innerHTML =
+      '<div class="family-member-header">' +
+        '<span>' + labelText + '</span>' +
+        '<button type="button" class="remove-btn" title="Remove">✕</button>' +
+      '</div>' +
+      '<div class="grid-2">' +
+        '<div class="field"><label>Relationship</label>' +
+          '<select class="fam-relationship">' +
+            '<option value="">Select</option>' +
+            '<option value="Spouse"' + (relationship === 'Spouse' ? ' selected' : '') + '>Spouse</option>' +
+            '<option value="Child"' + (relationship === 'Child' ? ' selected' : '') + '>Child</option>' +
+            '<option value="Parent">Parent</option>' +
+            '<option value="Sibling">Sibling</option>' +
+            '<option value="Other"' + (relationship === 'Other' ? ' selected' : '') + '>Other</option>' +
+          '</select></div>' +
+        '<div class="field"><label>Name</label>' +
+          '<input type="text" class="fam-name" placeholder="Full name"></div>' +
+      '</div>' +
+      '<div class="grid-2">' +
+        '<div class="field"><label>Date of Birth</label>' +
+          '<input type="date" class="fam-dob"></div>' +
+        '<div class="field"><label>Living Together</label>' +
+          '<select class="fam-living">' +
+            '<option value="">Select</option>' +
+            '<option value="Yes">Yes</option>' +
+            '<option value="No">No</option>' +
+          '</select></div>' +
+      '</div>' +
+      '<div class="grid-2">' +
+        '<div class="field"><label>Salvation</label>' +
+          '<select class="fam-salvation">' +
+            '<option value="">Select</option>' +
+            '<option value="Yes">Yes</option>' +
+            '<option value="No">No</option>' +
+            '<option value="Unknown">Unknown</option>' +
+          '</select></div>' +
+        '<div class="field"><label>Remarks</label>' +
+          '<input type="text" class="fam-remarks" placeholder="Remarks"></div>' +
+      '</div>';
+    wrap.querySelector('.remove-btn').addEventListener('click', function () {
+      var rel = wrap.dataset.relation;
+      if (rel === 'Spouse') spouseAdded = false;
+      else if (rel === 'Child') childCount = Math.max(0, childCount - 1);
+      else if (rel === 'Other') otherCount = Math.max(0, otherCount - 1);
+      wrap.remove();
+    });
+    return wrap;
+  }
+
+  function addFamilyMember(type) {
+    var list = document.getElementById('familyList');
+    if (type === 'Spouse') {
+      if (spouseAdded) { alert('Spouse is already added.'); return; }
+      spouseAdded = true;
+      list.appendChild(makeFamilyBlock('Spouse', 'Spouse'));
+    } else if (type === 'Child') {
+      if (childCount >= MAX_CHILD) {
+        alert('Up to ' + MAX_CHILD + ' children can be added.');
+        return;
+      }
+      childCount++;
+      list.appendChild(makeFamilyBlock('Child ' + childCount, 'Child'));
+    } else if (type === 'Other') {
+      otherCount++;
+      list.appendChild(makeFamilyBlock('Other ' + otherCount, 'Other'));
+    }
+  }
+
+  /* ===== 서명 ===== */
+  var canvas = document.getElementById('signatureCanvas');
+  var wrapper = document.getElementById('sigWrapper');
+  var ctx = canvas.getContext('2d');
+  var isDrawing = false, hasSigned = false;
+
+  function resizeCanvas() {
+    var rect = wrapper.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = 180 * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = '180px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#1b3a5c';
+  }
+
+  function getPos(e) {
+    var rect = canvas.getBoundingClientRect();
+    var cx, cy;
+    if (e.touches) { cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
+    else { cx = e.clientX; cy = e.clientY; }
+    return { x: cx - rect.left, y: cy - rect.top };
+  }
+  function startDraw(e) {
+    e.preventDefault(); isDrawing = true;
+    var p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    if (!hasSigned) { hasSigned = true; wrapper.classList.add('signed'); }
+  }
+  function draw(e) {
+    if (!isDrawing) return; e.preventDefault();
+    var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke();
+  }
+  function stopDraw(e) {
+    if (!isDrawing) return; e.preventDefault();
+    isDrawing = false; ctx.closePath();
+  }
+  window.clearSignature = function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasSigned = false; wrapper.classList.remove('signed');
+  };
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDraw);
+  canvas.addEventListener('mouseleave', stopDraw);
+  canvas.addEventListener('touchstart', startDraw, { passive: false });
+  canvas.addEventListener('touchmove', draw, { passive: false });
+  canvas.addEventListener('touchend', stopDraw, { passive: false });
+
+  /* ===== 인쇄용 동기화 ===== */
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function setText(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val || '';
+  }
+
+  function buildPrintFamily() {
+    var list = document.getElementById('familyList');
+    var blocks = list.querySelectorAll('.family-member');
+    var tbody = document.getElementById('p-familyBody');
+    tbody.innerHTML = '';
+
+    var predefined = ['Spouse', 'Child 1', 'Child 2', 'Child 3', 'Child 4', 'Other'];
+    var labels = ['Spouse', 'Child 1', 'Child 2', 'Child 3', 'Child 4', 'Other'];
+
+    // 실제 입력된 블록을 라벨 기준으로 매핑
+    var map = {};
+    blocks.forEach(function (b) {
+      var lab = b.querySelector('.family-member-header span').textContent.trim();
+      map[lab] = b;
+    });
+
+    labels.forEach(function (lab) {
+      var tr = document.createElement('tr');
+      var b = map[lab];
+      var rel = '', nm = '', dob = '', live = '', sal = '', rem = '';
+      if (b) {
+        rel = b.querySelector('.fam-relationship').value;
+        nm = b.querySelector('.fam-name').value;
+        dob = b.querySelector('.fam-dob').value;
+        live = b.querySelector('.fam-living').value;
+        sal = b.querySelector('.fam-salvation').value;
+        rem = b.querySelector('.fam-remarks').value;
+      }
+      tr.innerHTML =
+        '<td class="row-label">' + esc(lab) + '</td>' +
+        '<td>' + esc(nm) + '</td>' +
+        '<td>' + esc(dob) + '</td>' +
+        '<td style="text-align:center">' + esc(live) + '</td>' +
+        '<td style="text-align:center">' + esc(sal) + '</td>' +
+        '<td>' + esc(rem) + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  function syncToPrint() {
+    setText('p-firstName', document.getElementById('firstName').value);
+    setText('p-lastName', document.getElementById('lastName').value);
+    setText('p-dob', document.getElementById('dob').value);
+    setText('p-nationality', document.getElementById('nationality').value);
+    setText('p-gender', document.getElementById('gender').value);
+    setText('p-salvationDate', document.getElementById('salvationDate').value);
+    setText('p-guidedBy', document.getElementById('guidedBy').value);
+    setText('p-relationship', document.getElementById('relationship').value);
+    setText('p-entryDate', document.getElementById('entryDate').value);
+    setText('p-occupation', document.getElementById('occupation').value);
+    setText('p-departureDate', document.getElementById('departureDate').value);
+    setText('p-residency', document.getElementById('residency').value);
+    setText('p-emailPhone', document.getElementById('emailPhone').value);
+    setText('p-address', document.getElementById('address').value);
+    setText('p-prayerRequests', document.getElementById('prayerRequests').value);
+
+    buildPrintFamily();
+
+    // 동의
+    var consent = document.querySelector('input[name="consent"]:checked');
+    var ca = document.getElementById('p-check-agree');
+    var cd = document.getElementById('p-check-disagree');
+    ca.textContent = ''; cd.textContent = '';
+    if (consent && consent.value === 'Agree') ca.textContent = '✔';
+    else if (consent && consent.value === 'Disagree') cd.textContent = '✔';
+
+    // 서명
+    var sigImgBox = document.getElementById('p-sigImg');
+    sigImgBox.innerHTML = '';
+    if (hasSigned) {
+      var img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      sigImgBox.appendChild(img);
+    }
+    setText('p-sigName', document.getElementById('applicantName').value);
+    setText('p-signDate', document.getElementById('signDate').value);
+  }
+
+  /* ===== 이메일 모달 ===== */
+  var modal = document.getElementById('submitModal');
+  var btnEmail = document.getElementById('btnEmail');
+  var btnCopy = document.getElementById('btnCopyEmail');
+  var btnClose = document.getElementById('btnCloseModal');
+
+  function openModal() {
+    var name = document.getElementById('applicantName').value.trim()
+      || (document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value).trim()
+      || 'Applicant';
+    var dateSub = document.getElementById('signDate').value || new Date().toISOString().slice(0, 10);
+
+    var subject = 'Calgary Church Member Registration Card - ' + name + ' - ' + dateSub;
+    var bodyLines = [
+      'Hello,',
+      '',
+      'Attached is my Calgary Church Member Registration Card (PDF).',
+      '',
+      '- Applicant: ' + name,
+      '- Date: ' + dateSub,
+      '',
+      'Thank you.'
+    ];
+    var body = bodyLines.join('\r\n');
+    var url = 'mailto:' + encodeURIComponent(EMAIL_TO) +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    btnEmail.setAttribute('href', url);
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  btnClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+  });
+
+  btnCopy.addEventListener('click', function () {
+    var text = EMAIL_TO;
+    var done = function () {
+      var orig = btnCopy.textContent;
+      btnCopy.textContent = '✅ Copied!';
+      setTimeout(function () { btnCopy.textContent = orig; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallback(text, done); });
+    } else { fallback(text, done); }
+  });
+  function fallback(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    cb && cb();
+  }
+
+  /* ===== 버튼 ===== */
+  var pendingModal = false;
+
+  document.getElementById('btnPrint').addEventListener('click', function () {
+    var fn = document.getElementById('firstName').value.trim();
+    var ln = document.getElementById('lastName').value.trim();
+    if (!fn || !ln) {
+      alert('Please enter First Name and Last Name.');
+      (!fn ? document.getElementById('firstName') : document.getElementById('lastName')).focus();
+      return;
+    }
+    if (!document.getElementById('applicantName').value.trim()) {
+      alert('Please enter Applicant Name.');
+      document.getElementById('applicantName').focus();
+      return;
+    }
+    if (!hasSigned) {
+      alert('Please sign in the signature box.');
+      document.getElementById('sigWrapper').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    if (IN_APP) {
+      alert('⚠️ PDF saving is not supported in ' + (state.name || 'in-app browser') +
+        '.\n\nPlease reopen in Safari or Chrome:\n' +
+        '1. Tap ⋯ (or ⋮) menu\n' +
+        '2. Choose "Open in Browser" or "Open in Safari"\n' +
+        '3. Tap "Complete (Save PDF)" again');
+      if (inappBanner) inappBanner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    syncToPrint();
+    pendingModal = true;
+    setTimeout(function () { window.print(); }, 60);
+  });
+
+  window.addEventListener('beforeprint', syncToPrint);
+  window.addEventListener('afterprint', function () {
+    if (!pendingModal) return;
+    pendingModal = false;
+    setTimeout(openModal, 300);
+  });
+
+  document.getElementById('btnReset').addEventListener('click', function () {
+    if (!confirm('Clear all inputs and start over?')) return;
+    location.reload();
+  });
+
+  /* ===== 초기화 ===== */
+  window.addEventListener('load', function () {
+    resizeCanvas();
+    document.getElementById('signDate').value = new Date().toISOString().slice(0, 10);
+    // 초기 가족 슬롯: Spouse 1 + Child 1
+    addFamilyMember('Spouse');
+    addFamilyMember('Child');
+  });
+  window.addEventListener('resize', function () {
+    var dataUrl = hasSigned ? canvas.toDataURL() : null;
+    resizeCanvas();
+    if (dataUrl) {
+      var img = new Image();
+      img.onload = function () { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };
+      img.src = dataUrl;
+    }
+  });
+})();
+</script>
+</body>
+</html>
