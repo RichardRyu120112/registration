@@ -8,18 +8,19 @@
 <style>
   * { box-sizing: border-box; }
   :root {
-    --navy:#1b3a5c; --navy2:#2f6fb0; --bg:#eef1f5; --line:#dde4ec;
+    --navy:#1b3a5c; --navy2:#2f6fb0; --bg:#eef1f5; --line:#e0e6ee;
     --text:#16222e; --muted:#68788a; --danger:#c0392b;
     --warn-bg:#fff3cd; --warn-border:#ffc107; --warn-text:#856404;
-    --radius:12px; --card-bg:#fff;
-    --shadow:0 1px 4px rgba(16,32,48,.08);
+    --radius:14px; --card-bg:#fff;
+    --shadow:0 1px 4px rgba(16,32,48,.06);
+    --input-bg:#f9fafc;
   }
   html { -webkit-text-size-adjust:100%; }
   body {
     margin:0; background:var(--bg); color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
       "Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
-    font-size:15px; line-height:1.45;
+    font-size:16px; line-height:1.5;
   }
 
   /* 인앱 경고 */
@@ -41,118 +42,180 @@
 
   .app-header {
     background:linear-gradient(140deg,#17324f,#2f6fb0);
-    color:#fff; text-align:center; padding:16px 14px 18px;
+    color:#fff; text-align:center; padding:20px 16px 22px;
   }
   .app-header h1 {
-    margin:0 0 4px; font-size:12px; letter-spacing:.14em;
-    font-weight:600; opacity:.92;
+    margin:0 0 6px; font-size:12px; letter-spacing:.16em;
+    font-weight:600; opacity:.9;
   }
   .app-header h2 {
-    margin:0; font-size:17px; font-weight:800; letter-spacing:.02em;
+    margin:0; font-size:18px; font-weight:800; letter-spacing:.01em;
   }
 
   .notice-box {
     background:var(--warn-bg); border-left:5px solid var(--warn-border);
-    color:var(--warn-text); padding:12px 14px; margin:10px;
-    border-radius:10px; font-size:13px; line-height:1.55;
+    color:var(--warn-text); padding:14px 16px; margin:12px;
+    border-radius:12px; font-size:13.5px; line-height:1.55;
   }
-  .notice-box strong { display:block; margin-bottom:6px; font-size:13.5px; }
+  .notice-box strong { display:block; margin-bottom:6px; font-size:14px; }
   .notice-box ul { margin:6px 0 0; padding-left:20px; }
-  .notice-box li { margin-bottom:3px; }
+  .notice-box li { margin-bottom:4px; }
 
   .card {
-    background:var(--card-bg); margin:10px; border-radius:var(--radius);
-    box-shadow:var(--shadow); padding:14px 12px;
+    background:var(--card-bg); margin:12px; border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:18px 16px;
   }
   .card-title {
-    font-size:0.95rem; font-weight:800; color:var(--navy);
-    margin:0 0 12px; padding-bottom:8px;
-    border-bottom:1px solid var(--line);
-    display:flex; align-items:center; gap:6px;
+    font-size:1.05rem; font-weight:800; color:var(--navy);
+    margin:0 0 16px; padding-bottom:12px;
+    border-bottom:2px solid var(--line);
+    display:flex; align-items:center; gap:8px;
   }
-  .card-title i { font-style:normal; font-size:1.1rem; }
+  .card-title i { font-style:normal; font-size:1.15rem; }
 
-  .word-table {
-    width:100%; border-collapse:collapse; table-layout:fixed;
-    font-size:14px;
+  /* ============================================================
+     입력 행 : 라벨 왼쪽 + 입력칸 오른쪽 (한 줄에 하나씩)
+     ============================================================ */
+  .row {
+    display:grid;
+    grid-template-columns: 110px 1fr;
+    gap:10px;
+    align-items:center;
+    margin-bottom:12px;
   }
-  .word-table th, .word-table td {
-    border:1px solid #b8c4d2; padding:0; vertical-align:middle;
-  }
-  .word-table td.label {
-    background:#f0f4f8; font-weight:700; color:var(--navy);
-    padding:10px 10px; text-align:left;
-    font-size:12.5px; white-space:nowrap;
-  }
-  .word-table td.input-cell { padding:0; }
+  .row:last-child { margin-bottom:0; }
 
-  .word-table input[type="text"],
-  .word-table input[type="date"],
-  .word-table select,
-  .word-table textarea {
-    width:100%; min-height:42px; padding:9px 10px;
-    font-size:15px; font-family:inherit; color:var(--text);
-    border:0; background:transparent; outline:none;
-    -webkit-appearance:none; appearance:none; border-radius:0;
-  }
-  .word-table textarea {
-    resize:vertical; min-height:60px; padding-top:10px; display:block;
-  }
-  .word-table select {
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%2368788a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position:right 10px center;
-    padding-right:28px;
-  }
-  .word-table input:focus,
-  .word-table select:focus,
-  .word-table textarea:focus {
-    background:#eaf2fb;
-    box-shadow:inset 0 0 0 2px var(--navy2);
+  .row > label {
+    font-size:13px; font-weight:700; color:var(--muted);
+    letter-spacing:.01em;
+    padding-right:4px;
+    line-height:1.3;
   }
 
-  .family-table th {
-    background:#1b3a5c; color:#fff; font-weight:700;
-    font-size:11px; text-align:center; padding:7px 3px;
-    text-transform:uppercase;
+  @media (max-width:380px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap:4px;
+    }
+    .row > label {
+      font-size:12px;
+      padding-top:4px;
+    }
   }
-  .family-table td { padding:0; }
-  .family-table td.row-head {
-    background:#f0f4f8; font-weight:700; color:var(--navy);
-    text-align:center; padding:10px 4px; font-size:12px;
-  }
-  .family-table input[type="text"],
-  .family-table input[type="date"],
-  .family-table select {
-    min-height:40px; font-size:13.5px; text-align:center; padding:8px 3px;
-  }
-  .family-table select { padding-right:20px; text-align-last:center; }
 
-  .full-textarea {
-    width:100%; min-height:100px; padding:12px;
-    font-size:15px; font-family:inherit; color:var(--text);
-    border:1px solid var(--line); border-radius:10px;
-    background:#fff; outline:none; resize:vertical;
+  input[type="text"], input[type="date"], select, textarea {
+    width:100%; min-height:48px; padding:12px 14px;
+    font-size:16px; font-family:inherit; color:var(--text);
+    background:var(--input-bg);
+    border:1.5px solid var(--line); border-radius:10px;
+    outline:none; transition:border-color .2s, background .2s, box-shadow .2s;
+    -webkit-appearance:none; appearance:none;
   }
-  .full-textarea:focus {
-    border-color:var(--navy2);
+  textarea {
+    resize:vertical; min-height:100px; padding-top:12px;
+    font-family:inherit; line-height:1.5;
+    grid-column: 2; /* textarea가 row 안에 있을 때 */
+  }
+  input[type="date"] {
+    /* iOS Safari 기본 스타일 정리 */
+    -webkit-appearance:none; appearance:none;
+    background-image:none;
+    padding-right:14px;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    font-size:20px; cursor:pointer; opacity:.7;
+    margin-left:4px; margin-right:-4px;
+  }
+  select {
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2368788a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center;
+    padding-right:40px;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color:var(--navy2); background:#fff;
     box-shadow:0 0 0 3px rgba(47,111,176,.15);
   }
 
-  .consent-list {
-    margin:0 0 12px; padding:12px 14px 12px 30px;
-    font-size:12.5px; line-height:1.6; color:var(--warn-text);
-    background:var(--warn-bg); border-left:5px solid var(--warn-border);
-    border-radius:10px; list-style:disc;
+  /* ===== 가족 ===== */
+  .family-empty {
+    text-align:center; padding:22px 16px;
+    background:var(--input-bg); border:2px dashed var(--line);
+    border-radius:12px; color:var(--muted); font-size:14px;
+    line-height:1.6;
   }
-  .consent-list li { margin-bottom:4px; }
-  .consent-list strong { color:#b8860b; }
+  .family-empty strong { color:var(--navy); display:block; margin-bottom:4px; font-size:15px; }
 
-  .radio-row { display:flex; gap:12px; flex-wrap:wrap; }
-  .radio-label {
+  .family-member {
+    background:var(--input-bg); border:1.5px solid var(--line);
+    border-radius:12px; padding:16px 14px; margin-bottom:14px;
+    position:relative;
+  }
+  .family-member-header {
+    font-size:13px; font-weight:800; color:var(--navy);
+    margin-bottom:14px; padding-right:44px;
     display:flex; align-items:center; gap:8px;
-    font-size:15px; font-weight:600; cursor:pointer;
-    padding:12px 16px; border:2px solid var(--line);
-    border-radius:10px; flex:1 1 100px; justify-content:center;
+  }
+  .family-member-header .badge {
+    display:inline-flex; align-items:center; justify-content:center;
+    background:var(--navy); color:#fff;
+    font-size:11px; font-weight:800; padding:3px 10px;
+    border-radius:20px;
+  }
+  .remove-btn {
+    position:absolute; top:12px; right:12px;
+    background:#fff; border:1.5px solid var(--line);
+    color:var(--danger); font-size:16px; cursor:pointer;
+    padding:6px 10px; line-height:1; font-family:inherit;
+    border-radius:8px;
+  }
+  .remove-btn:active { background:#fdf0ee; }
+
+  .family-member .row { grid-template-columns: 100px 1fr; margin-bottom:10px; }
+  .family-member .row > label { font-size:12px; }
+  .family-member input,
+  .family-member select {
+    min-height:44px; padding:10px 12px; font-size:15px;
+    background:#fff;
+  }
+
+  .add-family-buttons {
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;
+    margin-top:8px;
+  }
+  @media (max-width:480px) { .add-family-buttons { grid-template-columns:1fr; } }
+  .add-family-btn {
+    padding:14px 12px; font-size:14px; font-weight:700;
+    font-family:inherit; border:2px dashed var(--navy2);
+    border-radius:12px; background:#fff; color:var(--navy2);
+    cursor:pointer; transition:all .2s;
+  }
+  .add-family-btn:active { background:#eaf2fb; transform:scale(.98); }
+  .add-family-btn:disabled {
+    opacity:.4; cursor:not-allowed;
+    border-color:var(--line); color:var(--muted);
+  }
+
+  /* ===== 동의 ===== */
+  .consent-box {
+    background:var(--warn-bg); border-left:5px solid var(--warn-border);
+    color:var(--warn-text); padding:14px 16px; border-radius:10px;
+    font-size:13px; line-height:1.6; margin-bottom:16px;
+  }
+  .consent-box ul { margin:6px 0 0 18px; padding:0; }
+  .consent-box li { margin-bottom:4px; }
+  .consent-box strong { color:#b8860b; }
+
+  .consent-question {
+    font-size:14.5px; font-weight:700; color:var(--navy);
+    margin:0 0 12px; line-height:1.5;
+  }
+
+  .radio-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .radio-label {
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    font-size:15px; font-weight:700; cursor:pointer;
+    padding:14px 12px; border:2px solid var(--line);
+    border-radius:12px; transition:all .2s;
     background:#fff;
   }
   .radio-label input[type="radio"] {
@@ -160,51 +223,61 @@
     margin:0; flex-shrink:0;
   }
   .radio-label:has(input:checked) {
-    border-color:var(--navy); background:#e8f0fa;
+    border-color:var(--navy); background:#e8f0fa; color:var(--navy);
   }
 
+  /* ===== 서명 ===== */
   .signature-wrapper {
     position:relative; border:2px dashed var(--line);
     border-radius:12px; background:#fff;
-    overflow:hidden; touch-action:none;
+    overflow:hidden;
+    /* touch-action none 은 캔버스에만 */
   }
   .signature-wrapper canvas {
-    display:block; width:100%; height:170px;
-    cursor:crosshair; touch-action:none;
+    display:block; width:100%; height:200px;
+    cursor:crosshair;
+    touch-action:none;   /* ★ 여기만 none */
   }
   .signature-placeholder {
     position:absolute; top:50%; left:50%;
     transform:translate(-50%,-50%); color:var(--muted);
-    font-size:0.9rem; pointer-events:none; opacity:.6;
+    font-size:0.95rem; pointer-events:none; opacity:.55;
     text-align:center; width:100%;
   }
   .signature-wrapper.signed .signature-placeholder { display:none; }
+  .sig-actions { display:flex; gap:8px; margin-top:10px; }
   .clear-sig-btn {
-    margin-top:8px; padding:8px 16px; font-size:0.85rem;
-    font-family:inherit; border:1.5px solid var(--line);
-    border-radius:8px; background:#fff; color:var(--muted); cursor:pointer;
+    padding:10px 18px; font-size:13.5px;
+    font-family:inherit; font-weight:700;
+    border:1.5px solid var(--line);
+    border-radius:10px; background:#fff;
+    color:var(--muted); cursor:pointer;
   }
+  .clear-sig-btn:active { background:#f5f7fa; }
 
+  /* ===== 하단 ===== */
   .bottom-bar {
     position:fixed; left:0; right:0; bottom:0; z-index:50;
     background:#fff; border-top:1px solid var(--line);
     box-shadow:0 -4px 18px rgba(16,32,48,.10);
-    padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+    padding:10px 12px calc(10px + env(safe-area-inset-bottom));
   }
-  .btn-row { display:grid; grid-template-columns:1fr auto; gap:6px; }
+  .btn-row { display:grid; grid-template-columns:1fr auto; gap:8px; }
   .btn-row button {
-    padding:13px 10px; border-radius:10px;
-    border:1px solid var(--line); background:#f6f9fc;
-    color:var(--navy); font-size:14px; font-weight:700;
+    padding:16px 14px; border-radius:12px;
+    border:1.5px solid var(--line); background:#f6f9fc;
+    color:var(--navy); font-size:15px; font-weight:800;
     font-family:inherit; cursor:pointer; white-space:nowrap;
+    transition:transform .1s;
   }
-  .btn-row button:active { transform:scale(.97); }
+  .btn-row button:active { transform:scale(.98); }
   .btn-row .primary {
     background:var(--navy); border-color:var(--navy); color:#fff;
+    box-shadow:0 4px 12px rgba(27,58,92,.25);
   }
-  body.inapp .btn-row .primary { background:#94a3b3; border-color:#94a3b3; }
+  body.inapp .btn-row .primary { background:#94a3b3; border-color:#94a3b3; box-shadow:none; }
 
-  /* 제출 안내 모달 */
+  /* ===== 모달 ===== */
   .modal {
     display:none; position:fixed; inset:0; z-index:1000;
     background:rgba(10,20,35,0.7);
@@ -214,53 +287,52 @@
   }
   .modal.show { display:flex; }
   .modal-content {
-    background:#fff; border-radius:16px;
+    background:#fff; border-radius:18px;
     max-width:440px; width:100%;
     max-height:calc(100vh - 28px); overflow-y:auto;
     box-shadow:0 20px 60px rgba(0,0,0,.3);
     display:flex; flex-direction:column;
   }
-
-  .submit-modal-icon { font-size:38px; text-align:center; margin:22px 0 6px; }
+  .submit-modal-icon { font-size:42px; text-align:center; margin:26px 0 8px; }
   .submit-modal-title {
-    font-size:17px; font-weight:800; color:var(--navy);
-    text-align:center; margin:0 0 14px; padding:0 18px;
+    font-size:18px; font-weight:800; color:var(--navy);
+    text-align:center; margin:0 0 16px; padding:0 18px;
   }
   .submit-modal-msg {
-    background:#f4f7fb; border-radius:12px; padding:14px 16px;
-    margin:0 18px 12px; font-size:14px; line-height:1.6;
+    background:#f4f7fb; border-radius:12px; padding:16px 18px;
+    margin:0 18px 14px; font-size:14.5px; line-height:1.6;
   }
   .submit-modal-msg .ko { font-weight:700; color:var(--navy); margin-bottom:8px; }
   .submit-modal-msg .en {
-    color:var(--muted); font-size:13px;
+    color:var(--muted); font-size:13.5px;
     border-top:1px solid var(--line); padding-top:8px; margin-top:8px;
   }
   .submit-modal-email {
-    text-align:center; font-size:15px; font-weight:700;
-    color:var(--navy2); background:#eaf2fb; border-radius:10px;
-    padding:10px; margin:0 18px 16px; word-break:break-all;
+    text-align:center; font-size:16px; font-weight:800;
+    color:var(--navy2); background:#eaf2fb; border-radius:12px;
+    padding:14px; margin:0 18px 18px; word-break:break-all;
     user-select:all; -webkit-user-select:all;
   }
-
   .modal-actions {
-    display:flex; flex-direction:column; gap:8px;
-    padding:12px 16px calc(14px + env(safe-area-inset-bottom));
-    border-top:1px solid var(--line); flex-shrink:0;
+    display:flex; flex-direction:column; gap:10px;
+    padding:14px 18px calc(18px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line);
   }
   .modal-btn {
     display:flex; align-items:center; justify-content:center;
-    gap:8px; padding:14px 12px; border-radius:12px;
-    font-size:15px; font-weight:700; font-family:inherit;
-    border:1px solid transparent; cursor:pointer;
+    gap:8px; padding:16px 14px; border-radius:12px;
+    font-size:15px; font-weight:800; font-family:inherit;
+    border:1.5px solid transparent; cursor:pointer;
     text-decoration:none; text-align:center;
+    transition:transform .1s;
   }
   .modal-btn:active { transform:scale(.98); }
   .modal-btn.primary { background:var(--navy); color:#fff; border-color:var(--navy); }
   .modal-btn.secondary { background:#fff; color:var(--navy); border-color:var(--line); }
-  .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:10px; font-size:14px; }
+  .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용 : Letter 1페이지, 원본 이미지 + 오버레이
+     인쇄용
      ============================================================ */
   .form-print { display:none; }
 
@@ -309,21 +381,14 @@
   }
 
   @media (min-width:701px){
-    .bottom-bar { max-width:720px; margin:0 auto; }
-    .card { max-width:720px; margin-left:auto; margin-right:auto; }
-    .notice-box { max-width:720px; margin-left:auto; margin-right:auto; }
-  }
-  @media (max-width:400px){
-    body { font-size:14px; }
-    .card { margin:8px; padding:12px 10px; }
-    .word-table td.label { font-size:12px; padding:8px; }
-    .word-table input, .word-table select, .word-table textarea { font-size:14.5px; }
+    .bottom-bar { max-width:640px; margin:0 auto; }
+    .card { max-width:640px; margin-left:auto; margin-right:auto; }
+    .notice-box { max-width:640px; margin-left:auto; margin-right:auto; }
   }
 </style>
 </head>
 <body>
 
-<!-- 인앱 경고 -->
 <div class="inapp-banner" id="inappBanner">
   <h3>⚠️ <span id="inappName">In-App Browser</span> — PDF saving is not supported</h3>
   <p>Please reopen this page in <b>Safari (iPhone)</b> or <b>Chrome (Android)</b>:</p>
@@ -332,10 +397,8 @@
     <li>Select <b>"Open in Browser"</b> or <b>"Open in Safari"</b></li>
     <li>When the browser opens, tap <b>"✅ Complete (Save PDF)"</b> again</li>
   </ol>
-  <p style="margin-top:8px;font-size:12.5px;">💡 KakaoTalk uses its own built-in browser which <b>blocks the print function</b>.</p>
 </div>
 
-<!-- 화면용 입력 폼 -->
 <div class="form-screen">
   <header class="app-header">
     <h1>CALGARY CHURCH</h1>
@@ -345,200 +408,120 @@
   <div class="notice-box">
     <strong>📌 How to Fill Out This Form</strong>
     <ul>
-      <li>Fill in all fields in <b>Section 1. Personal Information</b>.</li>
-      <li><b>Section 2. Family Information</b> is optional — fill only those who apply.</li>
-      <li>Use <b>Section 3</b> freely for prayer requests or inquiries.</li>
-      <li>Please sign at the bottom using your finger or mouse.</li>
-      <li>Tap <b>Complete (Save PDF)</b>, then submit the saved PDF by email.</li>
+      <li>Fill in all fields. Take your time.</li>
+      <li>Family information is optional — tap the buttons to add.</li>
+      <li>Please sign at the bottom with your finger.</li>
+      <li>Tap <b>Complete (Save PDF)</b> at the end.</li>
     </ul>
   </div>
 
-  <!-- 1. Personal Information -->
+  <!-- ===== 1. Personal ===== -->
   <div class="card">
     <div class="card-title"><i>👤</i> 1. Personal Information</div>
 
-    <table class="word-table">
-      <colgroup>
-        <col style="width:26%"><col style="width:24%">
-        <col style="width:26%"><col style="width:24%">
-      </colgroup>
-      <tbody>
-        <tr>
-          <td class="label">First Name</td>
-          <td class="input-cell"><input type="text" id="firstName" autocomplete="given-name"></td>
-          <td class="label">Last Name</td>
-          <td class="input-cell"><input type="text" id="lastName" autocomplete="family-name"></td>
-        </tr>
-        <tr>
-          <td class="label">Date of Birth</td>
-          <td class="input-cell"><input type="text" id="dob" placeholder="YYYY-MM-DD"></td>
-          <td class="label">Nationality</td>
-          <td class="input-cell"><input type="text" id="nationality"></td>
-        </tr>
-        <tr>
-          <td class="label">Gender</td>
-          <td class="input-cell">
-            <select id="gender">
-              <option value="">Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </td>
-          <td class="label">Date of Salvation</td>
-          <td class="input-cell"><input type="text" id="salvationDate" placeholder="YYYY-MM-DD"></td>
-        </tr>
-        <tr>
-          <td class="label">Guided By</td>
-          <td class="input-cell"><input type="text" id="guidedBy"></td>
-          <td class="label">Relationship to Guide</td>
-          <td class="input-cell"><input type="text" id="relationship"></td>
-        </tr>
-        <tr>
-          <td class="label">Date of Entry</td>
-          <td class="input-cell"><input type="text" id="entryDate" placeholder="YYYY-MM-DD"></td>
-          <td class="label">Occupation</td>
-          <td class="input-cell"><input type="text" id="occupation"></td>
-        </tr>
-        <tr>
-          <td class="label">Departure date</td>
-          <td class="input-cell"><input type="text" id="departureDate" placeholder="YYYY-MM-DD"></td>
-          <td class="label">Residency Status</td>
-          <td class="input-cell"><input type="text" id="residency"></td>
-        </tr>
-        <tr>
-          <td class="label">E-mail/Phone#</td>
-          <td class="input-cell" colspan="3"><input type="text" id="emailPhone" autocomplete="email"></td>
-        </tr>
-        <tr>
-          <td class="label">Address</td>
-          <td class="input-cell" colspan="3"><textarea id="address" rows="2"></textarea></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" placeholder="First name" autocomplete="given-name">
+    </div>
+    <div class="row">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" placeholder="Last name" autocomplete="family-name">
+    </div>
+    <div class="row">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob">
+    </div>
+    <div class="row">
+      <label for="nationality">Nationality</label>
+      <input type="text" id="nationality" placeholder="Nationality">
+    </div>
+    <div class="row">
+      <label for="gender">Gender</label>
+      <select id="gender">
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="row">
+      <label for="salvationDate">Date of Salvation</label>
+      <input type="date" id="salvationDate">
+    </div>
+    <div class="row">
+      <label for="guidedBy">Guided By</label>
+      <input type="text" id="guidedBy" placeholder="Name of guide">
+    </div>
+    <div class="row">
+      <label for="relationship">Relationship to Guide</label>
+      <input type="text" id="relationship" placeholder="e.g., Friend, Family">
+    </div>
+    <div class="row">
+      <label for="entryDate">Date of Entry</label>
+      <input type="date" id="entryDate">
+    </div>
+    <div class="row">
+      <label for="occupation">Occupation</label>
+      <input type="text" id="occupation" placeholder="Occupation">
+    </div>
+    <div class="row">
+      <label for="departureDate">Departure Date</label>
+      <input type="date" id="departureDate">
+    </div>
+    <div class="row">
+      <label for="residency">Residency Status</label>
+      <input type="text" id="residency" placeholder="e.g., Citizen, PR, Visa">
+    </div>
+    <div class="row">
+      <label for="emailPhone">E-mail / Phone#</label>
+      <input type="text" id="emailPhone" placeholder="email / phone" autocomplete="email">
+    </div>
+    <div class="row" style="align-items:flex-start;">
+      <label for="address" style="padding-top:14px;">Address</label>
+      <textarea id="address" rows="2" placeholder="Full address"></textarea>
+    </div>
   </div>
 
-  <!-- 2. Family Information -->
+  <!-- ===== 2. Family ===== -->
   <div class="card">
     <div class="card-title"><i>👨‍👩‍👧‍👦</i> 2. Family Information</div>
 
-    <table class="word-table family-table">
-      <colgroup>
-        <col style="width:16%"><col style="width:22%"><col style="width:15%">
-        <col style="width:14%"><col style="width:14%"><col style="width:19%">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Relationship</th><th>Name</th><th>Date of Birth</th>
-          <th>Living Together</th><th>Salvation</th><th>Remarks</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="row-head">Spouse</td>
-          <td><input type="text" class="fam-name" data-rel="Spouse"></td>
-          <td><input type="text" class="fam-dob" data-rel="Spouse" placeholder="YYYY-MM-DD"></td>
-          <td>
-            <select class="fam-living" data-rel="Spouse">
-              <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
-            </select>
-          </td>
-          <td>
-            <select class="fam-salvation" data-rel="Spouse">
-              <option value=""></option><option value="Yes">Yes</option>
-              <option value="No">No</option><option value="Unknown">Unknown</option>
-            </select>
-          </td>
-          <td><input type="text" class="fam-remarks" data-rel="Spouse"></td>
-        </tr>
-        <tr>
-          <td class="row-head">Child 1</td>
-          <td><input type="text" class="fam-name" data-rel="Child 1"></td>
-          <td><input type="text" class="fam-dob" data-rel="Child 1" placeholder="YYYY-MM-DD"></td>
-          <td>
-            <select class="fam-living" data-rel="Child 1">
-              <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
-            </select>
-          </td>
-          <td>
-            <select class="fam-salvation" data-rel="Child 1">
-              <option value=""></option><option value="Yes">Yes</option>
-              <option value="No">No</option><option value="Unknown">Unknown</option>
-            </select>
-          </td>
-          <td><input type="text" class="fam-remarks" data-rel="Child 1"></td>
-        </tr>
-        <tr>
-          <td class="row-head">Child 2</td>
-          <td><input type="text" class="fam-name" data-rel="Child 2"></td>
-          <td><input type="text" class="fam-dob" data-rel="Child 2" placeholder="YYYY-MM-DD"></td>
-          <td>
-            <select class="fam-living" data-rel="Child 2">
-              <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
-            </select>
-          </td>
-          <td>
-            <select class="fam-salvation" data-rel="Child 2">
-              <option value=""></option><option value="Yes">Yes</option>
-              <option value="No">No</option><option value="Unknown">Unknown</option>
-            </select>
-          </td>
-          <td><input type="text" class="fam-remarks" data-rel="Child 2"></td>
-        </tr>
-        <tr>
-          <td class="row-head">Child 3</td>
-          <td><input type="text" class="fam-name" data-rel="Child 3"></td>
-          <td><input type="text" class="fam-dob" data-rel="Child 3" placeholder="YYYY-MM-DD"></td>
-          <td>
-            <select class="fam-living" data-rel="Child 3">
-              <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
-            </select>
-          </td>
-          <td>
-            <select class="fam-salvation" data-rel="Child 3">
-              <option value=""></option><option value="Yes">Yes</option>
-              <option value="No">No</option><option value="Unknown">Unknown</option>
-            </select>
-          </td>
-          <td><input type="text" class="fam-remarks" data-rel="Child 3"></td>
-        </tr>
-        <tr>
-          <td class="row-head">Other</td>
-          <td><input type="text" class="fam-name" data-rel="Other"></td>
-          <td><input type="text" class="fam-dob" data-rel="Other" placeholder="YYYY-MM-DD"></td>
-          <td>
-            <select class="fam-living" data-rel="Other">
-              <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
-            </select>
-          </td>
-          <td>
-            <select class="fam-salvation" data-rel="Other">
-              <option value=""></option><option value="Yes">Yes</option>
-              <option value="No">No</option><option value="Unknown">Unknown</option>
-            </select>
-          </td>
-          <td><input type="text" class="fam-remarks" data-rel="Other"></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="family-empty" id="familyEmpty">
+      <strong>No family members added yet.</strong>
+      Tap a button below to add as needed.
+    </div>
+
+    <div id="familyList"></div>
+
+    <div class="add-family-buttons">
+      <button type="button" class="add-family-btn" id="btnAddSpouse">＋ Spouse</button>
+      <button type="button" class="add-family-btn" id="btnAddChild">＋ Child (0/4)</button>
+      <button type="button" class="add-family-btn" id="btnAddOther">＋ Other</button>
+    </div>
   </div>
 
-  <!-- 3. Prayer -->
+  <!-- ===== 3. Prayer ===== -->
   <div class="card">
     <div class="card-title"><i>🙏</i> 3. Prayer Requests &amp; Inquiries</div>
-    <textarea class="full-textarea" id="prayerRequests" placeholder="Please write freely..."></textarea>
+    <div class="row" style="align-items:flex-start;">
+      <label for="prayerRequests" style="padding-top:14px;">Prayer / Inquiries</label>
+      <textarea id="prayerRequests" rows="5" placeholder="Please write freely..."></textarea>
+    </div>
   </div>
 
-  <!-- Consent -->
+  <!-- ===== Consent ===== -->
   <div class="card">
     <div class="card-title"><i>🔒</i> Consent to Collection and Use of Personal Information</div>
-    <ul class="consent-list">
-      <li><strong>Purpose of Collection:</strong> Church register management, pastoral care and visitation, delivery of church news and announcements</li>
-      <li><strong>Items Collected:</strong> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</li>
-      <li><strong>Retention Period:</strong> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</li>
-    </ul>
 
-    <div style="font-size:13.5px;font-weight:700;color:var(--navy);margin:6px 0 10px;">
+    <div class="consent-box">
+      <ul>
+        <li><strong>Purpose of Collection:</strong> Church register management, pastoral care and visitation, delivery of church news and announcements</li>
+        <li><strong>Items Collected:</strong> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</li>
+        <li><strong>Retention Period:</strong> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</li>
+      </ul>
+    </div>
+
+    <div class="consent-question">
       Do you consent to the collection and use of personal information as stated above?
     </div>
 
@@ -552,29 +535,29 @@
     </div>
   </div>
 
-  <!-- Signature -->
+  <!-- ===== Signature ===== -->
   <div class="card">
     <div class="card-title"><i>✍️</i> Applicant (Name &amp; Signature)</div>
 
-    <table class="word-table" style="margin-bottom:12px;">
-      <tbody>
-        <tr>
-          <td class="label" style="width:24%;">Date</td>
-          <td class="input-cell"><input type="text" id="signDate" placeholder="YYYY-MM-DD"></td>
-        </tr>
-        <tr>
-          <td class="label">Applicant Name</td>
-          <td class="input-cell"><input type="text" id="applicantName" placeholder="Enter your name"></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div style="font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;">Signature</div>
-    <div class="signature-wrapper" id="sigWrapper">
-      <canvas id="signatureCanvas"></canvas>
-      <div class="signature-placeholder">Sign here</div>
+    <div class="row">
+      <label for="applicantName">Applicant Name</label>
+      <input type="text" id="applicantName" placeholder="Enter your full name">
     </div>
-    <button type="button" class="clear-sig-btn" onclick="clearSignature()">Clear</button>
+    <div class="row">
+      <label for="signDate">Date</label>
+      <input type="date" id="signDate">
+    </div>
+
+    <div class="row" style="align-items:flex-start; grid-template-columns:1fr;">
+      <label style="padding:0 0 6px;">Signature (sign with finger)</label>
+      <div class="signature-wrapper" id="sigWrapper">
+        <canvas id="signatureCanvas"></canvas>
+        <div class="signature-placeholder">Tap & drag here to sign</div>
+      </div>
+      <div class="sig-actions">
+        <button type="button" class="clear-sig-btn" onclick="clearSignature()">Clear</button>
+      </div>
+    </div>
   </div>
 
   <div class="bottom-bar">
@@ -585,9 +568,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     인쇄 전용 (화면 숨김)
-     ============================================================ -->
+<!-- 인쇄용 -->
 <div class="form-print" id="formPrint">
   <div class="print-page">
     <img class="print-bg" src="form.png" alt="">
@@ -595,9 +576,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     제출 안내 모달
-     ============================================================ -->
+<!-- 제출 모달 -->
 <div class="modal" id="submitModal">
   <div class="modal-content">
     <div class="submit-modal-icon">📧</div>
@@ -623,9 +602,10 @@
   'use strict';
 
   var EMAIL_TO = 'hansoo2454@gmail.com';
+  var MAX_CHILD = 4;
 
   /* ============================================================
-     좌표 정의 (원본 이미지 기준 %, 0~100)
+     좌표 (원본 이미지 %) — 대략적
      ============================================================ */
   var FIELDS = {
     firstName:      { l: 22.0, t: 18.6, w: 26.5, h: 3.0 },
@@ -667,6 +647,12 @@
     famSalvation_Child3: { l: 74.0, t: 60.5, w: 13.0, h: 2.8 },
     famRemarks_Child3:   { l: 88.0, t: 60.5, w: 10.0, h: 2.8 },
 
+    famName_Child4:      { l: 23.0, t: 63.5, w: 21.0, h: 2.8 },
+    famDob_Child4:       { l: 45.0, t: 63.5, w: 14.0, h: 2.8 },
+    famLiving_Child4:    { l: 60.0, t: 63.5, w: 13.0, h: 2.8 },
+    famSalvation_Child4: { l: 74.0, t: 63.5, w: 13.0, h: 2.8 },
+    famRemarks_Child4:   { l: 88.0, t: 63.5, w: 10.0, h: 2.8 },
+
     famName_Other:       { l: 23.0, t: 63.5, w: 21.0, h: 2.8 },
     famDob_Other:        { l: 45.0, t: 63.5, w: 14.0, h: 2.8 },
     famLiving_Other:     { l: 60.0, t: 63.5, w: 13.0, h: 2.8 },
@@ -691,46 +677,56 @@
     var el = document.getElementById(id);
     return el ? (el.value || '').trim() : '';
   }
-  function getSel(sel) {
-    var el = document.querySelector(sel);
-    return el ? (el.value || '').trim() : '';
+
+  function formatDateForPrint(v) {
+    // type=date 는 "YYYY-MM-DD" 로 반환됨. 그대로 사용.
+    return v;
   }
 
   function collectData() {
     var d = {
       firstName: getVal('firstName'),
       lastName: getVal('lastName'),
-      dob: getVal('dob'),
+      dob: formatDateForPrint(getVal('dob')),
       nationality: getVal('nationality'),
       gender: getVal('gender'),
-      salvationDate: getVal('salvationDate'),
+      salvationDate: formatDateForPrint(getVal('salvationDate')),
       guidedBy: getVal('guidedBy'),
       relationship: getVal('relationship'),
-      entryDate: getVal('entryDate'),
+      entryDate: formatDateForPrint(getVal('entryDate')),
       occupation: getVal('occupation'),
-      departureDate: getVal('departureDate'),
+      departureDate: formatDateForPrint(getVal('departureDate')),
       residency: getVal('residency'),
       emailPhone: getVal('emailPhone'),
       address: getVal('address'),
       prayerRequests: getVal('prayerRequests'),
-      signDate: getVal('signDate'),
+      signDate: formatDateForPrint(getVal('signDate')),
       applicantName: getVal('applicantName')
     };
-    ['Spouse', 'Child 1', 'Child 2', 'Child 3', 'Other'].forEach(function (rel) {
-      var k = rel.replace(' ', '');
-      d['famName_' + k]      = getSel('.fam-name[data-rel="' + rel + '"]');
-      d['famDob_' + k]       = getSel('.fam-dob[data-rel="' + rel + '"]');
-      d['famLiving_' + k]    = getSel('.fam-living[data-rel="' + rel + '"]');
-      d['famSalvation_' + k] = getSel('.fam-salvation[data-rel="' + rel + '"]');
-      d['famRemarks_' + k]   = getSel('.fam-remarks[data-rel="' + rel + '"]');
-    });
     var c = document.querySelector('input[name="consent"]:checked');
     d.consent = c ? c.value : 'Agree';
+
+    var members = document.querySelectorAll('#familyList .family-member');
+    members.forEach(function (m) {
+      var type = m.dataset.type;
+      var idx = m.dataset.index;
+      var key;
+      if (type === 'Spouse') key = 'Spouse';
+      else if (type === 'Child') key = 'Child' + idx;
+      else if (type === 'Other') key = 'Other';
+      else return;
+
+      d['famName_' + key]      = (m.querySelector('.fam-name') || {}).value || '';
+      d['famDob_' + key]       = formatDateForPrint((m.querySelector('.fam-dob') || {}).value || '');
+      d['famLiving_' + key]    = (m.querySelector('.fam-living') || {}).value || '';
+      d['famSalvation_' + key] = (m.querySelector('.fam-salvation') || {}).value || '';
+      d['famRemarks_' + key]   = (m.querySelector('.fam-remarks') || {}).value || '';
+    });
     return d;
   }
 
   /* ============================================================
-     인쇄용 오버레이 렌더
+     인쇄 오버레이
      ============================================================ */
   function buildPrintOverlay() {
     var container = document.getElementById('printOverlay');
@@ -753,7 +749,6 @@
       container.appendChild(el);
     });
 
-    /* 서명 */
     if (hasSigned) {
       var sigWrap = document.createElement('div');
       sigWrap.className = 'p-ov-sig';
@@ -762,12 +757,11 @@
       sigWrap.style.width  = SIG_POS.w + '%';
       sigWrap.style.height = SIG_POS.h + '%';
       var img = document.createElement('img');
-      img.src = canvas.toDataURL('image/png');
+      img.src = signatureDataUrl;
       sigWrap.appendChild(img);
       container.appendChild(sigWrap);
     }
 
-    /* 체크박스 */
     var ckField = data.consent === 'Agree' ? FIELDS.checkAgree
                 : data.consent === 'Disagree' ? FIELDS.checkDisagree
                 : null;
@@ -787,26 +781,40 @@
   }
 
   /* ============================================================
-     서명 패드
+     서명 패드 (핵심 수정)
+     - resize 되어도 내용이 사라지지 않도록 함
+     - 저장 데이터를 별도 변수에 보관
      ============================================================ */
   var canvas = document.getElementById('signatureCanvas');
   var wrapper = document.getElementById('sigWrapper');
   var ctx = canvas.getContext('2d');
-  var isDrawing = false, hasSigned = false;
+  var isDrawing = false;
+  var hasSigned = false;
+  var signatureDataUrl = '';   // ★ 서명 이미지 저장용
 
-  function resizeCanvas() {
+  function setupCanvasSize() {
     var rect = wrapper.getBoundingClientRect();
     if (rect.width === 0) return;
     var dpr = window.devicePixelRatio || 1;
     canvas.width = rect.width * dpr;
-    canvas.height = 170 * dpr;
+    canvas.height = 200 * dpr;
     canvas.style.width = rect.width + 'px';
-    canvas.style.height = '170px';
+    canvas.style.height = '200px';
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
     ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ctx.strokeStyle = '#1b3a5c';
+
+    // ★ 저장된 서명이 있으면 복원
+    if (hasSigned && signatureDataUrl) {
+      var img = new Image();
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0, canvas.width / dpr, canvas.height / dpr);
+      };
+      img.src = signatureDataUrl;
+    }
   }
+
   function getPos(e) {
     var rect = canvas.getBoundingClientRect();
     var cx, cy;
@@ -814,23 +822,36 @@
     else { cx = e.clientX; cy = e.clientY; }
     return { x: cx - rect.left, y: cy - rect.top };
   }
+
   function startDraw(e) {
     e.preventDefault(); isDrawing = true;
-    var p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y);
-    if (!hasSigned) { hasSigned = true; wrapper.classList.add('signed'); }
+    var p = getPos(e);
+    ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    if (!hasSigned) {
+      hasSigned = true;
+      wrapper.classList.add('signed');
+    }
   }
   function draw(e) {
     if (!isDrawing) return; e.preventDefault();
     var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke();
   }
   function stopDraw(e) {
-    if (!isDrawing) return; e.preventDefault();
-    isDrawing = false; ctx.closePath();
+    if (!isDrawing) return;
+    e.preventDefault();
+    isDrawing = false;
+    ctx.closePath();
+    // ★ 손을 떼면 현재 캔버스 상태를 저장
+    signatureDataUrl = canvas.toDataURL('image/png');
   }
+
   window.clearSignature = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hasSigned = false; wrapper.classList.remove('signed');
+    hasSigned = false;
+    signatureDataUrl = '';
+    wrapper.classList.remove('signed');
   };
+
   canvas.addEventListener('mousedown', startDraw);
   canvas.addEventListener('mousemove', draw);
   canvas.addEventListener('mouseup', stopDraw);
@@ -838,9 +859,123 @@
   canvas.addEventListener('touchstart', startDraw, { passive: false });
   canvas.addEventListener('touchmove', draw, { passive: false });
   canvas.addEventListener('touchend', stopDraw, { passive: false });
+  canvas.addEventListener('touchcancel', stopDraw, { passive: false });
 
   /* ============================================================
-     인앱 브라우저 감지
+     가족 추가/삭제
+     ============================================================ */
+  var childCounter = 0;
+  var otherCounter = 0;
+  var spouseAdded = false;
+
+  function updateAddButtons() {
+    document.getElementById('btnAddSpouse').disabled = spouseAdded;
+    document.getElementById('btnAddChild').disabled = (childCounter >= MAX_CHILD);
+    document.getElementById('btnAddChild').textContent =
+      '＋ Child (' + childCounter + '/' + MAX_CHILD + ')';
+  }
+
+  function updateFamilyEmpty() {
+    var list = document.getElementById('familyList');
+    var empty = document.getElementById('familyEmpty');
+    empty.style.display = list.children.length === 0 ? 'block' : 'none';
+  }
+
+  function createFamilyMember(type) {
+    var idx = 0;
+    var label = '';
+    var badge = '';
+    if (type === 'Spouse') {
+      label = 'Spouse'; badge = 'Spouse'; spouseAdded = true;
+    } else if (type === 'Child') {
+      childCounter++; idx = childCounter;
+      label = 'Child ' + idx; badge = 'Child ' + idx;
+    } else if (type === 'Other') {
+      otherCounter++; idx = otherCounter;
+      label = 'Other ' + idx; badge = 'Other';
+    }
+
+    var div = document.createElement('div');
+    div.className = 'family-member';
+    div.dataset.type = type;
+    div.dataset.index = idx;
+
+    div.innerHTML =
+      '<div class="family-member-header">' +
+        '<span class="badge">' + badge + '</span>' +
+        '<span>' + label + '</span>' +
+      '</div>' +
+      '<button type="button" class="remove-btn" title="Remove">✕</button>' +
+      '<div class="row">' +
+        '<label>Name</label>' +
+        '<input type="text" class="fam-name" placeholder="Full name">' +
+      '</div>' +
+      '<div class="row">' +
+        '<label>Date of Birth</label>' +
+        '<input type="date" class="fam-dob">' +
+      '</div>' +
+      '<div class="row">' +
+        '<label>Living Together</label>' +
+        '<select class="fam-living">' +
+          '<option value="">Select</option>' +
+          '<option value="Yes">Yes</option>' +
+          '<option value="No">No</option>' +
+        '</select>' +
+      '</div>' +
+      '<div class="row">' +
+        '<label>Salvation</label>' +
+        '<select class="fam-salvation">' +
+          '<option value="">Select</option>' +
+          '<option value="Yes">Yes</option>' +
+          '<option value="No">No</option>' +
+          '<option value="Unknown">Unknown</option>' +
+        '</select>' +
+      '</div>' +
+      '<div class="row">' +
+        '<label>Remarks</label>' +
+        '<input type="text" class="fam-remarks" placeholder="Remarks">' +
+      '</div>';
+
+    div.querySelector('.remove-btn').addEventListener('click', function () {
+      if (!confirm('Remove this family member?')) return;
+      var t = div.dataset.type;
+      if (t === 'Spouse') spouseAdded = false;
+      else if (t === 'Child') childCounter = Math.max(0, childCounter - 1);
+      else if (t === 'Other') otherCounter = Math.max(0, otherCounter - 1);
+      div.remove();
+      updateAddButtons();
+      updateFamilyEmpty();
+    });
+
+    return div;
+  }
+
+  document.getElementById('btnAddSpouse').addEventListener('click', function () {
+    if (spouseAdded) return;
+    var m = createFamilyMember('Spouse');
+    document.getElementById('familyList').appendChild(m);
+    updateAddButtons();
+    updateFamilyEmpty();
+    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  document.getElementById('btnAddChild').addEventListener('click', function () {
+    if (childCounter >= MAX_CHILD) return;
+    var m = createFamilyMember('Child');
+    document.getElementById('familyList').appendChild(m);
+    updateAddButtons();
+    updateFamilyEmpty();
+    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  document.getElementById('btnAddOther').addEventListener('click', function () {
+    var m = createFamilyMember('Other');
+    document.getElementById('familyList').appendChild(m);
+    updateAddButtons();
+    updateFamilyEmpty();
+    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  /* ============================================================
+     인앱 감지
      ============================================================ */
   function detectInApp() {
     var ua = (navigator.userAgent || '') + ' ' + (navigator.vendor || '');
@@ -876,7 +1011,7 @@
   }
 
   /* ============================================================
-     제출 안내 모달
+     제출 모달
      ============================================================ */
   var submitModal = document.getElementById('submitModal');
   var btnEmail = document.getElementById('btnEmail');
@@ -933,7 +1068,7 @@
   }
 
   /* ============================================================
-     완료 버튼 → 검증 → 바로 PDF 저장 → 모달
+     Complete 버튼
      ============================================================ */
   var pendingModal = false;
 
@@ -964,12 +1099,17 @@
       document.getElementById('inappBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
+    // 최신 서명 저장
+    if (hasSigned) signatureDataUrl = canvas.toDataURL('image/png');
     buildPrintOverlay();
     pendingModal = true;
     setTimeout(function () { window.print(); }, 100);
   });
 
-  window.addEventListener('beforeprint', buildPrintOverlay);
+  window.addEventListener('beforeprint', function () {
+    if (hasSigned) signatureDataUrl = canvas.toDataURL('image/png');
+    buildPrintOverlay();
+  });
   window.addEventListener('afterprint', function () {
     if (!pendingModal) return;
     pendingModal = false;
@@ -985,22 +1125,28 @@
      초기화
      ============================================================ */
   window.addEventListener('load', function () {
-    resizeCanvas();
+    setupCanvasSize();
     var t = new Date();
     var iso = t.getFullYear() + '-' +
       String(t.getMonth() + 1).padStart(2, '0') + '-' +
       String(t.getDate()).padStart(2, '0');
     document.getElementById('signDate').value = iso;
+    updateAddButtons();
+    updateFamilyEmpty();
   });
+
+  /* 화면 회전 시에만 캔버스 재조정, 서명 유지 */
+  var resizeTimer = null;
   window.addEventListener('resize', function () {
-    var dataUrl = hasSigned ? canvas.toDataURL() : null;
-    resizeCanvas();
-    if (dataUrl) {
-      var img = new Image();
-      img.onload = function () { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };
-      img.src = dataUrl;
-    }
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      setupCanvasSize();
+    }, 200);
   });
+  window.addEventListener('orientationchange', function () {
+    setTimeout(setupCanvasSize, 300);
+  });
+
 })();
 </script>
 </body>
