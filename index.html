@@ -60,63 +60,6 @@
   .notice-box ul { margin:6px 0 0; padding-left:20px; }
   .notice-box li { margin-bottom:3px; }
 
-  /* 미리보기 */
-  .preview-section {
-    background:#fff; margin:10px; border-radius:12px;
-    box-shadow:var(--shadow); overflow:hidden;
-  }
-  .preview-header {
-    background:#f0f4f8; padding:10px 14px;
-    font-size:12.5px; font-weight:800; color:var(--navy);
-    letter-spacing:.03em; text-transform:uppercase;
-    border-bottom:1px solid var(--line);
-    display:flex; justify-content:space-between; align-items:center;
-  }
-  .preview-header span.tip {
-    font-size:10.5px; font-weight:600; color:var(--muted);
-    text-transform:none; letter-spacing:0;
-  }
-  .preview-toggle {
-    background:none; border:none; color:var(--navy2);
-    font-size:12px; font-weight:700; cursor:pointer;
-    padding:2px 6px; font-family:inherit;
-  }
-  .preview-inner-wrap {
-    position:relative; width:100%;
-    padding-bottom:129.41%;   /* Letter 비율 */
-    background:#fff;
-  }
-  .preview-inner-wrap.hidden { display:none; }
-  .preview-img {
-    position:absolute; top:0; left:0;
-    width:100%; height:100%; display:block;
-  }
-  .overlay {
-    position:absolute; inset:0;
-    pointer-events:none;
-  }
-  .ov {
-    position:absolute;
-    color:#000;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:2.15%;
-    line-height:1;
-    white-space:pre-wrap;
-    word-break:break-word;
-    overflow:hidden;
-    padding:0.05em 0.35em;
-    display:flex;
-    align-items:center;
-  }
-  .ov-sig {
-    position:absolute;
-    padding:0;
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-  }
-  .ov-sig img { max-width:100%; max-height:100%; object-fit:contain; }
-
   /* 카드 */
   .card {
     background:var(--card-bg); margin:10px; border-radius:var(--radius);
@@ -262,28 +205,109 @@
   }
   body.inapp .btn-row .primary { background:#94a3b3; border-color:#94a3b3; }
 
-  .submit-modal {
+  /* ============================================================
+     공용 모달
+     ============================================================ */
+  .modal {
     display:none; position:fixed; inset:0; z-index:1000;
-    background:rgba(10,20,35,0.65);
+    background:rgba(10,20,35,0.7);
     backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
     align-items:center; justify-content:center;
-    padding:20px; padding-bottom:calc(20px + env(safe-area-inset-bottom));
+    padding:14px; padding-bottom:calc(14px + env(safe-area-inset-bottom));
   }
-  .submit-modal.show { display:flex; }
-  .submit-modal-content {
-    background:#fff; border-radius:18px; max-width:440px; width:100%;
-    max-height:calc(100vh - 40px); overflow-y:auto;
-    padding:22px 18px 18px;
+  .modal.show { display:flex; }
+  .modal-content {
+    background:#fff; border-radius:16px;
+    max-width:560px; width:100%;
+    max-height:calc(100vh - 28px); overflow-y:auto;
     box-shadow:0 20px 60px rgba(0,0,0,.3);
+    display:flex; flex-direction:column;
   }
-  .submit-modal-icon { font-size:38px; text-align:center; margin-bottom:6px; }
+
+  /* 미리보기 모달 전용 */
+  .preview-modal-title {
+    padding:14px 18px 12px;
+    font-size:15px; font-weight:800; color:var(--navy);
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    gap:8px; flex-shrink:0;
+  }
+  .preview-modal-title .sub {
+    font-size:11.5px; font-weight:600; color:var(--muted);
+    margin-top:2px;
+  }
+  .preview-close {
+    background:none; border:none; color:var(--muted);
+    font-size:22px; line-height:1; cursor:pointer;
+    padding:2px 8px; font-family:inherit;
+  }
+  .preview-body {
+    padding:12px; overflow-y:auto; flex:1;
+  }
+  .preview-canvas-wrap {
+    position:relative; width:100%;
+    padding-bottom:129.41%;  /* Letter 비율 */
+    background:#f4f7fb; border-radius:10px;
+    overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.06);
+  }
+  .preview-canvas-wrap img.preview-img {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%; display:block;
+  }
+  .preview-overlay {
+    position:absolute; inset:0; pointer-events:none;
+  }
+  .pv-ov {
+    position:absolute;
+    color:#000;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:2.15%;
+    line-height:1;
+    white-space:pre-wrap;
+    word-break:break-word;
+    overflow:hidden;
+    padding:0.05em 0.35em;
+    display:flex;
+    align-items:center;
+  }
+  .pv-ov-sig {
+    position:absolute; padding:0; overflow:hidden;
+    display:flex; align-items:center;
+  }
+  .pv-ov-sig img { max-width:100%; max-height:100%; object-fit:contain; }
+
+  .preview-note {
+    margin-top:10px; padding:10px 12px;
+    background:#f4f7fb; border-radius:8px;
+    font-size:12.5px; color:var(--muted); line-height:1.5;
+  }
+
+  .modal-actions {
+    display:flex; flex-direction:column; gap:8px;
+    padding:12px 16px calc(14px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line); flex-shrink:0;
+  }
+  .modal-btn {
+    display:flex; align-items:center; justify-content:center;
+    gap:8px; padding:14px 12px; border-radius:12px;
+    font-size:15px; font-weight:700; font-family:inherit;
+    border:1px solid transparent; cursor:pointer;
+    text-decoration:none; text-align:center;
+  }
+  .modal-btn:active { transform:scale(.98); }
+  .modal-btn.primary { background:var(--navy); color:#fff; border-color:var(--navy); }
+  .modal-btn.secondary { background:#fff; color:var(--navy); border-color:var(--line); }
+  .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:10px; font-size:14px; }
+
+  /* 제출 안내 모달 */
+  .submit-modal-icon { font-size:38px; text-align:center; margin:20px 0 6px; }
   .submit-modal-title {
     font-size:17px; font-weight:800; color:var(--navy);
-    text-align:center; margin:0 0 14px;
+    text-align:center; margin:0 0 14px; padding:0 18px;
   }
   .submit-modal-msg {
     background:#f4f7fb; border-radius:12px; padding:14px 16px;
-    margin-bottom:12px; font-size:14px; line-height:1.6;
+    margin:0 18px 12px; font-size:14px; line-height:1.6;
   }
   .submit-modal-msg .ko { font-weight:700; color:var(--navy); margin-bottom:8px; }
   .submit-modal-msg .en {
@@ -293,26 +317,12 @@
   .submit-modal-email {
     text-align:center; font-size:15px; font-weight:700;
     color:var(--navy2); background:#eaf2fb; border-radius:10px;
-    padding:10px; margin-bottom:16px; word-break:break-all;
+    padding:10px; margin:0 18px 16px; word-break:break-all;
     user-select:all; -webkit-user-select:all;
-  }
-  .submit-modal-actions { display:flex; flex-direction:column; gap:8px; }
-  .submit-btn {
-    display:block; text-align:center; padding:13px 12px;
-    border-radius:12px; font-size:14.5px; font-weight:700;
-    font-family:inherit; text-decoration:none;
-    border:1px solid transparent; cursor:pointer;
-  }
-  .submit-btn:active { transform:scale(.98); }
-  .submit-btn.email { background:var(--navy); color:#fff; border-color:var(--navy); }
-  .submit-btn.copy { background:#f6f9fc; color:var(--navy); border-color:var(--line); }
-  .submit-btn.close {
-    background:transparent; color:var(--muted);
-    border-color:transparent; padding:10px; font-size:14px;
   }
 
   /* ============================================================
-     인쇄용 : 원본 이미지 + 오버레이 (Letter 1페이지)
+     인쇄용 : Letter 1페이지, 원본 이미지 + 오버레이
      ============================================================ */
   .form-print { display:none; }
 
@@ -322,7 +332,7 @@
       background:#fff !important; margin:0 !important;
       padding:0 !important; width:100%;
     }
-    .form-screen, .inapp-banner, .submit-modal { display:none !important; }
+    .form-screen, .inapp-banner, .modal { display:none !important; }
     .form-print { display:block !important; width:100%; }
     * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
 
@@ -338,8 +348,7 @@
       width:100%; height:100%; display:block;
     }
     .print-overlay {
-      position:absolute; inset:0;
-      pointer-events:none;
+      position:absolute; inset:0; pointer-events:none;
     }
     .p-ov {
       position:absolute;
@@ -355,10 +364,8 @@
       align-items:center;
     }
     .p-ov-sig {
-      position:absolute;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
+      position:absolute; overflow:hidden;
+      display:flex; align-items:center;
     }
     .p-ov-sig img { max-width:100%; max-height:100%; object-fit:contain; }
   }
@@ -367,7 +374,6 @@
     .bottom-bar { max-width:720px; margin:0 auto; }
     .card { max-width:720px; margin-left:auto; margin-right:auto; }
     .notice-box { max-width:720px; margin-left:auto; margin-right:auto; }
-    .preview-section { max-width:720px; margin-left:auto; margin-right:auto; }
   }
   @media (max-width:400px){
     body { font-size:14px; }
@@ -405,21 +411,8 @@
       <li><b>Section 2. Family Information</b> is optional — fill only those who apply.</li>
       <li>Use <b>Section 3</b> freely for prayer requests or inquiries.</li>
       <li>Please sign at the bottom using your finger or mouse.</li>
-      <li>Tap <b>Complete (Save PDF)</b>, then submit the saved PDF by email.</li>
+      <li>Tap <b>Complete (Save PDF)</b> — you'll see a preview before saving.</li>
     </ul>
-  </div>
-
-  <!-- 미리보기 (원본 이미지 + 오버레이) -->
-  <div class="preview-section">
-    <div class="preview-header">
-      <span>👁️ Live Preview</span>
-      <button type="button" class="preview-toggle" id="previewToggle">Hide</button>
-    </div>
-    <div class="preview-inner-wrap" id="previewWrap">
-      <img class="preview-img" src="form.png" alt="Form"
-           onerror="this.parentNode.style.background='#f4f7fb';this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','<div style=&quot;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#c0392b;font-weight:700;text-align:center;padding:20px;font-size:13px;&quot;>⚠️ form.png not found.<br>Please upload the image to the same folder.</div>');">
-      <div class="overlay" id="previewOverlay"></div>
-    </div>
   </div>
 
   <!-- 1. Personal Information -->
@@ -655,7 +648,7 @@
 </div>
 
 <!-- ============================================================
-     인쇄 전용 : 원본 이미지 + 입력값 오버레이
+     인쇄용 (화면에는 숨김, PDF 출력 시에만 사용)
      ============================================================ -->
 <div class="form-print" id="formPrint">
   <div class="print-page">
@@ -664,9 +657,42 @@
   </div>
 </div>
 
-<!-- 제출 안내 모달 -->
-<div class="submit-modal" id="submitModal">
-  <div class="submit-modal-content">
+<!-- ============================================================
+     미리보기 모달
+     ============================================================ -->
+<div class="modal" id="previewModal">
+  <div class="modal-content">
+    <div class="preview-modal-title">
+      <div>
+        👁️ Preview
+        <div class="sub">Check before saving as PDF</div>
+      </div>
+      <button type="button" class="preview-close" id="previewCloseBtn">✕</button>
+    </div>
+
+    <div class="preview-body">
+      <div class="preview-canvas-wrap">
+        <img class="preview-img" src="form.png" alt="Form Preview">
+        <div class="preview-overlay" id="previewOverlay"></div>
+      </div>
+      <div class="preview-note">
+        💡 Please review your information. If everything looks correct, tap <b>Save as PDF</b> below.
+        If not, close this preview and edit your entries.
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="modal-btn primary" id="previewSaveBtn">🖨️ Save as PDF</button>
+      <button type="button" class="modal-btn ghost" id="previewCancelBtn">← Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     제출 안내 모달
+     ============================================================ -->
+<div class="modal" id="submitModal">
+  <div class="modal-content">
     <div class="submit-modal-icon">📧</div>
     <h2 class="submit-modal-title">Submission Notice</h2>
 
@@ -677,10 +703,10 @@
 
     <div class="submit-modal-email">hansoo2454@gmail.com</div>
 
-    <div class="submit-modal-actions">
-      <a class="submit-btn email" id="btnEmail" href="#">📨 Open Email App</a>
-      <button type="button" class="submit-btn copy" id="btnCopyEmail">📋 Copy Email Address</button>
-      <button type="button" class="submit-btn close" id="btnCloseModal">Close</button>
+    <div class="modal-actions">
+      <a class="modal-btn primary" id="btnEmail" href="#">📨 Open Email App</a>
+      <button type="button" class="modal-btn secondary" id="btnCopyEmail">📋 Copy Email Address</button>
+      <button type="button" class="modal-btn ghost" id="btnCloseModal">Close</button>
     </div>
   </div>
 </div>
@@ -692,7 +718,7 @@
   var EMAIL_TO = 'hansoo2454@gmail.com';
 
   /* ============================================================
-     좌표 정의 (원본 이미지 기준 %, 0~100) — 대략적, 나중에 조정 가능
+     좌표 정의 (원본 이미지 기준 %, 0~100) — 대략적
      ============================================================ */
   var FIELDS = {
     /* 1. Personal Information */
@@ -742,7 +768,7 @@
     famSalvation_Other:  { l: 74.0, t: 63.5, w: 13.0, h: 2.8 },
     famRemarks_Other:    { l: 88.0, t: 63.5, w: 10.0, h: 2.8 },
 
-    /* 3. Prayer (자유 영역) */
+    /* 3. Prayer */
     prayerRequests: { l: 13.0, t: 67.5, w: 79.0, h: 6.5 },
 
     /* Consent 체크박스 */
@@ -802,20 +828,20 @@
   }
 
   /* ============================================================
-     오버레이 렌더 (미리보기 & 인쇄 공용)
+     오버레이 렌더
      ============================================================ */
-  function buildOverlay(container, data, isPrint) {
+  function buildOverlay(container, data, mode) {
+    // mode: 'preview' | 'print'
     container.innerHTML = '';
 
     Object.keys(FIELDS).forEach(function (k) {
+      if (k === 'checkAgree' || k === 'checkDisagree') return;
       var f = FIELDS[k];
       var val = data[k] || '';
       if (!val) return;
-      // 체크박스는 별도 처리
-      if (k === 'checkAgree' || k === 'checkDisagree') return;
 
       var el = document.createElement('div');
-      el.className = isPrint ? 'p-ov' : 'ov';
+      el.className = (mode === 'print') ? 'p-ov' : 'pv-ov';
       el.style.left   = f.l + '%';
       el.style.top    = f.t + '%';
       el.style.width  = f.w + '%';
@@ -827,7 +853,7 @@
     /* 서명 */
     if (hasSigned) {
       var sigWrap = document.createElement('div');
-      sigWrap.className = isPrint ? 'p-ov-sig' : 'ov-sig';
+      sigWrap.className = (mode === 'print') ? 'p-ov-sig' : 'pv-ov-sig';
       sigWrap.style.left   = SIG_POS.l + '%';
       sigWrap.style.top    = SIG_POS.t + '%';
       sigWrap.style.width  = SIG_POS.w + '%';
@@ -844,24 +870,24 @@
                 : null;
     if (ckField) {
       var ck = document.createElement('div');
-      ck.className = isPrint ? 'p-ov' : 'ov';
+      ck.className = (mode === 'print') ? 'p-ov' : 'pv-ov';
       ck.style.left = ckField.l + '%';
       ck.style.top  = ckField.t + '%';
       ck.style.width = ckField.w + '%';
       ck.style.height = ckField.h + '%';
       ck.style.fontWeight = 'bold';
-      ck.style.fontSize = isPrint ? '12pt' : '2.6%';
+      ck.style.fontSize = (mode === 'print') ? '12pt' : '2.6%';
       ck.style.justifyContent = 'center';
       ck.textContent = '✔';
       container.appendChild(ck);
     }
   }
 
-  function renderPreview() {
-    buildOverlay(document.getElementById('previewOverlay'), collectData(), false);
+  function renderPreviewModal() {
+    buildOverlay(document.getElementById('previewOverlay'), collectData(), 'preview');
   }
   function renderPrint() {
-    buildOverlay(document.getElementById('printOverlay'), collectData(), true);
+    buildOverlay(document.getElementById('printOverlay'), collectData(), 'print');
   }
 
   /* ============================================================
@@ -904,12 +930,10 @@
   function stopDraw(e) {
     if (!isDrawing) return; e.preventDefault();
     isDrawing = false; ctx.closePath();
-    renderPreview();
   }
   window.clearSignature = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     hasSigned = false; wrapper.classList.remove('signed');
-    renderPreview();
   };
   canvas.addEventListener('mousedown', startDraw);
   canvas.addEventListener('mousemove', draw);
@@ -918,21 +942,6 @@
   canvas.addEventListener('touchstart', startDraw, { passive: false });
   canvas.addEventListener('touchmove', draw, { passive: false });
   canvas.addEventListener('touchend', stopDraw, { passive: false });
-
-  /* ============================================================
-     실시간 미리보기
-     ============================================================ */
-  var formScreen = document.querySelector('.form-screen');
-  formScreen.addEventListener('input', renderPreview);
-  formScreen.addEventListener('change', renderPreview);
-
-  /* 미리보기 접기/펴기 */
-  var previewWrap = document.getElementById('previewWrap');
-  var previewToggle = document.getElementById('previewToggle');
-  previewToggle.addEventListener('click', function () {
-    previewWrap.classList.toggle('hidden');
-    previewToggle.textContent = previewWrap.classList.contains('hidden') ? 'Show' : 'Hide';
-  });
 
   /* ============================================================
      인앱 브라우저 감지
@@ -971,14 +980,45 @@
   }
 
   /* ============================================================
-     모달 / 이메일
+     미리보기 모달
      ============================================================ */
-  var modal = document.getElementById('submitModal');
+  var previewModal = document.getElementById('previewModal');
+  var previewCloseBtn = document.getElementById('previewCloseBtn');
+  var previewSaveBtn = document.getElementById('previewSaveBtn');
+  var previewCancelBtn = document.getElementById('previewCancelBtn');
+
+  function openPreviewModal() {
+    renderPreviewModal();
+    previewModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePreviewModal() {
+    previewModal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  previewCloseBtn.addEventListener('click', closePreviewModal);
+  previewCancelBtn.addEventListener('click', closePreviewModal);
+  previewModal.addEventListener('click', function (e) {
+    if (e.target === previewModal) closePreviewModal();
+  });
+
+  previewSaveBtn.addEventListener('click', function () {
+    closePreviewModal();
+    pendingModal = true;
+    renderPrint();
+    setTimeout(function () { window.print(); }, 150);
+  });
+
+  /* ============================================================
+     제출 안내 모달
+     ============================================================ */
+  var submitModal = document.getElementById('submitModal');
   var btnEmail = document.getElementById('btnEmail');
   var btnCopy = document.getElementById('btnCopyEmail');
   var btnClose = document.getElementById('btnCloseModal');
 
-  function openModal() {
+  function openSubmitModal() {
     var name = getVal('applicantName') || (getVal('firstName') + ' ' + getVal('lastName')).trim() || 'Applicant';
     var dateSub = getVal('signDate') || new Date().toISOString().slice(0, 10);
     var subject = 'Calgary Church Member Registration Card - ' + name + ' - ' + dateSub;
@@ -993,17 +1033,21 @@
       '?subject=' + encodeURIComponent(subject) +
       '&body=' + encodeURIComponent(bodyLines.join('\r\n'));
     btnEmail.setAttribute('href', url);
-    modal.classList.add('show');
+    submitModal.classList.add('show');
     document.body.style.overflow = 'hidden';
   }
-  function closeModal() {
-    modal.classList.remove('show');
+  function closeSubmitModal() {
+    submitModal.classList.remove('show');
     document.body.style.overflow = '';
   }
-  btnClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  btnClose.addEventListener('click', closeSubmitModal);
+  submitModal.addEventListener('click', function (e) {
+    if (e.target === submitModal) closeSubmitModal();
+  });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+    if (e.key !== 'Escape') return;
+    if (previewModal.classList.contains('show')) closePreviewModal();
+    else if (submitModal.classList.contains('show')) closeSubmitModal();
   });
 
   btnCopy.addEventListener('click', function () {
@@ -1026,9 +1070,10 @@
   }
 
   /* ============================================================
-     완료 버튼
+     완료 버튼 → 검증 → 미리보기 모달
      ============================================================ */
   var pendingModal = false;
+
   document.getElementById('btnPrint').addEventListener('click', function () {
     var fn = getVal('firstName');
     var ln = getVal('lastName');
@@ -1056,15 +1101,14 @@
       document.getElementById('inappBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
-    renderPrint();
-    pendingModal = true;
-    setTimeout(function () { window.print(); }, 100);
+    openPreviewModal();
   });
+
   window.addEventListener('beforeprint', renderPrint);
   window.addEventListener('afterprint', function () {
     if (!pendingModal) return;
     pendingModal = false;
-    setTimeout(openModal, 300);
+    setTimeout(openSubmitModal, 300);
   });
 
   document.getElementById('btnReset').addEventListener('click', function () {
@@ -1082,7 +1126,6 @@
       String(t.getMonth() + 1).padStart(2, '0') + '-' +
       String(t.getDate()).padStart(2, '0');
     document.getElementById('signDate').value = iso;
-    renderPreview();
   });
   window.addEventListener('resize', function () {
     var dataUrl = hasSigned ? canvas.toDataURL() : null;
