@@ -22,7 +22,6 @@
     font-size:15px; line-height:1.45;
   }
 
-  /* 인앱 경고 */
   .inapp-banner {
     display:none; background:var(--warn-bg);
     border-bottom:2px solid var(--warn-border);
@@ -37,7 +36,6 @@
   .inapp-banner ol { margin:6px 0 0; padding-left:20px; }
   .inapp-banner b { color:#b8860b; }
 
-  /* 헤더 */
   .form-screen { padding-bottom:calc(110px + env(safe-area-inset-bottom)); }
 
   .app-header {
@@ -61,7 +59,46 @@
   .notice-box ul { margin:6px 0 0; padding-left:20px; }
   .notice-box li { margin-bottom:3px; }
 
-  /* 공통 카드 */
+  /* 미리보기 (원본 이미지 + 입력값 오버레이) */
+  .preview-wrap {
+    position:relative; margin:10px; background:#fff;
+    border-radius:10px; box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .preview-inner {
+    position:relative; width:100%;
+    /* Letter 비율 : 8.5 : 11 = 1 : 1.2941 */
+    padding-bottom:129.41%;
+  }
+  .preview-img {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%; object-fit:fill;
+    display:block;
+  }
+  .overlay {
+    position:absolute; inset:0;
+    font-family:Arial, Helvetica, sans-serif;
+    pointer-events:none;
+  }
+  .ov {
+    position:absolute;
+    color:#000;
+    font-size:2.3%;
+    line-height:1;
+    white-space:pre-wrap;
+    word-break:break-word;
+    overflow:hidden;
+    padding:0.15em 0.4em;
+    box-sizing:border-box;
+  }
+  .ov-sig {
+    position:absolute;
+    padding:0;
+    overflow:hidden;
+  }
+  .ov-sig img { width:100%; height:100%; object-fit:contain; }
+
+  /* 입력용 카드 (스크롤 아래) */
   .card {
     background:var(--card-bg); margin:10px; border-radius:var(--radius);
     box-shadow:var(--shadow); padding:14px 12px;
@@ -74,14 +111,12 @@
   }
   .card-title i { font-style:normal; font-size:1.1rem; }
 
-  /* ===== 화면용 표 (Word 폼 그대로) ===== */
   .word-table {
     width:100%; border-collapse:collapse; table-layout:fixed;
     font-size:14px;
   }
   .word-table th, .word-table td {
-    border:1px solid #b8c4d2;
-    padding:0; vertical-align:middle;
+    border:1px solid #b8c4d2; padding:0; vertical-align:middle;
   }
   .word-table td.label {
     background:#f0f4f8; font-weight:700; color:var(--navy);
@@ -114,18 +149,15 @@
     box-shadow:inset 0 0 0 2px var(--navy2);
   }
 
-  /* 가족 표 */
   .family-table th {
     background:#1b3a5c; color:#fff; font-weight:700;
-    font-size:11px; letter-spacing:.02em;
-    text-align:center; padding:7px 3px;
+    font-size:11px; text-align:center; padding:7px 3px;
     text-transform:uppercase;
   }
   .family-table td { padding:0; }
   .family-table td.row-head {
     background:#f0f4f8; font-weight:700; color:var(--navy);
-    text-align:center; padding:10px 4px;
-    font-size:12px;
+    text-align:center; padding:10px 4px; font-size:12px;
   }
   .family-table input[type="text"],
   .family-table input[type="date"],
@@ -134,7 +166,6 @@
   }
   .family-table select { padding-right:20px; text-align-last:center; }
 
-  /* 자유 입력 */
   .full-textarea {
     width:100%; min-height:100px; padding:12px;
     font-size:15px; font-family:inherit; color:var(--text);
@@ -146,12 +177,11 @@
     box-shadow:0 0 0 3px rgba(47,111,176,.15);
   }
 
-  /* 동의 */
   .consent-list {
-    margin:0 0 12px; padding-left:30px;
+    margin:0 0 12px; padding:12px 14px 12px 30px;
     font-size:12.5px; line-height:1.6; color:var(--warn-text);
     background:var(--warn-bg); border-left:5px solid var(--warn-border);
-    padding:12px 14px 12px 30px; border-radius:10px; list-style:disc;
+    border-radius:10px; list-style:disc;
   }
   .consent-list li { margin-bottom:4px; }
   .consent-list strong { color:#b8860b; }
@@ -161,8 +191,8 @@
     display:flex; align-items:center; gap:8px;
     font-size:15px; font-weight:600; cursor:pointer;
     padding:12px 16px; border:2px solid var(--line);
-    border-radius:10px; transition:all .2s;
-    flex:1 1 100px; justify-content:center; background:#fff;
+    border-radius:10px; flex:1 1 100px; justify-content:center;
+    background:#fff;
   }
   .radio-label input[type="radio"] {
     width:20px; height:20px; accent-color:var(--navy);
@@ -172,7 +202,6 @@
     border-color:var(--navy); background:#e8f0fa;
   }
 
-  /* 서명 */
   .signature-wrapper {
     position:relative; border:2px dashed var(--line);
     border-radius:12px; background:#fff;
@@ -195,7 +224,6 @@
     border-radius:8px; background:#fff; color:var(--muted); cursor:pointer;
   }
 
-  /* 하단 */
   .bottom-bar {
     position:fixed; left:0; right:0; bottom:0; z-index:50;
     background:#fff; border-top:1px solid var(--line);
@@ -215,7 +243,6 @@
   }
   body.inapp .btn-row .primary { background:#94a3b3; border-color:#94a3b3; }
 
-  /* 모달 */
   .submit-modal {
     display:none; position:fixed; inset:0; z-index:1000;
     background:rgba(10,20,35,0.65);
@@ -266,12 +293,12 @@
   }
 
   /* ============================================================
-     인쇄용 : Letter 용지 1페이지, Word 폼 그대로
+     인쇄용 : 원본 이미지 + 오버레이 (Letter 1페이지)
      ============================================================ */
   .form-print { display:none; }
 
   @media print {
-    @page { size: Letter; margin: 12.7mm 12.7mm; }
+    @page { size: Letter; margin: 0; }
     html, body {
       background:#fff !important; margin:0 !important;
       padding:0 !important; width:100%;
@@ -280,101 +307,52 @@
     .form-print { display:block !important; width:100%; }
     * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
 
-    .form-print {
-      font-family:"Times New Roman", Times, serif;
-      color:#000; font-size:10.5pt; line-height:1.3;
+    .print-page {
+      position:relative;
+      width: 8.5in;
+      height: 11in;
+      overflow:hidden;
+      page-break-after: avoid;
     }
-    .p-title {
-      text-align:center; font-size:14pt; font-weight:bold;
-      text-decoration:underline; margin:0 0 10pt;
+    .print-bg {
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      display:block;
     }
-    .p-section-title {
-      font-size:12pt; font-weight:bold; margin:12pt 0 5pt;
+    .print-overlay {
+      position:absolute; inset:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:#000;
+      pointer-events:none;
     }
-    .p-table {
-      width:100%; border-collapse:collapse; font-size:10.5pt;
-      table-layout:fixed;
-    }
-    .p-table th, .p-table td {
-      border:1px solid #000; padding:4pt 6pt; vertical-align:middle;
-    }
-    .p-table th {
-      background:#1b3a5c !important; color:#fff !important;
-      font-weight:bold; text-align:center; font-size:10pt;
-      padding:5pt 3pt;
-    }
-    .p-table td.label-cell {
-      background:#eef3f8 !important; font-weight:bold;
-      font-size:10pt; white-space:nowrap;
-    }
-    .p-table td.value-cell {
-      font-size:10.5pt; word-break:break-word;
-      min-height:20pt; height:20pt;
-    }
-    .p-table td.full-cell { min-height:28pt; height:28pt; }
-
-    .p-family-table th {
-      font-size:9.5pt; padding:5pt 2pt;
-    }
-    .p-family-table td {
-      text-align:center; padding:5pt 3pt; height:20pt;
+    .p-ov {
+      position:absolute;
       font-size:10pt;
+      line-height:1.15;
+      white-space:pre-wrap;
+      word-break:break-word;
+      overflow:hidden;
+      box-sizing:border-box;
+      padding:0 3pt;
+      vertical-align:middle;
+      display:flex;
+      align-items:center;
     }
-    .p-family-table td.row-label {
-      background:#eef3f8 !important; font-weight:bold;
-      color:#1b3a5c; font-size:10pt;
+    .p-ov-sig {
+      position:absolute;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
     }
-    .p-family-table td.text-left { text-align:left; }
-
-    .p-prayer-box {
-      border:1px solid #000; padding:8pt; min-height:60pt;
-      font-size:10.5pt; white-space:pre-wrap; word-break:break-word;
-      line-height:1.4;
-    }
-
-    .p-consent-item {
-      font-size:10.5pt; line-height:1.5; margin:0 0 4pt;
-      padding-left:14pt; text-indent:-14pt;
-    }
-    .p-consent-item b { font-weight:bold; }
-
-    .p-consent-row {
-      margin-top:10pt; font-size:11pt; font-weight:bold;
-    }
-    .p-consent-row .p-check {
-      display:inline-block; width:11pt; height:11pt;
-      border:1pt solid #000; vertical-align:-1pt;
-      margin-right:4pt; text-align:center; line-height:11pt;
-      font-size:10pt;
-    }
-    .p-consent-row span.gap { display:inline-block; width:30pt; }
-
-    .p-bottom {
-      margin-top:14pt; font-size:11pt; font-weight:bold;
-    }
-    .p-bottom .line {
-      display:inline-block; border-bottom:1pt solid #000;
-      min-width:140pt; padding:0 6pt;
-    }
-
-    .p-sig-area {
-      margin-top:16pt; page-break-inside:avoid;
-      display:flex; justify-content:space-between; gap:40pt;
-    }
-    .p-sig-block { flex:1; }
-    .p-sig-label { font-size:11pt; font-weight:bold; margin-bottom:6pt; }
-    .p-sig-img {
-      border-bottom:1pt solid #000; min-height:50pt;
-      padding:4pt 0;
-    }
-    .p-sig-img img { max-height:46pt; max-width:100%; object-fit:contain; }
-    .p-sig-name { font-size:10pt; color:#333; margin-top:4pt; }
+    .p-ov-sig img { max-width:100%; max-height:100%; object-fit:contain; }
   }
 
   @media (min-width:701px){
     .bottom-bar { max-width:720px; margin:0 auto; }
     .card { max-width:720px; margin-left:auto; margin-right:auto; }
     .notice-box { max-width:720px; margin-left:auto; margin-right:auto; }
+    .preview-wrap { max-width:720px; margin-left:auto; margin-right:auto; }
   }
   @media (max-width:400px){
     body { font-size:14px; }
@@ -408,12 +386,21 @@
   <div class="notice-box">
     <strong>📌 How to Fill Out This Form</strong>
     <ul>
-      <li>Please fill in all fields in <b>Section 1. Personal Information</b>.</li>
-      <li><b>Section 2. Family Information</b> is optional — fill only those who apply (Spouse, Child 1–4, Other).</li>
+      <li>Fill in all fields in <b>Section 1. Personal Information</b>.</li>
+      <li><b>Section 2. Family Information</b> is optional — fill only those who apply (Spouse, Child 1–3, Other).</li>
       <li>Use <b>Section 3</b> freely for prayer requests or inquiries.</li>
       <li>Please sign at the bottom using your finger or mouse.</li>
-      <li>After completing, tap <b>Complete (Save PDF)</b>, then submit the saved PDF by email.</li>
+      <li>Tap <b>Complete (Save PDF)</b>, then submit the saved PDF by email.</li>
     </ul>
+  </div>
+
+  <!-- 미리보기 (원본 이미지 위에 실시간 반영) -->
+  <div class="preview-wrap">
+    <div class="preview-inner">
+      <img class="preview-img" src="form.png" alt="Registration Card Form"
+           onerror="this.style.background='#f4f7fb';this.alt='⚠️ form.png not found. Please upload the form image.';">
+      <div class="overlay" id="previewOverlay"></div>
+    </div>
   </div>
 
   <!-- 1. Personal Information -->
@@ -434,7 +421,7 @@
         </tr>
         <tr>
           <td class="label">Date of Birth</td>
-          <td class="input-cell"><input type="date" id="dob"></td>
+          <td class="input-cell"><input type="text" id="dob" placeholder="YYYY-MM-DD"></td>
           <td class="label">Nationality</td>
           <td class="input-cell"><input type="text" id="nationality"></td>
         </tr>
@@ -449,7 +436,7 @@
             </select>
           </td>
           <td class="label">Date of Salvation</td>
-          <td class="input-cell"><input type="date" id="salvationDate"></td>
+          <td class="input-cell"><input type="text" id="salvationDate" placeholder="YYYY-MM-DD"></td>
         </tr>
         <tr>
           <td class="label">Guided By</td>
@@ -459,18 +446,18 @@
         </tr>
         <tr>
           <td class="label">Date of Entry</td>
-          <td class="input-cell"><input type="date" id="entryDate"></td>
+          <td class="input-cell"><input type="text" id="entryDate" placeholder="YYYY-MM-DD"></td>
           <td class="label">Occupation</td>
           <td class="input-cell"><input type="text" id="occupation"></td>
         </tr>
         <tr>
-          <td class="label">Departure Date</td>
-          <td class="input-cell"><input type="date" id="departureDate"></td>
+          <td class="label">Departure date</td>
+          <td class="input-cell"><input type="text" id="departureDate" placeholder="YYYY-MM-DD"></td>
           <td class="label">Residency Status</td>
           <td class="input-cell"><input type="text" id="residency"></td>
         </tr>
         <tr>
-          <td class="label">E-mail / Phone#</td>
+          <td class="label">E-mail/Phone#</td>
           <td class="input-cell" colspan="3"><input type="text" id="emailPhone" autocomplete="email"></td>
         </tr>
         <tr>
@@ -487,28 +474,20 @@
 
     <table class="word-table family-table">
       <colgroup>
-        <col style="width:16%">
-        <col style="width:22%">
-        <col style="width:15%">
-        <col style="width:14%">
-        <col style="width:14%">
-        <col style="width:19%">
+        <col style="width:16%"><col style="width:22%"><col style="width:15%">
+        <col style="width:14%"><col style="width:14%"><col style="width:19%">
       </colgroup>
       <thead>
         <tr>
-          <th>Relationship</th>
-          <th>Name</th>
-          <th>Date of<br>Birth</th>
-          <th>Living<br>Together</th>
-          <th>Salvation</th>
-          <th>Remarks</th>
+          <th>Relationship</th><th>Name</th><th>Date of Birth</th>
+          <th>Living Together</th><th>Salvation</th><th>Remarks</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="row-head">Spouse</td>
           <td><input type="text" class="fam-name" data-rel="Spouse"></td>
-          <td><input type="date" class="fam-dob" data-rel="Spouse"></td>
+          <td><input type="text" class="fam-dob" data-rel="Spouse" placeholder="YYYY-MM-DD"></td>
           <td>
             <select class="fam-living" data-rel="Spouse">
               <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
@@ -525,7 +504,7 @@
         <tr>
           <td class="row-head">Child 1</td>
           <td><input type="text" class="fam-name" data-rel="Child 1"></td>
-          <td><input type="date" class="fam-dob" data-rel="Child 1"></td>
+          <td><input type="text" class="fam-dob" data-rel="Child 1" placeholder="YYYY-MM-DD"></td>
           <td>
             <select class="fam-living" data-rel="Child 1">
               <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
@@ -542,7 +521,7 @@
         <tr>
           <td class="row-head">Child 2</td>
           <td><input type="text" class="fam-name" data-rel="Child 2"></td>
-          <td><input type="date" class="fam-dob" data-rel="Child 2"></td>
+          <td><input type="text" class="fam-dob" data-rel="Child 2" placeholder="YYYY-MM-DD"></td>
           <td>
             <select class="fam-living" data-rel="Child 2">
               <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
@@ -559,7 +538,7 @@
         <tr>
           <td class="row-head">Child 3</td>
           <td><input type="text" class="fam-name" data-rel="Child 3"></td>
-          <td><input type="date" class="fam-dob" data-rel="Child 3"></td>
+          <td><input type="text" class="fam-dob" data-rel="Child 3" placeholder="YYYY-MM-DD"></td>
           <td>
             <select class="fam-living" data-rel="Child 3">
               <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
@@ -574,26 +553,9 @@
           <td><input type="text" class="fam-remarks" data-rel="Child 3"></td>
         </tr>
         <tr>
-          <td class="row-head">Child 4</td>
-          <td><input type="text" class="fam-name" data-rel="Child 4"></td>
-          <td><input type="date" class="fam-dob" data-rel="Child 4"></td>
-          <td>
-            <select class="fam-living" data-rel="Child 4">
-              <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
-            </select>
-          </td>
-          <td>
-            <select class="fam-salvation" data-rel="Child 4">
-              <option value=""></option><option value="Yes">Yes</option>
-              <option value="No">No</option><option value="Unknown">Unknown</option>
-            </select>
-          </td>
-          <td><input type="text" class="fam-remarks" data-rel="Child 4"></td>
-        </tr>
-        <tr>
           <td class="row-head">Other</td>
           <td><input type="text" class="fam-name" data-rel="Other"></td>
-          <td><input type="date" class="fam-dob" data-rel="Other"></td>
+          <td><input type="text" class="fam-dob" data-rel="Other" placeholder="YYYY-MM-DD"></td>
           <td>
             <select class="fam-living" data-rel="Other">
               <option value=""></option><option value="Yes">Yes</option><option value="No">No</option>
@@ -648,7 +610,7 @@
       <tbody>
         <tr>
           <td class="label" style="width:24%;">Date</td>
-          <td class="input-cell"><input type="date" id="signDate"></td>
+          <td class="input-cell"><input type="text" id="signDate" placeholder="YYYY-MM-DD"></td>
         </tr>
         <tr>
           <td class="label">Applicant Name</td>
@@ -674,102 +636,12 @@
 </div>
 
 <!-- ============================================================
-     인쇄용 : Letter 1페이지, Word 폼 그대로
+     인쇄용 : 원본 이미지 + 오버레이
      ============================================================ -->
 <div class="form-print" id="formPrint">
-  <div class="p-title">Calgary Church Member Registration Card</div>
-
-  <div class="p-section-title">1. Personal Information</div>
-  <table class="p-table">
-    <colgroup>
-      <col style="width:24%"><col style="width:26%">
-      <col style="width:24%"><col style="width:26%">
-    </colgroup>
-    <tbody>
-      <tr>
-        <td class="label-cell">First Name</td><td class="value-cell" id="p-firstName"></td>
-        <td class="label-cell">Last Name</td><td class="value-cell" id="p-lastName"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">Date of Birth</td><td class="value-cell" id="p-dob"></td>
-        <td class="label-cell">Nationality</td><td class="value-cell" id="p-nationality"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">Gender</td><td class="value-cell" id="p-gender"></td>
-        <td class="label-cell">Date of Salvation</td><td class="value-cell" id="p-salvationDate"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">Guided By</td><td class="value-cell" id="p-guidedBy"></td>
-        <td class="label-cell">Relationship to Guide</td><td class="value-cell" id="p-relationship"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">Date of Entry</td><td class="value-cell" id="p-entryDate"></td>
-        <td class="label-cell">Occupation</td><td class="value-cell" id="p-occupation"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">Departure date</td><td class="value-cell" id="p-departureDate"></td>
-        <td class="label-cell">Residency Status</td><td class="value-cell" id="p-residency"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">E-mail/Phone#</td>
-        <td class="full-cell" colspan="3" id="p-emailPhone"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">Address</td>
-        <td class="full-cell" colspan="3" id="p-address"></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="p-section-title">2. Family Information</div>
-  <table class="p-table p-family-table">
-    <colgroup>
-      <col style="width:16%"><col style="width:22%"><col style="width:15%">
-      <col style="width:14%"><col style="width:14%"><col style="width:19%">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Relationship</th>
-        <th>Name</th>
-        <th>Date of Birth</th>
-        <th>Living Together</th>
-        <th>Salvation</th>
-        <th>Remarks</th>
-      </tr>
-    </thead>
-    <tbody id="p-familyBody"></tbody>
-  </table>
-
-  <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
-  <div class="p-prayer-box" id="p-prayerRequests"></div>
-
-  <div class="p-section-title">Consent to Collection and Use of Personal Information</div>
-  <div class="p-consent-item"><b>Purpose of Collection:</b> Church resister management, pastoral care and Visitation, delivery of church news and announcements</div>
-  <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, Family details, faith background/spiritual profile, etc.</div>
-  <div class="p-consent-item"><b>Retention Period:</b> Throughout church registry membership (permanently Discarded upon transfer of membership or request for deletion)</div>
-
-  <div style="margin-top:8pt;font-size:11pt;font-weight:bold;">
-    Do you consent to the collection and use of personal information as stated above?
-  </div>
-  <div class="p-consent-row">
-    <span class="p-check" id="p-check-agree"></span> Agree
-    <span class="gap"></span>
-    <span class="p-check" id="p-check-disagree"></span> Disagree
-  </div>
-
-  <div class="p-bottom">
-    <b>Date :</b> <span class="line" id="p-signDate"></span>
-  </div>
-  <div class="p-bottom" style="margin-top:8pt;">
-    <b>Applicant(Name &amp; signature):</b>
-  </div>
-
-  <div class="p-sig-area">
-    <div class="p-sig-block">
-      <div class="p-sig-label">Applicant Name</div>
-      <div class="p-sig-img" id="p-sigImg"></div>
-      <div class="p-sig-name" id="p-sigName"></div>
-    </div>
+  <div class="print-page">
+    <img class="print-bg" src="form.png" alt="">
+    <div class="print-overlay" id="printOverlay"></div>
   </div>
 </div>
 
@@ -800,41 +672,191 @@
 
   var EMAIL_TO = 'hansoo2454@gmail.com';
 
-  /* ===== 인앱 브라우저 감지 ===== */
-  function detectInApp() {
-    var ua = (navigator.userAgent || '') + ' ' + (navigator.vendor || '');
-    var name = null;
-    if (/KAKAOTALK/i.test(ua)) name = 'KakaoTalk';
-    else if (/Instagram/i.test(ua)) name = 'Instagram';
-    else if (/FBAN|FBAV|FB_IAB/i.test(ua)) name = 'Facebook';
-    else if (/Line\//i.test(ua)) name = 'LINE';
-    else if (/NAVER/i.test(ua)) name = 'Naver App';
-    else if (/DaumApps/i.test(ua)) name = 'Daum App';
-    else if (/SnapChat/i.test(ua)) name = 'Snapchat';
-    else if (/Twitter/i.test(ua)) name = 'X (Twitter)';
-    else if (/Pinterest/i.test(ua)) name = 'Pinterest';
-    if (name) return { inApp: true, name: name };
+  /* ============================================================
+     좌표 정의 (원본 이미지 기준 %, 0~100)
+     ─ 이미지 크기 : 713 x 923 px (Letter 비율 1:1.2941)
+     ─ 각 필드의 left, top, width, height 를 % 로 지정
+     ============================================================ */
+  var FIELDS = {
+    /* ── 1. Personal Information ── */
+    firstName:      { l: 21.5, t: 18.4, w: 27.5, h: 3.2 },
+    lastName:       { l: 68.5, t: 18.4, w: 24.0, h: 3.2 },
+    dob:            { l: 21.5, t: 21.7, w: 27.5, h: 3.2 },
+    nationality:    { l: 68.5, t: 21.7, w: 24.0, h: 3.2 },
+    gender:         { l: 21.5, t: 25.0, w: 27.5, h: 3.2 },
+    salvationDate:  { l: 68.5, t: 25.0, w: 24.0, h: 3.2 },
+    guidedBy:       { l: 21.5, t: 28.3, w: 27.5, h: 3.2 },
+    relationship:   { l: 68.5, t: 28.3, w: 24.0, h: 3.2 },
+    entryDate:      { l: 21.5, t: 31.6, w: 27.5, h: 3.2 },
+    occupation:     { l: 68.5, t: 31.6, w: 24.0, h: 3.2 },
+    departureDate:  { l: 21.5, t: 34.9, w: 27.5, h: 3.2 },
+    residency:      { l: 68.5, t: 34.9, w: 24.0, h: 3.2 },
+    emailPhone:     { l: 21.5, t: 38.2, w: 71.0, h: 3.2 },
+    address:        { l: 21.5, t: 41.5, w: 71.0, h: 3.2 },
 
-    var isIOS = /iPhone|iPad|iPod/i.test(ua);
-    var isIOSReal = /Safari/i.test(ua) || /CriOS/i.test(ua) || /FxiOS/i.test(ua) || /EdgiOS/i.test(ua);
-    if (isIOS && !isIOSReal) return { inApp: true, name: 'In-App Browser' };
+    /* ── 2. Family Information ── */
+    famName_Spouse:      { l: 22.5, t: 51.3, w: 21.5, h: 3.0 },
+    famDob_Spouse:       { l: 44.5, t: 51.3, w: 14.5, h: 3.0 },
+    famLiving_Spouse:    { l: 59.5, t: 51.3, w: 13.5, h: 3.0 },
+    famSalvation_Spouse: { l: 73.5, t: 51.3, w: 13.5, h: 3.0 },
+    famRemarks_Spouse:   { l: 87.5, t: 51.3, w: 10.5, h: 3.0 },
 
-    var isAndroid = /Android/i.test(ua);
-    var isWebView = /;\s*wv\)/i.test(ua);
-    var isChrome = /Chrome\/\d+/i.test(ua) && !isWebView;
-    if (isAndroid && isWebView && !isChrome) return { inApp: true, name: 'In-App Browser' };
-    return { inApp: false };
+    famName_Child1:      { l: 22.5, t: 54.3, w: 21.5, h: 3.0 },
+    famDob_Child1:       { l: 44.5, t: 54.3, w: 14.5, h: 3.0 },
+    famLiving_Child1:    { l: 59.5, t: 54.3, w: 13.5, h: 3.0 },
+    famSalvation_Child1: { l: 73.5, t: 54.3, w: 13.5, h: 3.0 },
+    famRemarks_Child1:   { l: 87.5, t: 54.3, w: 10.5, h: 3.0 },
+
+    famName_Child2:      { l: 22.5, t: 57.3, w: 21.5, h: 3.0 },
+    famDob_Child2:       { l: 44.5, t: 57.3, w: 14.5, h: 3.0 },
+    famLiving_Child2:    { l: 59.5, t: 57.3, w: 13.5, h: 3.0 },
+    famSalvation_Child2: { l: 73.5, t: 57.3, w: 13.5, h: 3.0 },
+    famRemarks_Child2:   { l: 87.5, t: 57.3, w: 10.5, h: 3.0 },
+
+    famName_Child3:      { l: 22.5, t: 60.3, w: 21.5, h: 3.0 },
+    famDob_Child3:       { l: 44.5, t: 60.3, w: 14.5, h: 3.0 },
+    famLiving_Child3:    { l: 59.5, t: 60.3, w: 13.5, h: 3.0 },
+    famSalvation_Child3: { l: 73.5, t: 60.3, w: 13.5, h: 3.0 },
+    famRemarks_Child3:   { l: 87.5, t: 60.3, w: 10.5, h: 3.0 },
+
+    famName_Other:       { l: 22.5, t: 63.3, w: 21.5, h: 3.0 },
+    famDob_Other:        { l: 44.5, t: 63.3, w: 14.5, h: 3.0 },
+    famLiving_Other:     { l: 59.5, t: 63.3, w: 13.5, h: 3.0 },
+    famSalvation_Other:  { l: 73.5, t: 63.3, w: 13.5, h: 3.0 },
+    famRemarks_Other:    { l: 87.5, t: 63.3, w: 10.5, h: 3.0 },
+
+    /* ── 3. Prayer Requests (자유 영역) ── */
+    prayerRequests: { l: 12.5, t: 67.5, w: 80.0, h: 6.5 },
+
+    /* ── Consent 체크박스 ── */
+    checkAgree:    { l: 11.8, t: 86.0, w: 2.2,  h: 1.4 },
+    checkDisagree: { l: 25.5, t: 86.0, w: 2.2,  h: 1.4 },
+
+    /* ── 서명 / 날짜 ── */
+    signDate:      { l: 15.5, t: 89.4, w: 25.0, h: 2.5 },
+    applicantName: { l: 12.0, t: 92.5, w: 35.0, h: 2.5 }
+  };
+
+  /* 서명 이미지 위치 */
+  var SIG_POS = { l: 30.0, t: 92.0, w: 40.0, h: 4.0 };
+
+  /* ============================================================
+     값 수집
+     ============================================================ */
+  function getVal(id) {
+    var el = document.getElementById(id);
+    return el ? (el.value || '').trim() : '';
   }
-  var state = detectInApp();
-  var IN_APP = state.inApp;
-  if (IN_APP) {
-    document.body.classList.add('inapp');
-    var nm = document.getElementById('inappName');
-    if (nm && state.name) nm.textContent = state.name;
-    document.getElementById('inappBanner').classList.add('show');
+  function getSelectVal(sel) {
+    var el = document.querySelector(sel);
+    return el ? (el.value || '').trim() : '';
   }
 
-  /* ===== 서명 패드 ===== */
+  function collectData() {
+    var d = {
+      firstName: getVal('firstName'),
+      lastName: getVal('lastName'),
+      dob: getVal('dob'),
+      nationality: getVal('nationality'),
+      gender: getVal('gender'),
+      salvationDate: getVal('salvationDate'),
+      guidedBy: getVal('guidedBy'),
+      relationship: getVal('relationship'),
+      entryDate: getVal('entryDate'),
+      occupation: getVal('occupation'),
+      departureDate: getVal('departureDate'),
+      residency: getVal('residency'),
+      emailPhone: getVal('emailPhone'),
+      address: getVal('address'),
+      prayerRequests: getVal('prayerRequests'),
+      signDate: getVal('signDate'),
+      applicantName: getVal('applicantName')
+    };
+    ['Spouse', 'Child 1', 'Child 2', 'Child 3', 'Other'].forEach(function (rel) {
+      var key = rel.replace(' ', '');
+      d['famName_' + key]      = getSelectVal('.fam-name[data-rel="' + rel + '"]');
+      d['famDob_' + key]       = getSelectVal('.fam-dob[data-rel="' + rel + '"]');
+      d['famLiving_' + key]    = getSelectVal('.fam-living[data-rel="' + rel + '"]');
+      d['famSalvation_' + key] = getSelectVal('.fam-salvation[data-rel="' + rel + '"]');
+      d['famRemarks_' + key]   = getSelectVal('.fam-remarks[data-rel="' + rel + '"]');
+    });
+    var c = document.querySelector('input[name="consent"]:checked');
+    d.consent = c ? c.value : 'Agree';
+    return d;
+  }
+
+  /* ============================================================
+     오버레이 렌더 (미리보기 & 인쇄 공용)
+     ============================================================ */
+  function buildOverlay(container, data, isPrint) {
+    container.innerHTML = '';
+    var keys = Object.keys(FIELDS);
+    keys.forEach(function (k) {
+      var f = FIELDS[k];
+      var val = data[k] || '';
+      if (!val) return;
+      var el = document.createElement('div');
+      el.className = isPrint ? 'p-ov' : 'ov';
+      el.style.left   = f.l + '%';
+      el.style.top    = f.t + '%';
+      el.style.width  = f.w + '%';
+      el.style.height = f.h + '%';
+      el.textContent = val;
+      container.appendChild(el);
+    });
+
+    /* 서명 */
+    if (hasSigned) {
+      var sigWrap = document.createElement('div');
+      sigWrap.className = isPrint ? 'p-ov-sig' : 'ov-sig';
+      sigWrap.style.left   = SIG_POS.l + '%';
+      sigWrap.style.top    = SIG_POS.t + '%';
+      sigWrap.style.width  = SIG_POS.w + '%';
+      sigWrap.style.height = SIG_POS.h + '%';
+      var img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      sigWrap.appendChild(img);
+      container.appendChild(sigWrap);
+    }
+
+    /* 체크박스 (✔) */
+    if (data.consent === 'Agree') {
+      var ck = document.createElement('div');
+      ck.className = isPrint ? 'p-ov' : 'ov';
+      ck.style.left = FIELDS.checkAgree.l + '%';
+      ck.style.top  = FIELDS.checkAgree.t + '%';
+      ck.style.width = FIELDS.checkAgree.w + '%';
+      ck.style.height = FIELDS.checkAgree.h + '%';
+      ck.style.fontWeight = 'bold';
+      ck.style.fontSize = isPrint ? '11pt' : '2.5%';
+      ck.textContent = '✔';
+      container.appendChild(ck);
+    } else if (data.consent === 'Disagree') {
+      var ck2 = document.createElement('div');
+      ck2.className = isPrint ? 'p-ov' : 'ov';
+      ck2.style.left = FIELDS.checkDisagree.l + '%';
+      ck2.style.top  = FIELDS.checkDisagree.t + '%';
+      ck2.style.width = FIELDS.checkDisagree.w + '%';
+      ck2.style.height = FIELDS.checkDisagree.h + '%';
+      ck2.style.fontWeight = 'bold';
+      ck2.style.fontSize = isPrint ? '11pt' : '2.5%';
+      ck2.textContent = '✔';
+      container.appendChild(ck2);
+    }
+  }
+
+  function renderPreview() {
+    var data = collectData();
+    buildOverlay(document.getElementById('previewOverlay'), data, false);
+  }
+  function renderPrint() {
+    var data = collectData();
+    buildOverlay(document.getElementById('printOverlay'), data, true);
+  }
+
+  /* ============================================================
+     서명 패드
+     ============================================================ */
   var canvas = document.getElementById('signatureCanvas');
   var wrapper = document.getElementById('sigWrapper');
   var ctx = canvas.getContext('2d');
@@ -871,10 +893,12 @@
   function stopDraw(e) {
     if (!isDrawing) return; e.preventDefault();
     isDrawing = false; ctx.closePath();
+    renderPreview();
   }
   window.clearSignature = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     hasSigned = false; wrapper.classList.remove('signed');
+    renderPreview();
   };
   canvas.addEventListener('mousedown', startDraw);
   canvas.addEventListener('mousemove', draw);
@@ -884,102 +908,71 @@
   canvas.addEventListener('touchmove', draw, { passive: false });
   canvas.addEventListener('touchend', stopDraw, { passive: false });
 
-  /* ===== 인쇄용 동기화 ===== */
-  function setText(id, val) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = val || '';
+  /* ============================================================
+     실시간 미리보기 반영
+     ============================================================ */
+  var formScreen = document.querySelector('.form-screen');
+  formScreen.addEventListener('input', renderPreview);
+  formScreen.addEventListener('change', renderPreview);
+
+  /* ============================================================
+     인앱 브라우저 감지
+     ============================================================ */
+  function detectInApp() {
+    var ua = (navigator.userAgent || '') + ' ' + (navigator.vendor || '');
+    var name = null;
+    if (/KAKAOTALK/i.test(ua)) name = 'KakaoTalk';
+    else if (/Instagram/i.test(ua)) name = 'Instagram';
+    else if (/FBAN|FBAV|FB_IAB/i.test(ua)) name = 'Facebook';
+    else if (/Line\//i.test(ua)) name = 'LINE';
+    else if (/NAVER/i.test(ua)) name = 'Naver App';
+    else if (/DaumApps/i.test(ua)) name = 'Daum App';
+    else if (/SnapChat/i.test(ua)) name = 'Snapchat';
+    else if (/Twitter/i.test(ua)) name = 'X (Twitter)';
+    else if (/Pinterest/i.test(ua)) name = 'Pinterest';
+    if (name) return { inApp: true, name: name };
+
+    var isIOS = /iPhone|iPad|iPod/i.test(ua);
+    var isIOSReal = /Safari/i.test(ua) || /CriOS/i.test(ua) || /FxiOS/i.test(ua) || /EdgiOS/i.test(ua);
+    if (isIOS && !isIOSReal) return { inApp: true, name: 'In-App Browser' };
+
+    var isAndroid = /Android/i.test(ua);
+    var isWebView = /;\s*wv\)/i.test(ua);
+    var isChrome = /Chrome\/\d+/i.test(ua) && !isWebView;
+    if (isAndroid && isWebView && !isChrome) return { inApp: true, name: 'In-App Browser' };
+    return { inApp: false };
   }
-  function esc(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  function buildPrintFamily() {
-    var tbody = document.getElementById('p-familyBody');
-    tbody.innerHTML = '';
-    var labels = ['Spouse', 'Child 1', 'Child 2', 'Child 3', 'Child 4', 'Other'];
-    labels.forEach(function (lab) {
-      var nm = document.querySelector('.fam-name[data-rel="' + lab + '"]');
-      var dob = document.querySelector('.fam-dob[data-rel="' + lab + '"]');
-      var lv = document.querySelector('.fam-living[data-rel="' + lab + '"]');
-      var sv = document.querySelector('.fam-salvation[data-rel="' + lab + '"]');
-      var rm = document.querySelector('.fam-remarks[data-rel="' + lab + '"]');
-      var tr = document.createElement('tr');
-      tr.innerHTML =
-        '<td class="row-label">' + lab + '</td>' +
-        '<td>' + esc(nm ? nm.value : '') + '</td>' +
-        '<td>' + esc(dob ? dob.value : '') + '</td>' +
-        '<td>' + esc(lv ? lv.value : '') + '</td>' +
-        '<td>' + esc(sv ? sv.value : '') + '</td>' +
-        '<td class="text-left">' + esc(rm ? rm.value : '') + '</td>';
-      tbody.appendChild(tr);
-    });
-  }
-
-  function syncToPrint() {
-    setText('p-firstName', document.getElementById('firstName').value);
-    setText('p-lastName', document.getElementById('lastName').value);
-    setText('p-dob', document.getElementById('dob').value);
-    setText('p-nationality', document.getElementById('nationality').value);
-    setText('p-gender', document.getElementById('gender').value);
-    setText('p-salvationDate', document.getElementById('salvationDate').value);
-    setText('p-guidedBy', document.getElementById('guidedBy').value);
-    setText('p-relationship', document.getElementById('relationship').value);
-    setText('p-entryDate', document.getElementById('entryDate').value);
-    setText('p-occupation', document.getElementById('occupation').value);
-    setText('p-departureDate', document.getElementById('departureDate').value);
-    setText('p-residency', document.getElementById('residency').value);
-    setText('p-emailPhone', document.getElementById('emailPhone').value);
-    setText('p-address', document.getElementById('address').value);
-    setText('p-prayerRequests', document.getElementById('prayerRequests').value);
-
-    buildPrintFamily();
-
-    var consent = document.querySelector('input[name="consent"]:checked');
-    var ca = document.getElementById('p-check-agree');
-    var cd = document.getElementById('p-check-disagree');
-    ca.textContent = ''; cd.textContent = '';
-    if (consent && consent.value === 'Agree') ca.textContent = '✔';
-    else if (consent && consent.value === 'Disagree') cd.textContent = '✔';
-
-    var sigImgBox = document.getElementById('p-sigImg');
-    sigImgBox.innerHTML = '';
-    if (hasSigned) {
-      var img = document.createElement('img');
-      img.src = canvas.toDataURL('image/png');
-      sigImgBox.appendChild(img);
-    }
-    setText('p-sigName', document.getElementById('applicantName').value);
-    setText('p-signDate', document.getElementById('signDate').value);
+  var state = detectInApp();
+  var IN_APP = state.inApp;
+  if (IN_APP) {
+    document.body.classList.add('inapp');
+    var nm = document.getElementById('inappName');
+    if (nm && state.name) nm.textContent = state.name;
+    document.getElementById('inappBanner').classList.add('show');
   }
 
-  /* ===== 모달 ===== */
+  /* ============================================================
+     모달 / 이메일
+     ============================================================ */
   var modal = document.getElementById('submitModal');
   var btnEmail = document.getElementById('btnEmail');
   var btnCopy = document.getElementById('btnCopyEmail');
   var btnClose = document.getElementById('btnCloseModal');
 
   function openModal() {
-    var name = document.getElementById('applicantName').value.trim()
-      || (document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value).trim()
-      || 'Applicant';
-    var dateSub = document.getElementById('signDate').value || new Date().toISOString().slice(0, 10);
+    var name = getVal('applicantName') || (getVal('firstName') + ' ' + getVal('lastName')).trim() || 'Applicant';
+    var dateSub = getVal('signDate') || new Date().toISOString().slice(0, 10);
     var subject = 'Calgary Church Member Registration Card - ' + name + ' - ' + dateSub;
     var bodyLines = [
-      'Hello,',
-      '',
-      'Attached is my Calgary Church Member Registration Card (PDF).',
-      '',
+      'Hello,', '',
+      'Attached is my Calgary Church Member Registration Card (PDF).', '',
       '- Applicant: ' + name,
-      '- Date: ' + dateSub,
-      '',
+      '- Date: ' + dateSub, '',
       'Thank you.'
     ];
-    var body = bodyLines.join('\r\n');
     var url = 'mailto:' + encodeURIComponent(EMAIL_TO) +
       '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(body);
+      '&body=' + encodeURIComponent(bodyLines.join('\r\n'));
     btnEmail.setAttribute('href', url);
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -1013,17 +1006,19 @@
     cb && cb();
   }
 
-  /* ===== 완료 버튼 ===== */
+  /* ============================================================
+     완료 버튼 → 인쇄 → 모달
+     ============================================================ */
   var pendingModal = false;
   document.getElementById('btnPrint').addEventListener('click', function () {
-    var fn = document.getElementById('firstName').value.trim();
-    var ln = document.getElementById('lastName').value.trim();
+    var fn = getVal('firstName');
+    var ln = getVal('lastName');
     if (!fn || !ln) {
       alert('Please enter First Name and Last Name.');
       (!fn ? document.getElementById('firstName') : document.getElementById('lastName')).focus();
       return;
     }
-    if (!document.getElementById('applicantName').value.trim()) {
+    if (!getVal('applicantName')) {
       alert('Please enter Applicant Name.');
       document.getElementById('applicantName').focus();
       return;
@@ -1042,12 +1037,11 @@
       document.getElementById('inappBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
-    syncToPrint();
+    renderPrint();
     pendingModal = true;
-    setTimeout(function () { window.print(); }, 60);
+    setTimeout(function () { window.print(); }, 100);
   });
-
-  window.addEventListener('beforeprint', syncToPrint);
+  window.addEventListener('beforeprint', renderPrint);
   window.addEventListener('afterprint', function () {
     if (!pendingModal) return;
     pendingModal = false;
@@ -1059,10 +1053,17 @@
     location.reload();
   });
 
-  /* ===== 초기화 ===== */
+  /* ============================================================
+     초기화
+     ============================================================ */
   window.addEventListener('load', function () {
     resizeCanvas();
-    document.getElementById('signDate').value = new Date().toISOString().slice(0, 10);
+    var today = new Date();
+    var iso = today.getFullYear() + '-' +
+      String(today.getMonth() + 1).padStart(2, '0') + '-' +
+      String(today.getDate()).padStart(2, '0');
+    document.getElementById('signDate').value = iso;
+    renderPreview();
   });
   window.addEventListener('resize', function () {
     var dataUrl = hasSigned ? canvas.toDataURL() : null;
