@@ -361,7 +361,7 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용 (HTML 폼으로 재현 — 원본 이미지 사용 안 함)
+     인쇄용 (HTML 폼으로 재현)
      ============================================================ */
   .form-print { display:none; }
 
@@ -379,10 +379,36 @@
       font-family:"Times New Roman", Times, serif;
       color:#000; font-size:10.5pt; line-height:1.3;
     }
-    .p-title {
-      text-align:center; font-size:14pt; font-weight:bold;
-      text-decoration:underline; margin:0 0 10pt;
+
+    /* ★ 상단 헤더 : 제목(왼쪽) + 로고(오른쪽) */
+    .p-header-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10pt;
+      margin:0 0 10pt;
     }
+    .p-title {
+      flex:1;
+      font-size:14pt; font-weight:bold;
+      text-decoration:underline;
+      margin:0;
+      text-align:left;
+    }
+    .p-logo {
+      flex-shrink:0;
+      width:70pt;
+      height:70pt;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .p-logo img {
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+    }
+
     .p-section-title {
       font-size:12pt; font-weight:bold; margin:12pt 0 5pt;
     }
@@ -614,7 +640,12 @@
      인쇄용 : HTML 폼 (원본 이미지 사용 안 함)
      ============================================================ -->
 <div class="form-print" id="formPrint">
-  <div class="p-title">Calgary Church Member Registration Card</div>
+  <div class="p-header-row">
+    <div class="p-title">Calgary Church Member Registration Card</div>
+    <div class="p-logo">
+      <img src="LOGO.PNG" alt="Logo" onerror="this.style.display='none'">
+    </div>
+  </div>
 
   <div class="p-section-title">1. Personal Information</div>
   <table class="p-table">
@@ -644,558 +675,4 @@
         <td class="label-cell">Occupation</td><td class="value-cell" id="p-occupation"></td>
       </tr>
       <tr>
-        <td class="label-cell">Departure date</td><td class="value-cell" id="p-departureDate"></td>
-        <td class="label-cell">Residency Status</td><td class="value-cell" id="p-residency"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">E-mail/Phone#</td>
-        <td class="full-cell" colspan="3" id="p-emailPhone"></td>
-      </tr>
-      <tr>
-        <td class="label-cell">Address</td>
-        <td class="full-cell" colspan="3" id="p-address"></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="p-section-title">2. Family Information</div>
-  <table class="p-table p-family-table">
-    <colgroup>
-      <col style="width:16%"><col style="width:22%"><col style="width:15%">
-      <col style="width:14%"><col style="width:14%"><col style="width:19%">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Relationship</th>
-        <th>Name</th>
-        <th>Date of Birth</th>
-        <th>Living Together</th>
-        <th>Salvation</th>
-        <th>Remarks</th>
-      </tr>
-    </thead>
-    <tbody id="p-familyBody"></tbody>
-  </table>
-
-  <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
-  <div class="p-prayer-box" id="p-prayerRequests"></div>
-
-  <div class="p-section-title">Consent to Collection and Use of Personal Information</div>
-  <div class="p-consent-item"><b>Purpose of Collection:</b> Church register management, pastoral care and visitation, delivery of church news and announcements</div>
-  <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</div>
-  <div class="p-consent-item"><b>Retention Period:</b> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</div>
-
-  <div style="margin-top:8pt;font-size:11pt;font-weight:bold;">
-    Do you consent to the collection and use of personal information as stated above?
-  </div>
-  <div class="p-consent-row">
-    <span class="p-check" id="p-check-agree"></span> Agree
-    <span class="gap"></span>
-    <span class="p-check" id="p-check-disagree"></span> Disagree
-  </div>
-
-  <div class="p-bottom">
-    <b>Date :</b> <span class="line" id="p-signDate"></span>
-  </div>
-  <div class="p-bottom" style="margin-top:8pt;">
-    <b>Applicant(Name &amp; signature):</b>
-  </div>
-
-  <div class="p-sig-area">
-    <div class="p-sig-block">
-      <div class="p-sig-label">Applicant Name</div>
-      <div class="p-sig-img" id="p-sigImg"></div>
-      <div class="p-sig-name" id="p-sigName"></div>
-    </div>
-  </div>
-</div>
-
-<!-- 서명 모달 -->
-<div class="modal" id="sigModal">
-  <div class="modal-content">
-    <div class="sig-modal-header">
-      <div>
-        <h3>✍️ Signature</h3>
-        <div class="sub">Sign with your finger or mouse</div>
-      </div>
-      <button type="button" class="sig-modal-close" id="sigCloseBtn">✕</button>
-    </div>
-    <div class="sig-modal-body">
-      <div class="sig-canvas-wrap" id="sigCanvasWrap">
-        <canvas id="signatureCanvas"></canvas>
-        <div class="sig-ph">Sign here</div>
-      </div>
-      <div class="sig-modal-tip">
-        💡 Draw your signature inside the box above. Screen is locked while signing.
-      </div>
-    </div>
-    <div class="sig-modal-actions">
-      <button type="button" class="sig-btn-clear" id="sigClearBtn">Clear</button>
-      <button type="button" class="sig-btn-cancel" id="sigCancelBtn">Cancel</button>
-      <button type="button" class="sig-btn-save" id="sigSaveBtn">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- 제출 안내 모달 -->
-<div class="modal" id="submitModal">
-  <div class="modal-content">
-    <div class="submit-modal-icon">📧</div>
-    <h2 class="submit-modal-title">Submission Notice</h2>
-    <div class="submit-modal-msg">
-      <div class="ko">저장하신 <b>PDF 파일</b>을 이메일에 첨부하여 제출해 주세요.</div>
-      <div class="en">Please submit the saved <b>PDF file</b> by attaching it to an email.</div>
-    </div>
-    <div class="submit-modal-email">hansoo2454@gmail.com</div>
-    <div class="modal-actions">
-      <a class="modal-btn primary" id="btnEmail" href="#">📨 Open Email App</a>
-      <button type="button" class="modal-btn secondary" id="btnCopyEmail">📋 Copy Email Address</button>
-      <button type="button" class="modal-btn ghost" id="btnCloseModal">Close</button>
-    </div>
-  </div>
-</div>
-
-<script>
-(function () {
-  'use strict';
-
-  var EMAIL_TO = 'hansoo2454@gmail.com';
-  var MAX_CHILD = 4;
-
-  /* ============================================================
-     값 수집
-     ============================================================ */
-  function getVal(id) {
-    var el = document.getElementById(id);
-    return el ? (el.value || '').trim() : '';
-  }
-  function collectData() {
-    var d = {
-      firstName: getVal('firstName'),
-      lastName: getVal('lastName'),
-      dob: getVal('dob'),
-      nationality: getVal('nationality'),
-      gender: getVal('gender'),
-      salvationDate: getVal('salvationDate'),
-      guidedBy: getVal('guidedBy'),
-      relationship: getVal('relationship'),
-      entryDate: getVal('entryDate'),
-      occupation: getVal('occupation'),
-      departureDate: getVal('departureDate'),
-      residency: getVal('residency'),
-      emailPhone: getVal('emailPhone'),
-      address: getVal('address'),
-      prayerRequests: getVal('prayerRequests'),
-      signDate: getVal('signDate'),
-      applicantName: getVal('applicantName')
-    };
-    var c = document.querySelector('input[name="consent"]:checked');
-    d.consent = c ? c.value : 'Agree';
-
-    var members = document.querySelectorAll('#familyList .family-member');
-    members.forEach(function (m) {
-      var type = m.dataset.type;
-      var idx = m.dataset.index;
-      var key;
-      if (type === 'Spouse') key = 'Spouse';
-      else if (type === 'Child') key = 'Child' + idx;
-      else if (type === 'Other') key = 'Other';
-      else return;
-      d['famName_' + key]      = (m.querySelector('.fam-name') || {}).value || '';
-      d['famDob_' + key]       = (m.querySelector('.fam-dob') || {}).value || '';
-      d['famLiving_' + key]    = (m.querySelector('.fam-living') || {}).value || '';
-      d['famSalvation_' + key] = (m.querySelector('.fam-salvation') || {}).value || '';
-      d['famRemarks_' + key]   = (m.querySelector('.fam-remarks') || {}).value || '';
-    });
-    return d;
-  }
-
-  /* ============================================================
-     인쇄용 HTML 폼 채우기
-     ============================================================ */
-  function esc(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-  function setText(id, val) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = val || '';
-  }
-
-  function buildPrintFamily() {
-    var tbody = document.getElementById('p-familyBody');
-    tbody.innerHTML = '';
-    var labels = [
-      { key: 'Spouse', label: 'Spouse' },
-      { key: 'Child1', label: 'Child 1' },
-      { key: 'Child2', label: 'Child 2' },
-      { key: 'Child3', label: 'Child 3' },
-      { key: 'Child4', label: 'Child 4' },
-      { key: 'Other',  label: 'Other' }
-    ];
-    labels.forEach(function (item) {
-      var d = collectData();
-      var tr = document.createElement('tr');
-      tr.innerHTML =
-        '<td class="row-label">' + item.label + '</td>' +
-        '<td>' + esc(d['famName_' + item.key] || '') + '</td>' +
-        '<td>' + esc(d['famDob_' + item.key] || '') + '</td>' +
-        '<td>' + esc(d['famLiving_' + item.key] || '') + '</td>' +
-        '<td>' + esc(d['famSalvation_' + item.key] || '') + '</td>' +
-        '<td class="text-left">' + esc(d['famRemarks_' + item.key] || '') + '</td>';
-      tbody.appendChild(tr);
-    });
-  }
-
-  function buildPrintOverlay() {
-    var d = collectData();
-    setText('p-firstName', d.firstName);
-    setText('p-lastName', d.lastName);
-    setText('p-dob', d.dob);
-    setText('p-nationality', d.nationality);
-    setText('p-gender', d.gender);
-    setText('p-salvationDate', d.salvationDate);
-    setText('p-guidedBy', d.guidedBy);
-    setText('p-relationship', d.relationship);
-    setText('p-entryDate', d.entryDate);
-    setText('p-occupation', d.occupation);
-    setText('p-departureDate', d.departureDate);
-    setText('p-residency', d.residency);
-    setText('p-emailPhone', d.emailPhone);
-    setText('p-address', d.address);
-    setText('p-prayerRequests', d.prayerRequests);
-
-    buildPrintFamily();
-
-    var ca = document.getElementById('p-check-agree');
-    var cd = document.getElementById('p-check-disagree');
-    ca.textContent = ''; cd.textContent = '';
-    if (d.consent === 'Agree') ca.textContent = '✔';
-    else if (d.consent === 'Disagree') cd.textContent = '✔';
-
-    var sigImgBox = document.getElementById('p-sigImg');
-    sigImgBox.innerHTML = '';
-    if (hasSigned && signatureDataUrl) {
-      var img = document.createElement('img');
-      img.src = signatureDataUrl;
-      sigImgBox.appendChild(img);
-    }
-    setText('p-sigName', d.applicantName);
-    setText('p-signDate', d.signDate);
-  }
-
-  /* ============================================================
-     서명
-     ============================================================ */
-  var sigModal = document.getElementById('sigModal');
-  var sigCanvasWrap = document.getElementById('sigCanvasWrap');
-  var sigPreview = document.getElementById('sigPreview');
-  var canvas = document.getElementById('signatureCanvas');
-  var ctx = canvas.getContext('2d');
-  var isDrawing = false;
-  var hasSigned = false;
-  var signatureDataUrl = '';
-
-  function fitCanvas() {
-    var rect = sigCanvasWrap.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return;
-    var dpr = window.devicePixelRatio || 1;
-    canvas.width = Math.round(rect.width * dpr);
-    canvas.height = Math.round(rect.height * dpr);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(dpr, dpr);
-    ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#1b3a5c';
-    if (hasSigned && signatureDataUrl) {
-      var img = new Image();
-      img.onload = function () { ctx.drawImage(img, 0, 0, rect.width, rect.height); };
-      img.src = signatureDataUrl;
-    }
-  }
-  function getPos(e) {
-    var rect = canvas.getBoundingClientRect();
-    var cx, cy;
-    if (e.touches) { cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
-    else { cx = e.clientX; cy = e.clientY; }
-    return { x: cx - rect.left, y: cy - rect.top };
-  }
-  function startDraw(e) {
-    e.preventDefault(); e.stopPropagation();
-    isDrawing = true;
-    var p = getPos(e);
-    ctx.beginPath(); ctx.moveTo(p.x, p.y);
-    if (!hasSigned) { hasSigned = true; sigCanvasWrap.classList.add('signed'); }
-  }
-  function draw(e) {
-    if (!isDrawing) return;
-    e.preventDefault(); e.stopPropagation();
-    var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke();
-  }
-  function stopDraw(e) {
-    if (!isDrawing) return;
-    e.preventDefault(); e.stopPropagation();
-    isDrawing = false; ctx.closePath();
-    signatureDataUrl = canvas.toDataURL('image/png');
-  }
-  canvas.addEventListener('mousedown', startDraw);
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseup', stopDraw);
-  canvas.addEventListener('mouseleave', stopDraw);
-  canvas.addEventListener('touchstart', startDraw, { passive: false });
-  canvas.addEventListener('touchmove', draw, { passive: false });
-  canvas.addEventListener('touchend', stopDraw, { passive: false });
-  canvas.addEventListener('touchcancel', stopDraw, { passive: false });
-
-  function openSigModal() {
-    sigModal.classList.add('show');
-    document.body.classList.add('no-scroll');
-    requestAnimationFrame(function () { requestAnimationFrame(fitCanvas); });
-  }
-  function closeSigModal() {
-    sigModal.classList.remove('show');
-    document.body.classList.remove('no-scroll');
-  }
-  function clearSignature() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hasSigned = false; signatureDataUrl = '';
-    sigCanvasWrap.classList.remove('signed');
-  }
-  function saveSignature() {
-    if (!hasSigned || !signatureDataUrl) {
-      sigPreview.classList.remove('has-sig');
-      sigPreview.innerHTML = '<div class="placeholder">✍️ Tap here to sign</div><div class="edit-hint">Tap to sign</div>';
-      closeSigModal();
-      return;
-    }
-    sigPreview.classList.add('has-sig');
-    sigPreview.innerHTML =
-      '<img src="' + signatureDataUrl + '" alt="Signature">' +
-      '<div class="edit-hint">Tap to edit</div>';
-    closeSigModal();
-  }
-
-  sigPreview.addEventListener('click', openSigModal);
-  document.getElementById('sigCloseBtn').addEventListener('click', closeSigModal);
-  document.getElementById('sigCancelBtn').addEventListener('click', closeSigModal);
-  document.getElementById('sigClearBtn').addEventListener('click', clearSignature);
-  document.getElementById('sigSaveBtn').addEventListener('click', saveSignature);
-  sigModal.addEventListener('click', function (e) { if (e.target === sigModal) closeSigModal(); });
-
-  /* ============================================================
-     가족
-     ============================================================ */
-  var childCounter = 0, otherCounter = 0, spouseAdded = false;
-
-  function updateAddButtons() {
-    document.getElementById('btnAddSpouse').disabled = spouseAdded;
-    document.getElementById('btnAddChild').disabled = (childCounter >= MAX_CHILD);
-    document.getElementById('btnAddChild').textContent = '＋ Child (' + childCounter + '/' + MAX_CHILD + ')';
-  }
-  function updateFamilyEmpty() {
-    var list = document.getElementById('familyList');
-    document.getElementById('familyEmpty').style.display = list.children.length === 0 ? 'block' : 'none';
-  }
-  function createFamilyMember(type) {
-    var idx = 0, label = '', badge = '';
-    if (type === 'Spouse') { label = 'Spouse'; badge = 'Spouse'; spouseAdded = true; }
-    else if (type === 'Child') { childCounter++; idx = childCounter; label = 'Child ' + idx; badge = 'Child ' + idx; }
-    else if (type === 'Other') { otherCounter++; idx = otherCounter; label = 'Other ' + idx; badge = 'Other'; }
-    var div = document.createElement('div');
-    div.className = 'family-member';
-    div.dataset.type = type; div.dataset.index = idx;
-    div.innerHTML =
-      '<div class="family-member-header">' +
-        '<span class="badge">' + badge + '</span>' +
-        '<span>' + label + '</span>' +
-      '</div>' +
-      '<button type="button" class="remove-btn">✕</button>' +
-      '<div class="row"><label>Name</label><input type="text" class="fam-name" placeholder="Full name"></div>' +
-      '<div class="row"><label>Date of Birth</label><input type="date" class="fam-dob"></div>' +
-      '<div class="row"><label>Living Together</label>' +
-        '<select class="fam-living"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div>' +
-      '<div class="row"><label>Salvation</label>' +
-        '<select class="fam-salvation"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option><option value="Unknown">Unknown</option></select></div>' +
-      '<div class="row"><label>Remarks</label><input type="text" class="fam-remarks" placeholder="Remarks"></div>';
-    div.querySelector('.remove-btn').addEventListener('click', function () {
-      if (!confirm('Remove this family member?')) return;
-      var t = div.dataset.type;
-      if (t === 'Spouse') spouseAdded = false;
-      else if (t === 'Child') childCounter = Math.max(0, childCounter - 1);
-      else if (t === 'Other') otherCounter = Math.max(0, otherCounter - 1);
-      div.remove(); updateAddButtons(); updateFamilyEmpty();
-    });
-    return div;
-  }
-  document.getElementById('btnAddSpouse').addEventListener('click', function () {
-    if (spouseAdded) return;
-    var m = createFamilyMember('Spouse');
-    document.getElementById('familyList').appendChild(m);
-    updateAddButtons(); updateFamilyEmpty();
-    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-  document.getElementById('btnAddChild').addEventListener('click', function () {
-    if (childCounter >= MAX_CHILD) return;
-    var m = createFamilyMember('Child');
-    document.getElementById('familyList').appendChild(m);
-    updateAddButtons(); updateFamilyEmpty();
-    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-  document.getElementById('btnAddOther').addEventListener('click', function () {
-    var m = createFamilyMember('Other');
-    document.getElementById('familyList').appendChild(m);
-    updateAddButtons(); updateFamilyEmpty();
-    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-
-  /* ============================================================
-     인앱 감지
-     ============================================================ */
-  function detectInApp() {
-    var ua = (navigator.userAgent || '') + ' ' + (navigator.vendor || '');
-    var name = null;
-    if (/KAKAOTALK/i.test(ua)) name = 'KakaoTalk';
-    else if (/Instagram/i.test(ua)) name = 'Instagram';
-    else if (/FBAN|FBAV|FB_IAB/i.test(ua)) name = 'Facebook';
-    else if (/Line\//i.test(ua)) name = 'LINE';
-    else if (/NAVER/i.test(ua)) name = 'Naver App';
-    else if (/DaumApps/i.test(ua)) name = 'Daum App';
-    else if (/SnapChat/i.test(ua)) name = 'Snapchat';
-    else if (/Twitter/i.test(ua)) name = 'X (Twitter)';
-    else if (/Pinterest/i.test(ua)) name = 'Pinterest';
-    if (name) return { inApp: true, name: name };
-    var isIOS = /iPhone|iPad|iPod/i.test(ua);
-    var isIOSReal = /Safari/i.test(ua) || /CriOS/i.test(ua) || /FxiOS/i.test(ua) || /EdgiOS/i.test(ua);
-    if (isIOS && !isIOSReal) return { inApp: true, name: 'In-App Browser' };
-    var isAndroid = /Android/i.test(ua);
-    var isWebView = /;\s*wv\)/i.test(ua);
-    var isChrome = /Chrome\/\d+/i.test(ua) && !isWebView;
-    if (isAndroid && isWebView && !isChrome) return { inApp: true, name: 'In-App Browser' };
-    return { inApp: false };
-  }
-  var state = detectInApp();
-  var IN_APP = state.inApp;
-  if (IN_APP) {
-    document.body.classList.add('inapp');
-    var nm = document.getElementById('inappName');
-    if (nm && state.name) nm.textContent = state.name;
-    document.getElementById('inappBanner').classList.add('show');
-  }
-
-  /* ============================================================
-     제출 모달
-     ============================================================ */
-  var submitModal = document.getElementById('submitModal');
-  var btnEmail = document.getElementById('btnEmail');
-  var btnCopy = document.getElementById('btnCopyEmail');
-  var btnClose = document.getElementById('btnCloseModal');
-
-  function openSubmitModal() {
-    var name = getVal('applicantName') || (getVal('firstName') + ' ' + getVal('lastName')).trim() || 'Applicant';
-    var dateSub = getVal('signDate') || new Date().toISOString().slice(0, 10);
-    var subject = 'Calgary Church Member Registration Card - ' + name + ' - ' + dateSub;
-    var bodyLines = [
-      'Hello,', '',
-      'Attached is my Calgary Church Member Registration Card (PDF).', '',
-      '- Applicant: ' + name,
-      '- Date: ' + dateSub, '',
-      'Thank you.'
-    ];
-    var url = 'mailto:' + encodeURIComponent(EMAIL_TO) +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(bodyLines.join('\r\n'));
-    btnEmail.setAttribute('href', url);
-    submitModal.classList.add('show');
-    document.body.classList.add('no-scroll');
-  }
-  function closeSubmitModal() {
-    submitModal.classList.remove('show');
-    document.body.classList.remove('no-scroll');
-  }
-  btnClose.addEventListener('click', closeSubmitModal);
-  submitModal.addEventListener('click', function (e) { if (e.target === submitModal) closeSubmitModal(); });
-  btnCopy.addEventListener('click', function () {
-    var done = function () {
-      var orig = btnCopy.textContent;
-      btnCopy.textContent = '✅ Copied!';
-      setTimeout(function () { btnCopy.textContent = orig; }, 1600);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(EMAIL_TO).then(done).catch(function () { fallback(done); });
-    } else { fallback(done); }
-  });
-  function fallback(cb) {
-    var ta = document.createElement('textarea');
-    ta.value = EMAIL_TO; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); } catch (e) {}
-    document.body.removeChild(ta);
-    cb && cb();
-  }
-  document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
-    if (sigModal.classList.contains('show')) closeSigModal();
-    if (submitModal.classList.contains('show')) closeSubmitModal();
-  });
-
-  /* ============================================================
-     Complete 버튼
-     ============================================================ */
-  var pendingModal = false;
-  document.getElementById('btnPrint').addEventListener('click', function () {
-    var fn = getVal('firstName');
-    var ln = getVal('lastName');
-    if (!fn || !ln) {
-      alert('Please enter First Name and Last Name.');
-      (!fn ? document.getElementById('firstName') : document.getElementById('lastName')).focus();
-      return;
-    }
-    if (!getVal('applicantName')) {
-      alert('Please enter Applicant Name.');
-      document.getElementById('applicantName').focus();
-      return;
-    }
-    if (!hasSigned) {
-      alert('Please add your signature. Tap the signature box.');
-      sigPreview.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-    if (IN_APP) {
-      alert('⚠️ PDF saving is not supported in ' + (state.name || 'in-app browser') +
-        '.\n\nPlease reopen in Safari or Chrome:\n' +
-        '1. Tap ⋯ (or ⋮) menu\n' +
-        '2. Choose "Open in Browser" or "Open in Safari"\n' +
-        '3. Tap "Complete (Save PDF)" again');
-      document.getElementById('inappBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
-    }
-    buildPrintOverlay();
-    pendingModal = true;
-    setTimeout(function () { window.print(); }, 100);
-  });
-
-  window.addEventListener('beforeprint', buildPrintOverlay);
-  window.addEventListener('afterprint', function () {
-    if (!pendingModal) return;
-    pendingModal = false;
-    setTimeout(openSubmitModal, 300);
-  });
-
-  document.getElementById('btnReset').addEventListener('click', function () {
-    if (!confirm('Clear all inputs and start over?')) return;
-    location.reload();
-  });
-
-  window.addEventListener('load', function () {
-    var t = new Date();
-    var iso = t.getFullYear() + '-' +
-      String(t.getMonth() + 1).padStart(2, '0') + '-' +
-      String(t.getDate()).padStart(2, '0');
-    document.getElementById('signDate').value = iso;
-    updateAddButtons();
-    updateFamilyEmpty();
-  });
-})();
-</script>
-</body>
-</html>
+        <td
