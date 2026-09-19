@@ -362,7 +362,7 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용 : Letter 1페이지, 2/3번 섹션은 flex로 늘림
+     인쇄용 : Letter 1페이지에 모두 들어가도록
      ============================================================ */
   .form-print { display:none; }
 
@@ -371,6 +371,8 @@
     html, body {
       background:#fff !important; margin:0 !important;
       padding:0 !important; width:100%;
+      height: auto !important;
+      overflow: hidden !important;
     }
     .form-screen, .inapp-banner, .modal { display:none !important; }
     .form-print { display:block !important; width:100%; }
@@ -379,15 +381,17 @@
     .form-print {
       font-family:"Times New Roman", Times, serif;
       color:#000; font-size:9pt; line-height:1.25;
-      /* ★ Letter 1페이지 고정 */
       width: 100%;
-      height: 11in;              /* Letter 높이 - 위아래 여백 = 약 10.4in */
-      max-height: 10.4in;
+      max-height: 10.3in;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
+      page-break-after: avoid !important;
+      page-break-inside: avoid !important;
+      break-after: avoid !important;
+      break-inside: avoid !important;
     }
 
-    /* 헤더 */
     .p-header-row {
       display:flex; justify-content:space-between;
       align-items:center; gap:8pt; margin:0 0 6pt;
@@ -430,12 +434,8 @@
     }
     .p-table td.full-cell { min-height:18pt; height:18pt; }
 
-    /* ★ 1번 섹션 (Personal) — 크기 고정 */
-    .p-section-1 {
-      flex-shrink: 0;
-    }
+    .p-section-1 { flex-shrink: 0; }
 
-    /* ★ 2번 + 3번 섹션 그룹 — 남는 공간을 채움 */
     .p-flex-group {
       flex: 1 1 auto;
       display: flex;
@@ -444,29 +444,23 @@
       gap: 0;
     }
 
-    /* 2번 섹션 (Family) — 늘어남 */
     .p-section-2 {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
-      min-height: 80pt;
+      min-height: 70pt;
     }
     .p-section-2 .p-family-wrap {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
     }
-    /* 가족 표가 늘어나도록 */
     .p-family-table {
       height: 100%;
       width: 100%;
     }
-    .p-family-table tbody tr {
-      /* 빈 행도 높이를 나눠가짐 */
-      height: 100%;
-    }
+    .p-family-table tbody tr { height: 100%; }
 
-    /* ★ 가족 없을 때 메시지 박스도 늘어남 */
     .p-no-family {
       border:1px solid #000; padding:8pt; text-align:center;
       font-size:9pt; font-weight:bold; color:#555;
@@ -475,30 +469,28 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 60pt;
+      min-height: 50pt;
     }
 
-    /* 3번 섹션 (Prayer) — 늘어남 */
     .p-section-3 {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
-      min-height: 60pt;
+      min-height: 50pt;
     }
     .p-prayer-box {
       border:1px solid #000; padding:6pt;
       font-size:9pt; white-space:pre-wrap; word-break:break-word;
       line-height:1.35;
       flex: 1 1 auto;
-      min-height: 50pt;
+      min-height: 45pt;
     }
 
-    /* ★ 하단 고정 영역 (Consent + Date + Applicant + 서명) */
     .p-footer {
       flex-shrink: 0;
-      margin-top: 6pt;
+      margin-top: 5pt;
       border-top: 1pt solid #ccc;
-      padding-top: 5pt;
+      padding-top: 4pt;
     }
 
     .p-consent-item {
@@ -508,7 +500,7 @@
     .p-consent-item b { font-weight:bold; }
 
     .p-consent-row {
-      margin-top:5pt; font-size:9.5pt; font-weight:bold;
+      margin-top:4pt; font-size:9.5pt; font-weight:bold;
     }
     .p-consent-row .p-check {
       display:inline-block; width:10pt; height:10pt;
@@ -519,7 +511,7 @@
     .p-consent-row span.gap { display:inline-block; width:24pt; }
 
     .p-bottom {
-      margin-top:6pt; font-size:9.5pt; font-weight:bold;
+      margin-top:5pt; font-size:9.5pt; font-weight:bold;
     }
     .p-bottom .line {
       display:inline-block; border-bottom:1pt solid #000;
@@ -527,20 +519,23 @@
     }
 
     .p-sig-area {
-      margin-top:6pt;
+      margin-top:5pt;
       display:flex; gap:30pt;
     }
     .p-sig-block { flex:1; }
-    .p-sig-label { font-size:9.5pt; font-weight:bold; margin-bottom:4pt; }
+    .p-sig-label { font-size:9.5pt; font-weight:bold; margin-bottom:3pt; }
     .p-sig-img {
-      border-bottom:1pt solid #000; min-height:34pt;
-      padding:3pt 0;
+      border-bottom:1pt solid #000; min-height:30pt;
+      padding:2pt 0;
     }
-    .p-sig-img img { max-height:32pt; max-width:100%; object-fit:contain; }
-    .p-sig-name { font-size:8.5pt; color:#333; margin-top:3pt; }
+    .p-sig-img img { max-height:28pt; max-width:100%; object-fit:contain; }
+    .p-sig-name { font-size:8.5pt; color:#333; margin-top:2pt; }
 
-    /* 페이지 나눔 방지 */
-    .form-print > * { page-break-inside: avoid; }
+    /* 페이지 나눔 완전 방지 */
+    .form-print > * {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
   }
 
   @media (min-width:701px){
@@ -702,18 +697,16 @@
 </div>
 
 <!-- ============================================================
-     인쇄용 : 2·3번 섹션은 flex로 늘어나고, 하단은 고정
+     인쇄용 (Letter 1페이지)
      ============================================================ -->
 <div class="form-print" id="formPrint">
-  <!-- 헤더 -->
   <div class="p-header-row">
     <div class="p-title">Calgary Church Member Registration Card</div>
     <div class="p-logo">
-      <img src="LOGO.PNG" alt="Logo" onerror="this.style.display='none'">
+      <img src="LOGO.png" alt="Logo" onerror="this.style.display='none'">
     </div>
   </div>
 
-  <!-- 1. Personal (고정) -->
   <div class="p-section-1">
     <div class="p-section-title">1. Personal Information</div>
     <table class="p-table">
@@ -758,31 +751,25 @@
     </table>
   </div>
 
-  <!-- ★ 2 & 3번 섹션 (flex로 늘어남) -->
   <div class="p-flex-group">
-
-    <!-- 2. Family -->
     <div class="p-section-2">
       <div class="p-section-title">2. Family Information</div>
       <div class="p-family-wrap" id="p-familyWrapper"></div>
     </div>
 
-    <!-- 3. Prayer -->
     <div class="p-section-3">
       <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
       <div class="p-prayer-box" id="p-prayerRequests"></div>
     </div>
-
   </div>
 
-  <!-- ★ 하단 고정 영역 -->
   <div class="p-footer">
     <div class="p-section-title">Consent to Collection and Use of Personal Information</div>
     <div class="p-consent-item"><b>Purpose of Collection:</b> Church register management, pastoral care and visitation, delivery of church news and announcements</div>
     <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</div>
     <div class="p-consent-item"><b>Retention Period:</b> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</div>
 
-    <div style="margin-top:5pt;font-size:9.5pt;font-weight:bold;">
+    <div style="margin-top:4pt;font-size:9.5pt;font-weight:bold;">
       Do you consent to the collection and use of personal information as stated above?
     </div>
     <div class="p-consent-row">
@@ -794,7 +781,7 @@
     <div class="p-bottom">
       <b>Date :</b> <span class="line" id="p-signDate"></span>
     </div>
-    <div class="p-bottom" style="margin-top:5pt;">
+    <div class="p-bottom" style="margin-top:4pt;">
       <b>Applicant(Name &amp; signature):</b>
     </div>
 
@@ -954,7 +941,6 @@
     var d = collectData();
     wrapper.innerHTML = '';
 
-    /* 가족 정보 없음 */
     if (!hasFamilyData(d)) {
       var msg = document.createElement('div');
       msg.className = 'p-no-family';
@@ -963,7 +949,6 @@
       return;
     }
 
-    /* 가족 정보 있음 — 표 (입력된 행만) */
     var table = document.createElement('table');
     table.className = 'p-table p-family-table';
     table.innerHTML =
@@ -991,7 +976,6 @@
       { key: 'Other',  label: 'Other' }
     ];
 
-    /* 실제 데이터가 있는 행만 (최소 1개 이상) */
     var hasRow = false;
     labels.forEach(function (item) {
       var name = d['famName_' + item.key] || '';
@@ -1013,7 +997,6 @@
       tbody.appendChild(tr);
     });
 
-    /* 만약 행이 하나도 없으면 메시지 */
     if (!hasRow) {
       var msg2 = document.createElement('div');
       msg2.className = 'p-no-family';
@@ -1062,7 +1045,6 @@
     setText('p-signDate', d.signDate);
   }
 
-  /* 서명 */
   var sigModal = document.getElementById('sigModal');
   var sigCanvasWrap = document.getElementById('sigCanvasWrap');
   var sigPreview = document.getElementById('sigPreview');
@@ -1157,7 +1139,6 @@
   document.getElementById('sigSaveBtn').addEventListener('click', saveSignature);
   sigModal.addEventListener('click', function (e) { if (e.target === sigModal) closeSigModal(); });
 
-  /* 가족 */
   var childCounter = 0, otherCounter = 0, spouseAdded = false;
 
   function updateAddButtons() {
@@ -1221,7 +1202,6 @@
     m.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
-  /* 인앱 감지 */
   function detectInApp() {
     var ua = (navigator.userAgent || '') + ' ' + (navigator.vendor || '');
     var name = null;
@@ -1253,7 +1233,6 @@
     document.getElementById('inappBanner').classList.add('show');
   }
 
-  /* 제출 모달 */
   var submitModal = document.getElementById('submitModal');
   var btnEmail = document.getElementById('btnEmail');
   var btnCopy = document.getElementById('btnCopyEmail');
@@ -1307,7 +1286,6 @@
     if (submitModal.classList.contains('show')) closeSubmitModal();
   });
 
-  /* Complete */
   var pendingModal = false;
   document.getElementById('btnPrint').addEventListener('click', function () {
     var fn = getVal('firstName');
