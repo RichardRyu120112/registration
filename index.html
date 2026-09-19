@@ -106,14 +106,9 @@
     box-shadow:0 0 0 3px rgba(47,111,176,.15);
   }
 
-  /* Other 입력칸 (숨겼다가 나타남) */
-  .other-input-wrap {
-    display:none;
-    margin-top:8px;
-  }
+  .other-input-wrap { display:none; margin-top:8px; }
   .other-input-wrap.show { display:block; }
 
-  /* 가족 */
   .family-empty {
     text-align:center; padding:22px 16px;
     background:var(--input-bg); border:2px dashed var(--line);
@@ -367,12 +362,12 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용
+     인쇄용 : Letter 1페이지에 모두 들어가게 조정
      ============================================================ */
   .form-print { display:none; }
 
   @media print {
-    @page { size: Letter; margin: 12.7mm 12.7mm; }
+    @page { size: Letter; margin: 8mm 10mm; }
     html, body {
       background:#fff !important; margin:0 !important;
       padding:0 !important; width:100%;
@@ -383,108 +378,114 @@
 
     .form-print {
       font-family:"Times New Roman", Times, serif;
-      color:#000; font-size:10.5pt; line-height:1.3;
+      color:#000; font-size:9pt; line-height:1.25;
     }
+
+    /* 헤더 */
     .p-header-row {
       display:flex; justify-content:space-between;
-      align-items:center; gap:10pt; margin:0 0 10pt;
+      align-items:center; gap:8pt; margin:0 0 6pt;
     }
     .p-title {
-      flex:1; font-size:14pt; font-weight:bold;
+      flex:1; font-size:12pt; font-weight:bold;
       text-decoration:underline; margin:0; text-align:left;
     }
     .p-logo {
-      flex-shrink:0; width:70pt; height:70pt;
+      flex-shrink:0; width:55pt; height:55pt;
       display:flex; align-items:center; justify-content:center;
     }
     .p-logo img { max-width:100%; max-height:100%; object-fit:contain; }
 
     .p-section-title {
-      font-size:12pt; font-weight:bold; margin:12pt 0 5pt;
+      font-size:10.5pt; font-weight:bold; margin:8pt 0 3pt;
     }
+
     .p-table {
-      width:100%; border-collapse:collapse; font-size:10.5pt;
+      width:100%; border-collapse:collapse; font-size:9pt;
       table-layout:fixed;
     }
     .p-table th, .p-table td {
-      border:1px solid #000; padding:4pt 6pt; vertical-align:middle;
+      border:1px solid #000; padding:2pt 4pt; vertical-align:middle;
     }
     .p-table th {
       background:#1b3a5c !important; color:#fff !important;
-      font-weight:bold; text-align:center; font-size:10pt;
-      padding:5pt 3pt;
+      font-weight:bold; text-align:center; font-size:8.5pt;
+      padding:3pt 2pt;
     }
     .p-table td.label-cell {
       background:#eef3f8 !important; font-weight:bold;
-      font-size:10pt; white-space:nowrap;
+      font-size:8.5pt; white-space:nowrap;
     }
     .p-table td.value-cell {
-      font-size:10.5pt; word-break:break-word;
-      min-height:20pt; height:20pt;
+      font-size:9pt; word-break:break-word;
+      min-height:14pt; height:14pt;
     }
-    .p-table td.full-cell { min-height:28pt; height:28pt; }
+    .p-table td.full-cell { min-height:18pt; height:18pt; }
 
-    .p-family-table th { font-size:9.5pt; padding:5pt 2pt; }
+    .p-family-table th { font-size:8pt; padding:3pt 2pt; }
     .p-family-table td {
-      text-align:center; padding:5pt 3pt; height:20pt;
-      font-size:10pt;
+      text-align:center; padding:3pt 2pt; height:14pt;
+      font-size:8.5pt;
     }
     .p-family-table td.row-label {
       background:#eef3f8 !important; font-weight:bold;
-      color:#1b3a5c; font-size:10pt;
+      color:#1b3a5c; font-size:8.5pt;
     }
     .p-family-table td.text-left { text-align:left; }
 
-    /* ★ 가족 없을 때 메시지 박스 */
+    /* 가족 없을 때 */
     .p-no-family {
-      border:1px solid #000; padding:10pt; text-align:center;
-      font-size:10.5pt; font-weight:bold; color:#555;
+      border:1px solid #000; padding:8pt; text-align:center;
+      font-size:9pt; font-weight:bold; color:#555;
       background:#f7f8fa; font-style:italic;
     }
 
     .p-prayer-box {
-      border:1px solid #000; padding:8pt; min-height:60pt;
-      font-size:10.5pt; white-space:pre-wrap; word-break:break-word;
-      line-height:1.4;
+      border:1px solid #000; padding:6pt; min-height:40pt;
+      font-size:9pt; white-space:pre-wrap; word-break:break-word;
+      line-height:1.35;
     }
 
     .p-consent-item {
-      font-size:10.5pt; line-height:1.5; margin:0 0 4pt;
-      padding-left:14pt; text-indent:-14pt;
+      font-size:8.5pt; line-height:1.4; margin:0 0 2pt;
+      padding-left:12pt; text-indent:-12pt;
     }
     .p-consent-item b { font-weight:bold; }
 
     .p-consent-row {
-      margin-top:10pt; font-size:11pt; font-weight:bold;
+      margin-top:6pt; font-size:9.5pt; font-weight:bold;
     }
     .p-consent-row .p-check {
-      display:inline-block; width:11pt; height:11pt;
+      display:inline-block; width:10pt; height:10pt;
       border:1pt solid #000; vertical-align:-1pt;
-      margin-right:4pt; text-align:center; line-height:11pt;
-      font-size:10pt;
+      margin-right:3pt; text-align:center; line-height:10pt;
+      font-size:9pt;
     }
-    .p-consent-row span.gap { display:inline-block; width:30pt; }
+    .p-consent-row span.gap { display:inline-block; width:24pt; }
 
     .p-bottom {
-      margin-top:14pt; font-size:11pt; font-weight:bold;
+      margin-top:8pt; font-size:9.5pt; font-weight:bold;
     }
     .p-bottom .line {
       display:inline-block; border-bottom:1pt solid #000;
-      min-width:140pt; padding:0 6pt;
+      min-width:110pt; padding:0 5pt;
     }
 
     .p-sig-area {
-      margin-top:16pt; page-break-inside:avoid;
-      display:flex; justify-content:space-between; gap:40pt;
+      margin-top:10pt; page-break-inside:avoid;
+      display:flex; gap:30pt;
     }
     .p-sig-block { flex:1; }
-    .p-sig-label { font-size:11pt; font-weight:bold; margin-bottom:6pt; }
+    .p-sig-label { font-size:9.5pt; font-weight:bold; margin-bottom:4pt; }
     .p-sig-img {
-      border-bottom:1pt solid #000; min-height:50pt;
-      padding:4pt 0;
+      border-bottom:1pt solid #000; min-height:34pt;
+      padding:3pt 0;
     }
-    .p-sig-img img { max-height:46pt; max-width:100%; object-fit:contain; }
-    .p-sig-name { font-size:10pt; color:#333; margin-top:4pt; }
+    .p-sig-img img { max-height:32pt; max-width:100%; object-fit:contain; }
+    .p-sig-name { font-size:8.5pt; color:#333; margin-top:3pt; }
+
+    /* 페이지 나눔 방지 */
+    .form-print > * { page-break-inside: avoid; }
   }
 
   @media (min-width:701px){
@@ -522,7 +523,6 @@
     </ul>
   </div>
 
-  <!-- 1. Personal -->
   <div class="card">
     <div class="card-title"><i>👤</i> 1. Personal Information</div>
     <div class="row"><label for="firstName">First Name</label>
@@ -553,7 +553,6 @@
     <div class="row"><label for="departureDate">Departure Date</label>
       <input type="date" id="departureDate"></div>
 
-    <!-- ★ Residency Status 드롭다운 + Other 입력칸 -->
     <div class="row" style="align-items:flex-start;">
       <label for="residency" style="padding-top:14px;">Residency Status</label>
       <div>
@@ -580,7 +579,6 @@
     </div>
   </div>
 
-  <!-- 2. Family -->
   <div class="card">
     <div class="card-title"><i>👨‍👩‍👧‍👦</i> 2. Family Information</div>
     <div class="family-empty" id="familyEmpty">
@@ -595,7 +593,6 @@
     </div>
   </div>
 
-  <!-- 3. Prayer -->
   <div class="card">
     <div class="card-title"><i>🙏</i> 3. Prayer Requests &amp; Inquiries</div>
     <div class="row" style="align-items:flex-start;">
@@ -604,7 +601,6 @@
     </div>
   </div>
 
-  <!-- Consent -->
   <div class="card">
     <div class="card-title"><i>🔒</i> Consent to Collection and Use of Personal Information</div>
     <div class="consent-box">
@@ -627,7 +623,6 @@
     </div>
   </div>
 
-  <!-- Signature -->
   <div class="card">
     <div class="card-title"><i>✍️</i> Applicant (Name &amp; Signature)</div>
     <div class="row"><label for="applicantName">Applicant Name</label>
@@ -652,7 +647,7 @@
 </div>
 
 <!-- ============================================================
-     인쇄용
+     인쇄용 (Letter 1페이지)
      ============================================================ -->
 <div class="form-print" id="formPrint">
   <div class="p-header-row">
@@ -705,9 +700,7 @@
   </table>
 
   <div class="p-section-title">2. Family Information</div>
-  <div id="p-familyWrapper">
-    <!-- 자바스크립트로 표 또는 "NO FAMILY INFORMATION" 메시지 삽입 -->
-  </div>
+  <div id="p-familyWrapper"></div>
 
   <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
   <div class="p-prayer-box" id="p-prayerRequests"></div>
@@ -717,7 +710,7 @@
   <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</div>
   <div class="p-consent-item"><b>Retention Period:</b> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</div>
 
-  <div style="margin-top:8pt;font-size:11pt;font-weight:bold;">
+  <div style="margin-top:6pt;font-size:9.5pt;font-weight:bold;">
     Do you consent to the collection and use of personal information as stated above?
   </div>
   <div class="p-consent-row">
@@ -729,7 +722,7 @@
   <div class="p-bottom">
     <b>Date :</b> <span class="line" id="p-signDate"></span>
   </div>
-  <div class="p-bottom" style="margin-top:8pt;">
+  <div class="p-bottom" style="margin-top:6pt;">
     <b>Applicant(Name &amp; signature):</b>
   </div>
 
@@ -794,13 +787,10 @@
   var EMAIL_TO = 'hansoo2454@gmail.com';
   var MAX_CHILD = 4;
 
-  /* ============================================================
-     Residency Status "Other" 토글
-     ============================================================ */
+  /* Residency Other */
   var residencySelect = document.getElementById('residency');
   var residencyOtherWrap = document.getElementById('residencyOtherWrap');
   var residencyOther = document.getElementById('residencyOther');
-
   residencySelect.addEventListener('change', function () {
     if (residencySelect.value === 'Other') {
       residencyOtherWrap.classList.add('show');
@@ -811,9 +801,7 @@
     }
   });
 
-  /* ============================================================
-     값 수집
-     ============================================================ */
+  /* 값 수집 */
   function getVal(id) {
     var el = document.getElementById(id);
     return el ? (el.value || '').trim() : '';
@@ -826,7 +814,6 @@
     }
     return v;
   }
-
   function collectData() {
     var d = {
       firstName: getVal('firstName'),
@@ -868,9 +855,6 @@
     return d;
   }
 
-  /* ============================================================
-     인쇄용 채우기
-     ============================================================ */
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -900,7 +884,7 @@
     var d = collectData();
     wrapper.innerHTML = '';
 
-    /* ★ 가족 정보가 없으면 메시지 출력 */
+    /* 가족 정보가 없으면 메시지 */
     if (!hasFamilyData(d)) {
       var msg = document.createElement('div');
       msg.className = 'p-no-family';
@@ -909,7 +893,7 @@
       return;
     }
 
-    /* ★ 가족 정보가 있으면 표 출력 (입력된 행만) */
+    /* 있으면 표 (입력된 행만) */
     var table = document.createElement('table');
     table.className = 'p-table p-family-table';
     table.innerHTML =
@@ -943,7 +927,6 @@
       var living = d['famLiving_' + item.key] || '';
       var salvation = d['famSalvation_' + item.key] || '';
       var remarks = d['famRemarks_' + item.key] || '';
-      /* 이 행에 아무 데이터도 없으면 스킵 */
       if (!name && !dob && !living && !salvation && !remarks) return;
 
       var tr = document.createElement('tr');
@@ -997,9 +980,7 @@
     setText('p-signDate', d.signDate);
   }
 
-  /* ============================================================
-     서명
-     ============================================================ */
+  /* 서명 */
   var sigModal = document.getElementById('sigModal');
   var sigCanvasWrap = document.getElementById('sigCanvasWrap');
   var sigPreview = document.getElementById('sigPreview');
@@ -1094,9 +1075,7 @@
   document.getElementById('sigSaveBtn').addEventListener('click', saveSignature);
   sigModal.addEventListener('click', function (e) { if (e.target === sigModal) closeSigModal(); });
 
-  /* ============================================================
-     가족
-     ============================================================ */
+  /* 가족 */
   var childCounter = 0, otherCounter = 0, spouseAdded = false;
 
   function updateAddButtons() {
@@ -1160,9 +1139,7 @@
     m.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
-  /* ============================================================
-     인앱 감지
-     ============================================================ */
+  /* 인앱 감지 */
   function detectInApp() {
     var ua = (navigator.userAgent || '') + ' ' + (navigator.vendor || '');
     var name = null;
@@ -1194,9 +1171,7 @@
     document.getElementById('inappBanner').classList.add('show');
   }
 
-  /* ============================================================
-     제출 모달
-     ============================================================ */
+  /* 제출 모달 */
   var submitModal = document.getElementById('submitModal');
   var btnEmail = document.getElementById('btnEmail');
   var btnCopy = document.getElementById('btnCopyEmail');
@@ -1250,9 +1225,7 @@
     if (submitModal.classList.contains('show')) closeSubmitModal();
   });
 
-  /* ============================================================
-     Complete 버튼
-     ============================================================ */
+  /* Complete */
   var pendingModal = false;
   document.getElementById('btnPrint').addEventListener('click', function () {
     var fn = getVal('firstName');
