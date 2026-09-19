@@ -362,7 +362,10 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용 : Letter 1페이지에 모두 들어가도록
+     인쇄용 : Letter 1페이지
+     ★ 상단(Header + 1번) 고정
+     ★ 중간(2번 + 3번) 내용에 따라 자연스럽게 늘어남
+     ★ 하단(Consent~) margin-top:auto 로 페이지 하단에 고정
      ============================================================ */
   .form-print { display:none; }
 
@@ -384,6 +387,7 @@
       width: 100%;
       max-height: 10.3in;
       overflow: hidden;
+      /* ★ flex column 으로 3부분 (상단/중간/하단) 배치 */
       display: flex;
       flex-direction: column;
       page-break-after: avoid !important;
@@ -392,10 +396,35 @@
       break-inside: avoid !important;
     }
 
+    /* ---------- 상단 고정 영역 ---------- */
+    .p-top {
+      flex-shrink: 0;
+    }
+
+    /* ---------- 중간 (자연스럽게 늘어남) ---------- */
+    .p-middle {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4pt;
+      min-height: 0;
+      /* 남는 공간이 있으면 이 안에서 자연스럽게 분배됨 */
+    }
+
+    /* ---------- 하단 고정 (margin-top:auto 로 항상 바닥) ---------- */
+    .p-bottom-fixed {
+      flex-shrink: 0;
+      margin-top: auto;    /* ★ 남는 공간을 위로 밀어냄 → 하단에 딱 붙음 */
+      border-top: 1pt solid #999;
+      padding-top: 5pt;
+      padding-bottom: 0;
+      page-break-inside: avoid !important;
+    }
+
+    /* ---------- 헤더 ---------- */
     .p-header-row {
       display:flex; justify-content:space-between;
       align-items:center; gap:8pt; margin:0 0 6pt;
-      flex-shrink: 0;
     }
     .p-title {
       flex:1; font-size:12pt; font-weight:bold;
@@ -409,9 +438,9 @@
 
     .p-section-title {
       font-size:10.5pt; font-weight:bold; margin:6pt 0 3pt;
-      flex-shrink: 0;
     }
 
+    /* ---------- 표 ---------- */
     .p-table {
       width:100%; border-collapse:collapse; font-size:9pt;
       table-layout:fixed;
@@ -434,65 +463,35 @@
     }
     .p-table td.full-cell { min-height:18pt; height:18pt; }
 
-    .p-section-1 { flex-shrink: 0; }
-
-    .p-flex-group {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      gap: 0;
-    }
-
-    .p-section-2 {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      min-height: 70pt;
-    }
-    .p-section-2 .p-family-wrap {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
+    /* ---------- 2번 Family ---------- */
+    .p-family-wrap {
+      display: block;
     }
     .p-family-table {
-      height: 100%;
       width: 100%;
     }
-    .p-family-table tbody tr { height: 100%; }
+    .p-family-table tbody tr { height: auto; }
 
+    /* 가족 정보 없을 때 : 고정 높이 */
     .p-no-family {
-      border:1px solid #000; padding:8pt; text-align:center;
+      border:1px solid #000; padding:14pt 8pt; text-align:center;
       font-size:9pt; font-weight:bold; color:#555;
       background:#f7f8fa; font-style:italic;
-      flex: 1 1 auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 50pt;
     }
 
-    .p-section-3 {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      min-height: 50pt;
-    }
+    /* ---------- 3번 Prayer : 자연 높이 (최소만 보장) ---------- */
     .p-prayer-box {
       border:1px solid #000; padding:6pt;
       font-size:9pt; white-space:pre-wrap; word-break:break-word;
       line-height:1.35;
-      flex: 1 1 auto;
-      min-height: 45pt;
+      min-height: 60pt;
+      /* ★ 내용이 길면 자동으로 늘어남 */
     }
 
-    .p-footer {
-      flex-shrink: 0;
-      margin-top: 5pt;
-      border-top: 1pt solid #ccc;
-      padding-top: 4pt;
-    }
-
+    /* ---------- 하단 고정 : Consent / Date / Applicant / 서명 ---------- */
     .p-consent-item {
       font-size:8.5pt; line-height:1.4; margin:0 0 2pt;
       padding-left:12pt; text-indent:-12pt;
@@ -511,7 +510,7 @@
     .p-consent-row span.gap { display:inline-block; width:24pt; }
 
     .p-bottom {
-      margin-top:5pt; font-size:9.5pt; font-weight:bold;
+      margin-top:4pt; font-size:9.5pt; font-weight:bold;
     }
     .p-bottom .line {
       display:inline-block; border-bottom:1pt solid #000;
@@ -530,12 +529,6 @@
     }
     .p-sig-img img { max-height:28pt; max-width:100%; object-fit:contain; }
     .p-sig-name { font-size:8.5pt; color:#333; margin-top:2pt; }
-
-    /* 페이지 나눔 완전 방지 */
-    .form-print > * {
-      page-break-inside: avoid !important;
-      break-inside: avoid !important;
-    }
   }
 
   @media (min-width:701px){
@@ -697,17 +690,19 @@
 </div>
 
 <!-- ============================================================
-     인쇄용 (Letter 1페이지)
+     인쇄용 : 상단 고정 / 중간 자연 늘어남 / 하단 고정
      ============================================================ -->
 <div class="form-print" id="formPrint">
-  <div class="p-header-row">
-    <div class="p-title">Calgary Church Member Registration Card</div>
-    <div class="p-logo">
-      <img src="LOGO.png" alt="Logo" onerror="this.style.display='none'">
-    </div>
-  </div>
 
-  <div class="p-section-1">
+  <!-- ★ 상단 고정 영역 -->
+  <div class="p-top">
+    <div class="p-header-row">
+      <div class="p-title">Calgary Church Member Registration Card</div>
+      <div class="p-logo">
+        <img src="LOGO.png" alt="Logo" onerror="this.style.display='none'">
+      </div>
+    </div>
+
     <div class="p-section-title">1. Personal Information</div>
     <table class="p-table">
       <colgroup>
@@ -751,19 +746,21 @@
     </table>
   </div>
 
-  <div class="p-flex-group">
-    <div class="p-section-2">
+  <!-- ★ 중간 (자연스럽게 늘어남) -->
+  <div class="p-middle">
+    <div>
       <div class="p-section-title">2. Family Information</div>
       <div class="p-family-wrap" id="p-familyWrapper"></div>
     </div>
 
-    <div class="p-section-3">
+    <div>
       <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
       <div class="p-prayer-box" id="p-prayerRequests"></div>
     </div>
   </div>
 
-  <div class="p-footer">
+  <!-- ★ 하단 고정 (margin-top:auto) -->
+  <div class="p-bottom-fixed">
     <div class="p-section-title">Consent to Collection and Use of Personal Information</div>
     <div class="p-consent-item"><b>Purpose of Collection:</b> Church register management, pastoral care and visitation, delivery of church news and announcements</div>
     <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</div>
