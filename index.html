@@ -362,15 +362,12 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용 : Letter 1페이지
-     ─ 상단(Header + 1번) 고정
-     ─ 중간(2번 + 3번) 남은 공간 절반씩 나눠 채움
-     ─ 하단(Consent~) 페이지 맨 아래 고정
+     인쇄용 : position:absolute 로 확실하게 배치
      ============================================================ */
   .form-print { display:none; }
 
   @media print {
-    @page { size: Letter; margin: 8mm 10mm; }
+    @page { size: Letter; margin: 0; }
     html, body {
       background:#fff !important; margin:0 !important;
       padding:0 !important; width:100%;
@@ -378,75 +375,85 @@
       overflow: hidden !important;
     }
     .form-screen, .inapp-banner, .modal { display:none !important; }
-    .form-print { display:block !important; width:100%; }
-    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
 
+    /* ★ 페이지 전체를 감싸는 컨테이너 */
     .form-print {
-      font-family:"Times New Roman", Times, serif;
-      color:#000; font-size:9pt; line-height:1.25;
-      width: 100%;
-      max-height: 10.3in;
+      display:block !important;
+      position: relative;
+      width: 8.5in;
+      height: 11in;
+      margin: 0 auto;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
       page-break-after: avoid !important;
       page-break-inside: avoid !important;
       break-after: avoid !important;
       break-inside: avoid !important;
+      font-family:"Times New Roman", Times, serif;
+      color:#000; font-size:9pt; line-height:1.25;
     }
 
-    /* ---------- ① 상단 고정 ---------- */
+    /* 내부 컨텐츠는 상하여백(0.4in = 약 10mm) 안쪽에 배치 */
+    .p-inner {
+      position: absolute;
+      top: 0.4in;
+      left: 0.4in;
+      right: 0.4in;
+      bottom: 0.4in;
+    }
+
+    /* ─── ① 상단 : top: 0 ─── */
     .p-top {
-      flex-shrink: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3.55in;   /* 1번까지 고정 높이 */
     }
 
-    /* ---------- ② 중간 : 남은 공간 절반씩 ---------- */
+    /* ─── ② 중간 : top 이후 ~ 하단 이전까지 ─── */
     .p-middle {
-      flex: 1 1 auto;
+      position: absolute;
+      top: 3.55in;
+      left: 0;
+      right: 0;
+      bottom: 2.55in;   /* 하단 고정 영역 높이 */
       display: flex;
       flex-direction: column;
       gap: 4pt;
+      overflow: hidden;
+    }
+    .p-block-family {
+      flex: 1 1 50%;
+      display: flex;
+      flex-direction: column;
       min-height: 0;
       overflow: hidden;
     }
-
-    /* ★ 2번 블록 : 남는 공간 절반 */
-    .p-middle .p-block-family {
+    .p-block-prayer {
       flex: 1 1 50%;
       display: flex;
       flex-direction: column;
       min-height: 0;
+      overflow: hidden;
     }
-    /* ★ 3번 블록 : 남는 공간 절반 */
-    .p-middle .p-block-prayer {
-      flex: 1 1 50%;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-
-    /* ★ 2번 내부 : 표가 부모 높이 다 씀 */
     .p-family-wrap {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
       min-height: 0;
+      overflow: hidden;
     }
     .p-family-table {
       width: 100%;
       height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
     }
-    .p-family-table tbody {
-      height: 100%;
-    }
-    .p-family-table tr {
-      height: 100%;
-    }
-    .p-family-table td {
-      height: auto;
-    }
+    .p-family-table tbody { height: 100%; }
+    .p-family-table tr { height: 100%; }
+    .p-family-table td { height: auto; }
 
-    /* ★ 가족 없을 때 : 박스도 부모 높이 다 씀 */
+    /* 가족 없을 때 박스가 영역 꽉 채우게 */
     .p-no-family {
       flex: 1 1 auto;
       border:1px solid #000; padding:14pt 8pt; text-align:center;
@@ -458,7 +465,7 @@
       min-height: 0;
     }
 
-    /* ★ 3번 내부 : 박스가 부모 높이 다 씀 */
+    /* Prayer 박스도 영역 꽉 채우게 */
     .p-prayer-box {
       flex: 1 1 auto;
       border:1px solid #000; padding:6pt;
@@ -468,16 +475,17 @@
       overflow: hidden;
     }
 
-    /* ---------- ③ 하단 고정 (margin-top: auto) ---------- */
+    /* ─── ③ 하단 고정 : bottom: 0 ─── */
     .p-bottom-fixed {
-      flex-shrink: 0;
-      margin-top: auto;
-      border-top: 1pt solid #999;
-      padding-top: 5pt;
-      page-break-inside: avoid !important;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-height: 2.55in;
+      overflow: hidden;
     }
 
-    /* ---------- 헤더 ---------- */
+    /* ---------- 공통 스타일 ---------- */
     .p-header-row {
       display:flex; justify-content:space-between;
       align-items:center; gap:8pt; margin:0 0 6pt;
@@ -497,7 +505,6 @@
       flex-shrink: 0;
     }
 
-    /* ---------- 표 ---------- */
     .p-table {
       width:100%; border-collapse:collapse; font-size:9pt;
       table-layout:fixed;
@@ -520,7 +527,6 @@
     }
     .p-table td.full-cell { min-height:18pt; height:18pt; }
 
-    /* ---------- 하단 ---------- */
     .p-consent-item {
       font-size:8.5pt; line-height:1.4; margin:0 0 2pt;
       padding-left:12pt; text-indent:-12pt;
@@ -719,105 +725,108 @@
 </div>
 
 <!-- ============================================================
-     인쇄용 : 3부분 구조 (상단/중간/하단)
+     인쇄용 : position:absolute 로 확실하게 배치
      ============================================================ -->
 <div class="form-print" id="formPrint">
+  <div class="p-inner">
 
-  <!-- ① 상단 고정 -->
-  <div class="p-top">
-    <div class="p-header-row">
-      <div class="p-title">Calgary Church Member Registration Card</div>
-      <div class="p-logo">
-        <img src="LOGO.PNG" alt="Logo" onerror="this.style.display='none'">
+    <!-- ① 상단 (top: 0) -->
+    <div class="p-top">
+      <div class="p-header-row">
+        <div class="p-title">Calgary Church Member Registration Card</div>
+        <div class="p-logo">
+          <img src="LOGO.png" alt="Logo" onerror="this.style.display='none'">
+        </div>
+      </div>
+
+      <div class="p-section-title">1. Personal Information</div>
+      <table class="p-table">
+        <colgroup>
+          <col style="width:24%"><col style="width:26%">
+          <col style="width:24%"><col style="width:26%">
+        </colgroup>
+        <tbody>
+          <tr>
+            <td class="label-cell">First Name</td><td class="value-cell" id="p-firstName"></td>
+            <td class="label-cell">Last Name</td><td class="value-cell" id="p-lastName"></td>
+          </tr>
+          <tr>
+            <td class="label-cell">Date of Birth</td><td class="value-cell" id="p-dob"></td>
+            <td class="label-cell">Nationality</td><td class="value-cell" id="p-nationality"></td>
+          </tr>
+          <tr>
+            <td class="label-cell">Gender</td><td class="value-cell" id="p-gender"></td>
+            <td class="label-cell">Date of Salvation</td><td class="value-cell" id="p-salvationDate"></td>
+          </tr>
+          <tr>
+            <td class="label-cell">Guided By</td><td class="value-cell" id="p-guidedBy"></td>
+            <td class="label-cell">Relationship to Guide</td><td class="value-cell" id="p-relationship"></td>
+          </tr>
+          <tr>
+            <td class="label-cell">Date of Entry</td><td class="value-cell" id="p-entryDate"></td>
+            <td class="label-cell">Occupation</td><td class="value-cell" id="p-occupation"></td>
+          </tr>
+          <tr>
+            <td class="label-cell">Departure date</td><td class="value-cell" id="p-departureDate"></td>
+            <td class="label-cell">Residency Status</td><td class="value-cell" id="p-residency"></td>
+          </tr>
+          <tr>
+            <td class="label-cell">E-mail/Phone#</td>
+            <td class="full-cell" colspan="3" id="p-emailPhone"></td>
+          </tr>
+          <tr>
+            <td class="label-cell">Address</td>
+            <td class="full-cell" colspan="3" id="p-address"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ② 중간 (2번 + 3번) -->
+    <div class="p-middle">
+      <div class="p-block-family">
+        <div class="p-section-title">2. Family Information</div>
+        <div class="p-family-wrap" id="p-familyWrapper"></div>
+      </div>
+
+      <div class="p-block-prayer">
+        <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
+        <div class="p-prayer-box" id="p-prayerRequests"></div>
       </div>
     </div>
 
-    <div class="p-section-title">1. Personal Information</div>
-    <table class="p-table">
-      <colgroup>
-        <col style="width:24%"><col style="width:26%">
-        <col style="width:24%"><col style="width:26%">
-      </colgroup>
-      <tbody>
-        <tr>
-          <td class="label-cell">First Name</td><td class="value-cell" id="p-firstName"></td>
-          <td class="label-cell">Last Name</td><td class="value-cell" id="p-lastName"></td>
-        </tr>
-        <tr>
-          <td class="label-cell">Date of Birth</td><td class="value-cell" id="p-dob"></td>
-          <td class="label-cell">Nationality</td><td class="value-cell" id="p-nationality"></td>
-        </tr>
-        <tr>
-          <td class="label-cell">Gender</td><td class="value-cell" id="p-gender"></td>
-          <td class="label-cell">Date of Salvation</td><td class="value-cell" id="p-salvationDate"></td>
-        </tr>
-        <tr>
-          <td class="label-cell">Guided By</td><td class="value-cell" id="p-guidedBy"></td>
-          <td class="label-cell">Relationship to Guide</td><td class="value-cell" id="p-relationship"></td>
-        </tr>
-        <tr>
-          <td class="label-cell">Date of Entry</td><td class="value-cell" id="p-entryDate"></td>
-          <td class="label-cell">Occupation</td><td class="value-cell" id="p-occupation"></td>
-        </tr>
-        <tr>
-          <td class="label-cell">Departure date</td><td class="value-cell" id="p-departureDate"></td>
-          <td class="label-cell">Residency Status</td><td class="value-cell" id="p-residency"></td>
-        </tr>
-        <tr>
-          <td class="label-cell">E-mail/Phone#</td>
-          <td class="full-cell" colspan="3" id="p-emailPhone"></td>
-        </tr>
-        <tr>
-          <td class="label-cell">Address</td>
-          <td class="full-cell" colspan="3" id="p-address"></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- ③ 하단 고정 (bottom: 0) -->
+    <div class="p-bottom-fixed">
+      <div class="p-section-title">Consent to Collection and Use of Personal Information</div>
+      <div class="p-consent-item"><b>Purpose of Collection:</b> Church register management, pastoral care and visitation, delivery of church news and announcements</div>
+      <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</div>
+      <div class="p-consent-item"><b>Retention Period:</b> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</div>
 
-  <!-- ② 중간 (남은 공간 절반씩) -->
-  <div class="p-middle">
-    <div class="p-block-family">
-      <div class="p-section-title">2. Family Information</div>
-      <div class="p-family-wrap" id="p-familyWrapper"></div>
-    </div>
+      <div style="margin-top:4pt;font-size:9.5pt;font-weight:bold;">
+        Do you consent to the collection and use of personal information as stated above?
+      </div>
+      <div class="p-consent-row">
+        <span class="p-check" id="p-check-agree"></span> Agree
+        <span class="gap"></span>
+        <span class="p-check" id="p-check-disagree"></span> Disagree
+      </div>
 
-    <div class="p-block-prayer">
-      <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
-      <div class="p-prayer-box" id="p-prayerRequests"></div>
-    </div>
-  </div>
+      <div class="p-bottom">
+        <b>Date :</b> <span class="line" id="p-signDate"></span>
+      </div>
+      <div class="p-bottom" style="margin-top:4pt;">
+        <b>Applicant(Name &amp; signature):</b>
+      </div>
 
-  <!-- ③ 하단 고정 -->
-  <div class="p-bottom-fixed">
-    <div class="p-section-title">Consent to Collection and Use of Personal Information</div>
-    <div class="p-consent-item"><b>Purpose of Collection:</b> Church register management, pastoral care and visitation, delivery of church news and announcements</div>
-    <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</div>
-    <div class="p-consent-item"><b>Retention Period:</b> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</div>
-
-    <div style="margin-top:4pt;font-size:9.5pt;font-weight:bold;">
-      Do you consent to the collection and use of personal information as stated above?
-    </div>
-    <div class="p-consent-row">
-      <span class="p-check" id="p-check-agree"></span> Agree
-      <span class="gap"></span>
-      <span class="p-check" id="p-check-disagree"></span> Disagree
-    </div>
-
-    <div class="p-bottom">
-      <b>Date :</b> <span class="line" id="p-signDate"></span>
-    </div>
-    <div class="p-bottom" style="margin-top:4pt;">
-      <b>Applicant(Name &amp; signature):</b>
-    </div>
-
-    <div class="p-sig-area">
-      <div class="p-sig-block">
-        <div class="p-sig-label">Applicant Name</div>
-        <div class="p-sig-img" id="p-sigImg"></div>
-        <div class="p-sig-name" id="p-sigName"></div>
+      <div class="p-sig-area">
+        <div class="p-sig-block">
+          <div class="p-sig-label">Applicant Name</div>
+          <div class="p-sig-img" id="p-sigImg"></div>
+          <div class="p-sig-name" id="p-sigName"></div>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
 
