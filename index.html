@@ -67,7 +67,6 @@
   }
   .card-title i { font-style:normal; font-size:1.15rem; }
 
-  /* 입력 행 */
   .row {
     display:grid; grid-template-columns: 110px 1fr; gap:10px;
     align-items:center; margin-bottom:12px;
@@ -94,9 +93,7 @@
     resize:vertical; min-height:100px; padding-top:12px;
     font-family:inherit; line-height:1.5;
   }
-  input[type="date"] {
-    -webkit-appearance:none; appearance:none;
-  }
+  input[type="date"] { -webkit-appearance:none; appearance:none; }
   input[type="date"]::-webkit-calendar-picker-indicator {
     font-size:20px; cursor:pointer; opacity:.7;
   }
@@ -110,7 +107,6 @@
     box-shadow:0 0 0 3px rgba(47,111,176,.15);
   }
 
-  /* 가족 */
   .family-empty {
     text-align:center; padding:22px 16px;
     background:var(--input-bg); border:2px dashed var(--line);
@@ -160,7 +156,6 @@
   .add-family-btn:active { background:#eaf2fb; transform:scale(.98); }
   .add-family-btn:disabled { opacity:.4; cursor:not-allowed; border-color:var(--line); color:var(--muted); }
 
-  /* 동의 */
   .consent-box {
     background:var(--warn-bg); border-left:5px solid var(--warn-border);
     color:var(--warn-text); padding:14px 16px; border-radius:10px;
@@ -190,7 +185,6 @@
     border-color:var(--navy); background:#e8f0fa; color:var(--navy);
   }
 
-  /* 서명 미리보기 박스 (폼 안) */
   .signature-preview {
     width:100%; min-height:120px;
     background:#fff; border:2px dashed var(--line);
@@ -199,7 +193,6 @@
     cursor:pointer; position:relative;
     padding:8px;
     transition:border-color .2s, background .2s;
-    -webkit-tap-highlight-color:transparent;
   }
   .signature-preview:active { background:#f7fafd; }
   .signature-preview.has-sig { border-style:solid; border-color:var(--navy2); }
@@ -219,7 +212,6 @@
     pointer-events:none;
   }
 
-  /* 하단 */
   .bottom-bar {
     position:fixed; left:0; right:0; bottom:0; z-index:50;
     background:#fff; border-top:1px solid var(--line);
@@ -241,9 +233,7 @@
   }
   body.inapp .btn-row .primary { background:#94a3b3; border-color:#94a3b3; box-shadow:none; }
 
-  /* ============================================================
-     모달 (제출 안내 / 서명)
-     ============================================================ */
+  /* 모달 */
   .modal {
     display:none; position:fixed; inset:0; z-index:1000;
     background:rgba(10,20,35,0.7);
@@ -261,41 +251,31 @@
     display:flex; flex-direction:column;
   }
 
-  /* 서명 모달 전용 */
   .sig-modal-header {
     padding:16px 18px 12px;
     border-bottom:1px solid var(--line);
     display:flex; align-items:center; justify-content:space-between;
     gap:10px; flex-shrink:0;
   }
-  .sig-modal-header h3 {
-    margin:0; font-size:16px; font-weight:800; color:var(--navy);
-  }
-  .sig-modal-header .sub {
-    font-size:12px; font-weight:600; color:var(--muted);
-    margin-top:2px;
-  }
+  .sig-modal-header h3 { margin:0; font-size:16px; font-weight:800; color:var(--navy); }
+  .sig-modal-header .sub { font-size:12px; font-weight:600; color:var(--muted); margin-top:2px; }
   .sig-modal-close {
     background:none; border:none; color:var(--muted);
     font-size:22px; line-height:1; cursor:pointer;
     padding:4px 10px; font-family:inherit;
   }
-
   .sig-modal-body {
     padding:14px 18px;
     flex:1; display:flex; flex-direction:column; gap:10px;
     min-height:0;
   }
   .sig-canvas-wrap {
-    position:relative;
-    width:100%;
+    position:relative; width:100%;
     background:#fafbfd;
     border:2px dashed var(--navy2);
     border-radius:14px;
     overflow:hidden;
-    /* iOS 스크롤 방지 */
     touch-action:none;
-    /* 정사각형에 가까운 비율 */
     height: min(50vh, 320px);
     min-height: 220px;
   }
@@ -321,7 +301,6 @@
     text-align:center; line-height:1.5;
     padding:0 6px;
   }
-
   .sig-modal-actions {
     display:flex; gap:8px;
     padding:12px 18px calc(16px + env(safe-area-inset-bottom));
@@ -336,18 +315,13 @@
     transition:transform .1s;
   }
   .sig-modal-actions button:active { transform:scale(.98); }
-  .sig-btn-clear {
-    background:#fff; color:var(--muted); border-color:var(--line);
-  }
-  .sig-btn-cancel {
-    background:#f6f9fc; color:var(--navy); border-color:var(--line);
-  }
+  .sig-btn-clear { background:#fff; color:var(--muted); border-color:var(--line); }
+  .sig-btn-cancel { background:#f6f9fc; color:var(--navy); border-color:var(--line); }
   .sig-btn-save {
     background:var(--navy); color:#fff; border-color:var(--navy);
     box-shadow:0 4px 12px rgba(27,58,92,.25);
   }
 
-  /* 제출 안내 모달 */
   .submit-modal-icon { font-size:42px; text-align:center; margin:26px 0 8px; }
   .submit-modal-title {
     font-size:18px; font-weight:800; color:var(--navy);
@@ -386,24 +360,108 @@
   .modal-btn.secondary { background:#fff; color:var(--navy); border-color:var(--line); }
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
-  /* 인쇄 */
+  /* ============================================================
+     인쇄용 (HTML 폼으로 재현 — 원본 이미지 사용 안 함)
+     ============================================================ */
   .form-print { display:none; }
+
   @media print {
-    @page { size: Letter; margin: 0; }
-    html, body { background:#fff !important; margin:0 !important; padding:0 !important; width:100%; }
+    @page { size: Letter; margin: 12.7mm 12.7mm; }
+    html, body {
+      background:#fff !important; margin:0 !important;
+      padding:0 !important; width:100%;
+    }
     .form-screen, .inapp-banner, .modal { display:none !important; }
     .form-print { display:block !important; width:100%; }
     * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
-    .print-page { position:relative; width: 8.5in; height: 11in; overflow:hidden; page-break-after: avoid; }
-    .print-bg { position:absolute; top:0; left:0; width:100%; height:100%; display:block; }
-    .print-overlay { position:absolute; inset:0; pointer-events:none; }
-    .p-ov {
-      position:absolute; font-family:Arial, Helvetica, sans-serif; font-size:10pt;
-      color:#000; line-height:1; white-space:pre-wrap; word-break:break-word;
-      overflow:hidden; padding:0 2pt; display:flex; align-items:center;
+
+    .form-print {
+      font-family:"Times New Roman", Times, serif;
+      color:#000; font-size:10.5pt; line-height:1.3;
     }
-    .p-ov-sig { position:absolute; overflow:hidden; display:flex; align-items:center; }
-    .p-ov-sig img { max-width:100%; max-height:100%; object-fit:contain; }
+    .p-title {
+      text-align:center; font-size:14pt; font-weight:bold;
+      text-decoration:underline; margin:0 0 10pt;
+    }
+    .p-section-title {
+      font-size:12pt; font-weight:bold; margin:12pt 0 5pt;
+    }
+    .p-table {
+      width:100%; border-collapse:collapse; font-size:10.5pt;
+      table-layout:fixed;
+    }
+    .p-table th, .p-table td {
+      border:1px solid #000; padding:4pt 6pt; vertical-align:middle;
+    }
+    .p-table th {
+      background:#1b3a5c !important; color:#fff !important;
+      font-weight:bold; text-align:center; font-size:10pt;
+      padding:5pt 3pt;
+    }
+    .p-table td.label-cell {
+      background:#eef3f8 !important; font-weight:bold;
+      font-size:10pt; white-space:nowrap;
+    }
+    .p-table td.value-cell {
+      font-size:10.5pt; word-break:break-word;
+      min-height:20pt; height:20pt;
+    }
+    .p-table td.full-cell { min-height:28pt; height:28pt; }
+
+    .p-family-table th { font-size:9.5pt; padding:5pt 2pt; }
+    .p-family-table td {
+      text-align:center; padding:5pt 3pt; height:20pt;
+      font-size:10pt;
+    }
+    .p-family-table td.row-label {
+      background:#eef3f8 !important; font-weight:bold;
+      color:#1b3a5c; font-size:10pt;
+    }
+    .p-family-table td.text-left { text-align:left; }
+
+    .p-prayer-box {
+      border:1px solid #000; padding:8pt; min-height:60pt;
+      font-size:10.5pt; white-space:pre-wrap; word-break:break-word;
+      line-height:1.4;
+    }
+
+    .p-consent-item {
+      font-size:10.5pt; line-height:1.5; margin:0 0 4pt;
+      padding-left:14pt; text-indent:-14pt;
+    }
+    .p-consent-item b { font-weight:bold; }
+
+    .p-consent-row {
+      margin-top:10pt; font-size:11pt; font-weight:bold;
+    }
+    .p-consent-row .p-check {
+      display:inline-block; width:11pt; height:11pt;
+      border:1pt solid #000; vertical-align:-1pt;
+      margin-right:4pt; text-align:center; line-height:11pt;
+      font-size:10pt;
+    }
+    .p-consent-row span.gap { display:inline-block; width:30pt; }
+
+    .p-bottom {
+      margin-top:14pt; font-size:11pt; font-weight:bold;
+    }
+    .p-bottom .line {
+      display:inline-block; border-bottom:1pt solid #000;
+      min-width:140pt; padding:0 6pt;
+    }
+
+    .p-sig-area {
+      margin-top:16pt; page-break-inside:avoid;
+      display:flex; justify-content:space-between; gap:40pt;
+    }
+    .p-sig-block { flex:1; }
+    .p-sig-label { font-size:11pt; font-weight:bold; margin-bottom:6pt; }
+    .p-sig-img {
+      border-bottom:1pt solid #000; min-height:50pt;
+      padding:4pt 0;
+    }
+    .p-sig-img img { max-height:46pt; max-width:100%; object-fit:contain; }
+    .p-sig-name { font-size:10pt; color:#333; margin-top:4pt; }
   }
 
   @media (min-width:701px){
@@ -444,7 +502,6 @@
   <!-- 1. Personal -->
   <div class="card">
     <div class="card-title"><i>👤</i> 1. Personal Information</div>
-
     <div class="row"><label for="firstName">First Name</label>
       <input type="text" id="firstName" placeholder="First name" autocomplete="given-name"></div>
     <div class="row"><label for="lastName">Last Name</label>
@@ -532,12 +589,10 @@
   <!-- Signature -->
   <div class="card">
     <div class="card-title"><i>✍️</i> Applicant (Name &amp; Signature)</div>
-
     <div class="row"><label for="applicantName">Applicant Name</label>
       <input type="text" id="applicantName" placeholder="Enter your full name"></div>
     <div class="row"><label for="signDate">Date</label>
       <input type="date" id="signDate"></div>
-
     <div style="font-size:13px;font-weight:700;color:var(--muted);margin:14px 0 8px;">
       Signature (tap to sign)
     </div>
@@ -556,18 +611,106 @@
 </div>
 
 <!-- ============================================================
-     인쇄용
+     인쇄용 : HTML 폼 (원본 이미지 사용 안 함)
      ============================================================ -->
 <div class="form-print" id="formPrint">
-  <div class="print-page">
-    <img class="print-bg" src="form.png" alt="">
-    <div class="print-overlay" id="printOverlay"></div>
+  <div class="p-title">Calgary Church Member Registration Card</div>
+
+  <div class="p-section-title">1. Personal Information</div>
+  <table class="p-table">
+    <colgroup>
+      <col style="width:24%"><col style="width:26%">
+      <col style="width:24%"><col style="width:26%">
+    </colgroup>
+    <tbody>
+      <tr>
+        <td class="label-cell">First Name</td><td class="value-cell" id="p-firstName"></td>
+        <td class="label-cell">Last Name</td><td class="value-cell" id="p-lastName"></td>
+      </tr>
+      <tr>
+        <td class="label-cell">Date of Birth</td><td class="value-cell" id="p-dob"></td>
+        <td class="label-cell">Nationality</td><td class="value-cell" id="p-nationality"></td>
+      </tr>
+      <tr>
+        <td class="label-cell">Gender</td><td class="value-cell" id="p-gender"></td>
+        <td class="label-cell">Date of Salvation</td><td class="value-cell" id="p-salvationDate"></td>
+      </tr>
+      <tr>
+        <td class="label-cell">Guided By</td><td class="value-cell" id="p-guidedBy"></td>
+        <td class="label-cell">Relationship to Guide</td><td class="value-cell" id="p-relationship"></td>
+      </tr>
+      <tr>
+        <td class="label-cell">Date of Entry</td><td class="value-cell" id="p-entryDate"></td>
+        <td class="label-cell">Occupation</td><td class="value-cell" id="p-occupation"></td>
+      </tr>
+      <tr>
+        <td class="label-cell">Departure date</td><td class="value-cell" id="p-departureDate"></td>
+        <td class="label-cell">Residency Status</td><td class="value-cell" id="p-residency"></td>
+      </tr>
+      <tr>
+        <td class="label-cell">E-mail/Phone#</td>
+        <td class="full-cell" colspan="3" id="p-emailPhone"></td>
+      </tr>
+      <tr>
+        <td class="label-cell">Address</td>
+        <td class="full-cell" colspan="3" id="p-address"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="p-section-title">2. Family Information</div>
+  <table class="p-table p-family-table">
+    <colgroup>
+      <col style="width:16%"><col style="width:22%"><col style="width:15%">
+      <col style="width:14%"><col style="width:14%"><col style="width:19%">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Relationship</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Living Together</th>
+        <th>Salvation</th>
+        <th>Remarks</th>
+      </tr>
+    </thead>
+    <tbody id="p-familyBody"></tbody>
+  </table>
+
+  <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
+  <div class="p-prayer-box" id="p-prayerRequests"></div>
+
+  <div class="p-section-title">Consent to Collection and Use of Personal Information</div>
+  <div class="p-consent-item"><b>Purpose of Collection:</b> Church register management, pastoral care and visitation, delivery of church news and announcements</div>
+  <div class="p-consent-item"><b>Items Collected:</b> Full name, date of birth, contact information, address, family details, faith background/spiritual profile, etc.</div>
+  <div class="p-consent-item"><b>Retention Period:</b> Throughout church registry membership (permanently discarded upon transfer of membership or request for deletion)</div>
+
+  <div style="margin-top:8pt;font-size:11pt;font-weight:bold;">
+    Do you consent to the collection and use of personal information as stated above?
+  </div>
+  <div class="p-consent-row">
+    <span class="p-check" id="p-check-agree"></span> Agree
+    <span class="gap"></span>
+    <span class="p-check" id="p-check-disagree"></span> Disagree
+  </div>
+
+  <div class="p-bottom">
+    <b>Date :</b> <span class="line" id="p-signDate"></span>
+  </div>
+  <div class="p-bottom" style="margin-top:8pt;">
+    <b>Applicant(Name &amp; signature):</b>
+  </div>
+
+  <div class="p-sig-area">
+    <div class="p-sig-block">
+      <div class="p-sig-label">Applicant Name</div>
+      <div class="p-sig-img" id="p-sigImg"></div>
+      <div class="p-sig-name" id="p-sigName"></div>
+    </div>
   </div>
 </div>
 
-<!-- ============================================================
-     서명 팝업 모달 (화면 고정!)
-     ============================================================ -->
+<!-- 서명 모달 -->
 <div class="modal" id="sigModal">
   <div class="modal-content">
     <div class="sig-modal-header">
@@ -577,7 +720,6 @@
       </div>
       <button type="button" class="sig-modal-close" id="sigCloseBtn">✕</button>
     </div>
-
     <div class="sig-modal-body">
       <div class="sig-canvas-wrap" id="sigCanvasWrap">
         <canvas id="signatureCanvas"></canvas>
@@ -587,7 +729,6 @@
         💡 Draw your signature inside the box above. Screen is locked while signing.
       </div>
     </div>
-
     <div class="sig-modal-actions">
       <button type="button" class="sig-btn-clear" id="sigClearBtn">Clear</button>
       <button type="button" class="sig-btn-cancel" id="sigCancelBtn">Cancel</button>
@@ -596,9 +737,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     제출 안내 모달
-     ============================================================ -->
+<!-- 제출 안내 모달 -->
 <div class="modal" id="submitModal">
   <div class="modal-content">
     <div class="submit-modal-icon">📧</div>
@@ -622,71 +761,6 @@
 
   var EMAIL_TO = 'hansoo2454@gmail.com';
   var MAX_CHILD = 4;
-
-  /* ============================================================
-     좌표
-     ============================================================ */
-  var FIELDS = {
-    firstName:      { l: 22.0, t: 18.6, w: 26.5, h: 3.0 },
-    lastName:       { l: 69.0, t: 18.6, w: 24.0, h: 3.0 },
-    dob:            { l: 22.0, t: 21.9, w: 26.5, h: 3.0 },
-    nationality:    { l: 69.0, t: 21.9, w: 24.0, h: 3.0 },
-    gender:         { l: 22.0, t: 25.2, w: 26.5, h: 3.0 },
-    salvationDate:  { l: 69.0, t: 25.2, w: 24.0, h: 3.0 },
-    guidedBy:       { l: 22.0, t: 28.5, w: 26.5, h: 3.0 },
-    relationship:   { l: 69.0, t: 28.5, w: 24.0, h: 3.0 },
-    entryDate:      { l: 22.0, t: 31.8, w: 26.5, h: 3.0 },
-    occupation:     { l: 69.0, t: 31.8, w: 24.0, h: 3.0 },
-    departureDate:  { l: 22.0, t: 35.1, w: 26.5, h: 3.0 },
-    residency:      { l: 69.0, t: 35.1, w: 24.0, h: 3.0 },
-    emailPhone:     { l: 22.0, t: 38.4, w: 71.0, h: 3.0 },
-    address:        { l: 22.0, t: 41.7, w: 71.0, h: 3.0 },
-
-    famName_Spouse:      { l: 23.0, t: 51.5, w: 21.0, h: 2.8 },
-    famDob_Spouse:       { l: 45.0, t: 51.5, w: 14.0, h: 2.8 },
-    famLiving_Spouse:    { l: 60.0, t: 51.5, w: 13.0, h: 2.8 },
-    famSalvation_Spouse: { l: 74.0, t: 51.5, w: 13.0, h: 2.8 },
-    famRemarks_Spouse:   { l: 88.0, t: 51.5, w: 10.0, h: 2.8 },
-
-    famName_Child1:      { l: 23.0, t: 54.5, w: 21.0, h: 2.8 },
-    famDob_Child1:       { l: 45.0, t: 54.5, w: 14.0, h: 2.8 },
-    famLiving_Child1:    { l: 60.0, t: 54.5, w: 13.0, h: 2.8 },
-    famSalvation_Child1: { l: 74.0, t: 54.5, w: 13.0, h: 2.8 },
-    famRemarks_Child1:   { l: 88.0, t: 54.5, w: 10.0, h: 2.8 },
-
-    famName_Child2:      { l: 23.0, t: 57.5, w: 21.0, h: 2.8 },
-    famDob_Child2:       { l: 45.0, t: 57.5, w: 14.0, h: 2.8 },
-    famLiving_Child2:    { l: 60.0, t: 57.5, w: 13.0, h: 2.8 },
-    famSalvation_Child2: { l: 74.0, t: 57.5, w: 13.0, h: 2.8 },
-    famRemarks_Child2:   { l: 88.0, t: 57.5, w: 10.0, h: 2.8 },
-
-    famName_Child3:      { l: 23.0, t: 60.5, w: 21.0, h: 2.8 },
-    famDob_Child3:       { l: 45.0, t: 60.5, w: 14.0, h: 2.8 },
-    famLiving_Child3:    { l: 60.0, t: 60.5, w: 13.0, h: 2.8 },
-    famSalvation_Child3: { l: 74.0, t: 60.5, w: 13.0, h: 2.8 },
-    famRemarks_Child3:   { l: 88.0, t: 60.5, w: 10.0, h: 2.8 },
-
-    famName_Child4:      { l: 23.0, t: 63.5, w: 21.0, h: 2.8 },
-    famDob_Child4:       { l: 45.0, t: 63.5, w: 14.0, h: 2.8 },
-    famLiving_Child4:    { l: 60.0, t: 63.5, w: 13.0, h: 2.8 },
-    famSalvation_Child4: { l: 74.0, t: 63.5, w: 13.0, h: 2.8 },
-    famRemarks_Child4:   { l: 88.0, t: 63.5, w: 10.0, h: 2.8 },
-
-    famName_Other:       { l: 23.0, t: 63.5, w: 21.0, h: 2.8 },
-    famDob_Other:        { l: 45.0, t: 63.5, w: 14.0, h: 2.8 },
-    famLiving_Other:     { l: 60.0, t: 63.5, w: 13.0, h: 2.8 },
-    famSalvation_Other:  { l: 74.0, t: 63.5, w: 13.0, h: 2.8 },
-    famRemarks_Other:    { l: 88.0, t: 63.5, w: 10.0, h: 2.8 },
-
-    prayerRequests: { l: 13.0, t: 67.5, w: 79.0, h: 6.5 },
-
-    checkAgree:    { l: 11.5, t: 86.2, w: 2.0,  h: 1.2 },
-    checkDisagree: { l: 25.0, t: 86.2, w: 2.0,  h: 1.2 },
-
-    signDate:      { l: 15.5, t: 89.5, w: 25.0, h: 2.3 },
-    applicantName: { l: 12.0, t: 92.6, w: 35.0, h: 2.3 }
-  };
-  var SIG_POS = { l: 30.0, t: 92.2, w: 40.0, h: 3.8 };
 
   /* ============================================================
      값 수집
@@ -737,53 +811,82 @@
   }
 
   /* ============================================================
-     인쇄용 오버레이
+     인쇄용 HTML 폼 채우기
      ============================================================ */
-  function buildPrintOverlay() {
-    var container = document.getElementById('printOverlay');
-    var data = collectData();
-    container.innerHTML = '';
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function setText(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val || '';
+  }
 
-    Object.keys(FIELDS).forEach(function (k) {
-      if (k === 'checkAgree' || k === 'checkDisagree') return;
-      var f = FIELDS[k];
-      var val = data[k] || '';
-      if (!val) return;
-      var el = document.createElement('div');
-      el.className = 'p-ov';
-      el.style.left = f.l + '%'; el.style.top = f.t + '%';
-      el.style.width = f.w + '%'; el.style.height = f.h + '%';
-      el.textContent = val;
-      container.appendChild(el);
+  function buildPrintFamily() {
+    var tbody = document.getElementById('p-familyBody');
+    tbody.innerHTML = '';
+    var labels = [
+      { key: 'Spouse', label: 'Spouse' },
+      { key: 'Child1', label: 'Child 1' },
+      { key: 'Child2', label: 'Child 2' },
+      { key: 'Child3', label: 'Child 3' },
+      { key: 'Child4', label: 'Child 4' },
+      { key: 'Other',  label: 'Other' }
+    ];
+    labels.forEach(function (item) {
+      var d = collectData();
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="row-label">' + item.label + '</td>' +
+        '<td>' + esc(d['famName_' + item.key] || '') + '</td>' +
+        '<td>' + esc(d['famDob_' + item.key] || '') + '</td>' +
+        '<td>' + esc(d['famLiving_' + item.key] || '') + '</td>' +
+        '<td>' + esc(d['famSalvation_' + item.key] || '') + '</td>' +
+        '<td class="text-left">' + esc(d['famRemarks_' + item.key] || '') + '</td>';
+      tbody.appendChild(tr);
     });
+  }
 
+  function buildPrintOverlay() {
+    var d = collectData();
+    setText('p-firstName', d.firstName);
+    setText('p-lastName', d.lastName);
+    setText('p-dob', d.dob);
+    setText('p-nationality', d.nationality);
+    setText('p-gender', d.gender);
+    setText('p-salvationDate', d.salvationDate);
+    setText('p-guidedBy', d.guidedBy);
+    setText('p-relationship', d.relationship);
+    setText('p-entryDate', d.entryDate);
+    setText('p-occupation', d.occupation);
+    setText('p-departureDate', d.departureDate);
+    setText('p-residency', d.residency);
+    setText('p-emailPhone', d.emailPhone);
+    setText('p-address', d.address);
+    setText('p-prayerRequests', d.prayerRequests);
+
+    buildPrintFamily();
+
+    var ca = document.getElementById('p-check-agree');
+    var cd = document.getElementById('p-check-disagree');
+    ca.textContent = ''; cd.textContent = '';
+    if (d.consent === 'Agree') ca.textContent = '✔';
+    else if (d.consent === 'Disagree') cd.textContent = '✔';
+
+    var sigImgBox = document.getElementById('p-sigImg');
+    sigImgBox.innerHTML = '';
     if (hasSigned && signatureDataUrl) {
-      var sigWrap = document.createElement('div');
-      sigWrap.className = 'p-ov-sig';
-      sigWrap.style.left = SIG_POS.l + '%'; sigWrap.style.top = SIG_POS.t + '%';
-      sigWrap.style.width = SIG_POS.w + '%'; sigWrap.style.height = SIG_POS.h + '%';
       var img = document.createElement('img');
       img.src = signatureDataUrl;
-      sigWrap.appendChild(img);
-      container.appendChild(sigWrap);
+      sigImgBox.appendChild(img);
     }
-
-    var ckField = data.consent === 'Agree' ? FIELDS.checkAgree
-                : data.consent === 'Disagree' ? FIELDS.checkDisagree : null;
-    if (ckField) {
-      var ck = document.createElement('div');
-      ck.className = 'p-ov';
-      ck.style.left = ckField.l + '%'; ck.style.top = ckField.t + '%';
-      ck.style.width = ckField.w + '%'; ck.style.height = ckField.h + '%';
-      ck.style.fontWeight = 'bold'; ck.style.fontSize = '12pt';
-      ck.style.justifyContent = 'center';
-      ck.textContent = '✔';
-      container.appendChild(ck);
-    }
+    setText('p-sigName', d.applicantName);
+    setText('p-signDate', d.signDate);
   }
 
   /* ============================================================
-     서명 (팝업 모달)
+     서명
      ============================================================ */
   var sigModal = document.getElementById('sigModal');
   var sigCanvasWrap = document.getElementById('sigCanvasWrap');
@@ -794,7 +897,6 @@
   var hasSigned = false;
   var signatureDataUrl = '';
 
-  /* 팝업 열릴 때만 캔버스 크기 결정 (1회) */
   function fitCanvas() {
     var rect = sigCanvasWrap.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
@@ -803,20 +905,14 @@
     canvas.height = Math.round(rect.height * dpr);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
-    ctx.lineWidth = 2.5;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
+    ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ctx.strokeStyle = '#1b3a5c';
-    // 이전 서명 복원
     if (hasSigned && signatureDataUrl) {
       var img = new Image();
-      img.onload = function () {
-        ctx.drawImage(img, 0, 0, rect.width, rect.height);
-      };
+      img.onload = function () { ctx.drawImage(img, 0, 0, rect.width, rect.height); };
       img.src = signatureDataUrl;
     }
   }
-
   function getPos(e) {
     var rect = canvas.getBoundingClientRect();
     var cx, cy;
@@ -829,25 +925,19 @@
     isDrawing = true;
     var p = getPos(e);
     ctx.beginPath(); ctx.moveTo(p.x, p.y);
-    if (!hasSigned) {
-      hasSigned = true;
-      sigCanvasWrap.classList.add('signed');
-    }
+    if (!hasSigned) { hasSigned = true; sigCanvasWrap.classList.add('signed'); }
   }
   function draw(e) {
     if (!isDrawing) return;
     e.preventDefault(); e.stopPropagation();
-    var p = getPos(e);
-    ctx.lineTo(p.x, p.y); ctx.stroke();
+    var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke();
   }
   function stopDraw(e) {
     if (!isDrawing) return;
     e.preventDefault(); e.stopPropagation();
-    isDrawing = false;
-    ctx.closePath();
+    isDrawing = false; ctx.closePath();
     signatureDataUrl = canvas.toDataURL('image/png');
   }
-
   canvas.addEventListener('mousedown', startDraw);
   canvas.addEventListener('mousemove', draw);
   canvas.addEventListener('mouseup', stopDraw);
@@ -860,32 +950,24 @@
   function openSigModal() {
     sigModal.classList.add('show');
     document.body.classList.add('no-scroll');
-    // 팝업이 화면에 그려진 후 캔버스 크기 맞춤
-    requestAnimationFrame(function () {
-      requestAnimationFrame(fitCanvas);
-    });
+    requestAnimationFrame(function () { requestAnimationFrame(fitCanvas); });
   }
   function closeSigModal() {
     sigModal.classList.remove('show');
     document.body.classList.remove('no-scroll');
   }
   function clearSignature() {
-    var rect = sigCanvasWrap.getBoundingClientRect();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hasSigned = false;
-    signatureDataUrl = '';
+    hasSigned = false; signatureDataUrl = '';
     sigCanvasWrap.classList.remove('signed');
   }
   function saveSignature() {
     if (!hasSigned || !signatureDataUrl) {
-      // 서명 없이 저장 시도 시, 빈 상태로 유지
       sigPreview.classList.remove('has-sig');
-      sigPreview.innerHTML = '<div class="placeholder">✍️ Tap here to sign</div>' +
-                             '<div class="edit-hint">Tap to sign</div>';
+      sigPreview.innerHTML = '<div class="placeholder">✍️ Tap here to sign</div><div class="edit-hint">Tap to sign</div>';
       closeSigModal();
       return;
     }
-    // 미리보기 이미지 갱신
     sigPreview.classList.add('has-sig');
     sigPreview.innerHTML =
       '<img src="' + signatureDataUrl + '" alt="Signature">' +
@@ -898,17 +980,7 @@
   document.getElementById('sigCancelBtn').addEventListener('click', closeSigModal);
   document.getElementById('sigClearBtn').addEventListener('click', clearSignature);
   document.getElementById('sigSaveBtn').addEventListener('click', saveSignature);
-
-  sigModal.addEventListener('click', function (e) {
-    if (e.target === sigModal) closeSigModal();
-  });
-
-  // ESC 닫기
-  document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
-    if (sigModal.classList.contains('show')) closeSigModal();
-    if (submitModal.classList.contains('show')) closeSubmitModal();
-  });
+  sigModal.addEventListener('click', function (e) { if (e.target === sigModal) closeSigModal(); });
 
   /* ============================================================
      가족
@@ -918,20 +990,17 @@
   function updateAddButtons() {
     document.getElementById('btnAddSpouse').disabled = spouseAdded;
     document.getElementById('btnAddChild').disabled = (childCounter >= MAX_CHILD);
-    document.getElementById('btnAddChild').textContent =
-      '＋ Child (' + childCounter + '/' + MAX_CHILD + ')';
+    document.getElementById('btnAddChild').textContent = '＋ Child (' + childCounter + '/' + MAX_CHILD + ')';
   }
   function updateFamilyEmpty() {
     var list = document.getElementById('familyList');
-    document.getElementById('familyEmpty').style.display =
-      list.children.length === 0 ? 'block' : 'none';
+    document.getElementById('familyEmpty').style.display = list.children.length === 0 ? 'block' : 'none';
   }
   function createFamilyMember(type) {
     var idx = 0, label = '', badge = '';
     if (type === 'Spouse') { label = 'Spouse'; badge = 'Spouse'; spouseAdded = true; }
     else if (type === 'Child') { childCounter++; idx = childCounter; label = 'Child ' + idx; badge = 'Child ' + idx; }
     else if (type === 'Other') { otherCounter++; idx = otherCounter; label = 'Other ' + idx; badge = 'Other'; }
-
     var div = document.createElement('div');
     div.className = 'family-member';
     div.dataset.type = type; div.dataset.index = idx;
@@ -948,15 +1017,13 @@
       '<div class="row"><label>Salvation</label>' +
         '<select class="fam-salvation"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option><option value="Unknown">Unknown</option></select></div>' +
       '<div class="row"><label>Remarks</label><input type="text" class="fam-remarks" placeholder="Remarks"></div>';
-
     div.querySelector('.remove-btn').addEventListener('click', function () {
       if (!confirm('Remove this family member?')) return;
       var t = div.dataset.type;
       if (t === 'Spouse') spouseAdded = false;
       else if (t === 'Child') childCounter = Math.max(0, childCounter - 1);
       else if (t === 'Other') otherCounter = Math.max(0, otherCounter - 1);
-      div.remove();
-      updateAddButtons(); updateFamilyEmpty();
+      div.remove(); updateAddButtons(); updateFamilyEmpty();
     });
     return div;
   }
@@ -1016,7 +1083,7 @@
   }
 
   /* ============================================================
-     제출 안내 모달
+     제출 모달
      ============================================================ */
   var submitModal = document.getElementById('submitModal');
   var btnEmail = document.getElementById('btnEmail');
@@ -1046,9 +1113,7 @@
     document.body.classList.remove('no-scroll');
   }
   btnClose.addEventListener('click', closeSubmitModal);
-  submitModal.addEventListener('click', function (e) {
-    if (e.target === submitModal) closeSubmitModal();
-  });
+  submitModal.addEventListener('click', function (e) { if (e.target === submitModal) closeSubmitModal(); });
   btnCopy.addEventListener('click', function () {
     var done = function () {
       var orig = btnCopy.textContent;
@@ -1067,6 +1132,11 @@
     document.body.removeChild(ta);
     cb && cb();
   }
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (sigModal.classList.contains('show')) closeSigModal();
+    if (submitModal.classList.contains('show')) closeSubmitModal();
+  });
 
   /* ============================================================
      Complete 버튼
@@ -1116,9 +1186,6 @@
     location.reload();
   });
 
-  /* ============================================================
-     초기화
-     ============================================================ */
   window.addEventListener('load', function () {
     var t = new Date();
     var iso = t.getFullYear() + '-' +
@@ -1127,14 +1194,6 @@
     document.getElementById('signDate').value = iso;
     updateAddButtons();
     updateFamilyEmpty();
-  });
-
-  // 화면 회전 시 서명이 있었다면 미리보기 재조정 (캔버스는 팝업 열 때 재계산됨)
-  window.addEventListener('orientationchange', function () {
-    // 팝업이 열려있으면 다시 맞춤
-    if (sigModal.classList.contains('show')) {
-      setTimeout(fitCanvas, 300);
-    }
   });
 })();
 </script>
