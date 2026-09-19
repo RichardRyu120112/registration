@@ -24,7 +24,6 @@
   }
   body.no-scroll { overflow:hidden; }
 
-  /* 인앱 경고 */
   .inapp-banner {
     display:none; background:var(--warn-bg);
     border-bottom:2px solid var(--warn-border);
@@ -107,6 +106,14 @@
     box-shadow:0 0 0 3px rgba(47,111,176,.15);
   }
 
+  /* Other 입력칸 (숨겼다가 나타남) */
+  .other-input-wrap {
+    display:none;
+    margin-top:8px;
+  }
+  .other-input-wrap.show { display:block; }
+
+  /* 가족 */
   .family-empty {
     text-align:center; padding:22px 16px;
     background:var(--input-bg); border:2px dashed var(--line);
@@ -233,7 +240,6 @@
   }
   body.inapp .btn-row .primary { background:#94a3b3; border-color:#94a3b3; box-shadow:none; }
 
-  /* 모달 */
   .modal {
     display:none; position:fixed; inset:0; z-index:1000;
     background:rgba(10,20,35,0.7);
@@ -361,7 +367,7 @@
   .modal-btn.ghost { background:transparent; color:var(--muted); border-color:transparent; padding:12px; font-size:14px; font-weight:600; }
 
   /* ============================================================
-     인쇄용 (HTML 폼으로 재현)
+     인쇄용
      ============================================================ */
   .form-print { display:none; }
 
@@ -379,35 +385,19 @@
       font-family:"Times New Roman", Times, serif;
       color:#000; font-size:10.5pt; line-height:1.3;
     }
-
-    /* ★ 상단 헤더 : 제목(왼쪽) + 로고(오른쪽) */
     .p-header-row {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10pt;
-      margin:0 0 10pt;
+      display:flex; justify-content:space-between;
+      align-items:center; gap:10pt; margin:0 0 10pt;
     }
     .p-title {
-      flex:1;
-      font-size:14pt; font-weight:bold;
-      text-decoration:underline;
-      margin:0;
-      text-align:left;
+      flex:1; font-size:14pt; font-weight:bold;
+      text-decoration:underline; margin:0; text-align:left;
     }
     .p-logo {
-      flex-shrink:0;
-      width:70pt;
-      height:70pt;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      flex-shrink:0; width:70pt; height:70pt;
+      display:flex; align-items:center; justify-content:center;
     }
-    .p-logo img {
-      max-width:100%;
-      max-height:100%;
-      object-fit:contain;
-    }
+    .p-logo img { max-width:100%; max-height:100%; object-fit:contain; }
 
     .p-section-title {
       font-size:12pt; font-weight:bold; margin:12pt 0 5pt;
@@ -444,6 +434,13 @@
       color:#1b3a5c; font-size:10pt;
     }
     .p-family-table td.text-left { text-align:left; }
+
+    /* ★ 가족 없을 때 메시지 박스 */
+    .p-no-family {
+      border:1px solid #000; padding:10pt; text-align:center;
+      font-size:10.5pt; font-weight:bold; color:#555;
+      background:#f7f8fa; font-style:italic;
+    }
 
     .p-prayer-box {
       border:1px solid #000; padding:8pt; min-height:60pt;
@@ -555,8 +552,26 @@
       <input type="text" id="occupation" placeholder="Occupation"></div>
     <div class="row"><label for="departureDate">Departure Date</label>
       <input type="date" id="departureDate"></div>
-    <div class="row"><label for="residency">Residency Status</label>
-      <input type="text" id="residency" placeholder="e.g., Citizen, PR, Visa"></div>
+
+    <!-- ★ Residency Status 드롭다운 + Other 입력칸 -->
+    <div class="row" style="align-items:flex-start;">
+      <label for="residency" style="padding-top:14px;">Residency Status</label>
+      <div>
+        <select id="residency">
+          <option value="">Select</option>
+          <option value="Canadian">Canadian</option>
+          <option value="PR">PR (Permanent Resident)</option>
+          <option value="Working Holiday">Working Holiday</option>
+          <option value="Student Visa">Student Visa</option>
+          <option value="Visitor Visa">Visitor Visa</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="other-input-wrap" id="residencyOtherWrap">
+          <input type="text" id="residencyOther" placeholder="Please specify your residency status">
+        </div>
+      </div>
+    </div>
+
     <div class="row"><label for="emailPhone">E-mail / Phone#</label>
       <input type="text" id="emailPhone" placeholder="email / phone" autocomplete="email"></div>
     <div class="row" style="align-items:flex-start;">
@@ -637,7 +652,7 @@
 </div>
 
 <!-- ============================================================
-     인쇄용 : HTML 폼 (원본 이미지 사용 안 함)
+     인쇄용
      ============================================================ -->
 <div class="form-print" id="formPrint">
   <div class="p-header-row">
@@ -690,23 +705,9 @@
   </table>
 
   <div class="p-section-title">2. Family Information</div>
-  <table class="p-table p-family-table">
-    <colgroup>
-      <col style="width:16%"><col style="width:22%"><col style="width:15%">
-      <col style="width:14%"><col style="width:14%"><col style="width:19%">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Relationship</th>
-        <th>Name</th>
-        <th>Date of Birth</th>
-        <th>Living Together</th>
-        <th>Salvation</th>
-        <th>Remarks</th>
-      </tr>
-    </thead>
-    <tbody id="p-familyBody"></tbody>
-  </table>
+  <div id="p-familyWrapper">
+    <!-- 자바스크립트로 표 또는 "NO FAMILY INFORMATION" 메시지 삽입 -->
+  </div>
 
   <div class="p-section-title">3. Prayer Requests &amp; Inquiries</div>
   <div class="p-prayer-box" id="p-prayerRequests"></div>
@@ -794,12 +795,38 @@
   var MAX_CHILD = 4;
 
   /* ============================================================
+     Residency Status "Other" 토글
+     ============================================================ */
+  var residencySelect = document.getElementById('residency');
+  var residencyOtherWrap = document.getElementById('residencyOtherWrap');
+  var residencyOther = document.getElementById('residencyOther');
+
+  residencySelect.addEventListener('change', function () {
+    if (residencySelect.value === 'Other') {
+      residencyOtherWrap.classList.add('show');
+      setTimeout(function () { residencyOther.focus(); }, 100);
+    } else {
+      residencyOtherWrap.classList.remove('show');
+      residencyOther.value = '';
+    }
+  });
+
+  /* ============================================================
      값 수집
      ============================================================ */
   function getVal(id) {
     var el = document.getElementById(id);
     return el ? (el.value || '').trim() : '';
   }
+  function getResidencyValue() {
+    var v = residencySelect.value;
+    if (v === 'Other') {
+      var custom = residencyOther.value.trim();
+      return custom ? custom : 'Other';
+    }
+    return v;
+  }
+
   function collectData() {
     var d = {
       firstName: getVal('firstName'),
@@ -813,7 +840,7 @@
       entryDate: getVal('entryDate'),
       occupation: getVal('occupation'),
       departureDate: getVal('departureDate'),
-      residency: getVal('residency'),
+      residency: getResidencyValue(),
       emailPhone: getVal('emailPhone'),
       address: getVal('address'),
       prayerRequests: getVal('prayerRequests'),
@@ -842,7 +869,7 @@
   }
 
   /* ============================================================
-     인쇄용 HTML 폼 채우기
+     인쇄용 채우기
      ============================================================ */
   function esc(s) {
     return String(s == null ? '' : s)
@@ -854,10 +881,53 @@
     if (el) el.textContent = val || '';
   }
 
+  /* ★ 가족 정보가 있는지 확인 */
+  function hasFamilyData(d) {
+    var keys = ['Spouse', 'Child1', 'Child2', 'Child3', 'Child4', 'Other'];
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      if ((d['famName_' + k] || '').trim()) return true;
+      if ((d['famDob_' + k] || '').trim()) return true;
+      if ((d['famLiving_' + k] || '').trim()) return true;
+      if ((d['famSalvation_' + k] || '').trim()) return true;
+      if ((d['famRemarks_' + k] || '').trim()) return true;
+    }
+    return false;
+  }
+
   function buildPrintFamily() {
-    var tbody = document.getElementById('p-familyBody');
-    tbody.innerHTML = '';
+    var wrapper = document.getElementById('p-familyWrapper');
     var d = collectData();
+    wrapper.innerHTML = '';
+
+    /* ★ 가족 정보가 없으면 메시지 출력 */
+    if (!hasFamilyData(d)) {
+      var msg = document.createElement('div');
+      msg.className = 'p-no-family';
+      msg.textContent = 'NO FAMILY INFORMATION';
+      wrapper.appendChild(msg);
+      return;
+    }
+
+    /* ★ 가족 정보가 있으면 표 출력 (입력된 행만) */
+    var table = document.createElement('table');
+    table.className = 'p-table p-family-table';
+    table.innerHTML =
+      '<colgroup>' +
+        '<col style="width:16%"><col style="width:22%"><col style="width:15%">' +
+        '<col style="width:14%"><col style="width:14%"><col style="width:19%">' +
+      '</colgroup>' +
+      '<thead><tr>' +
+        '<th>Relationship</th>' +
+        '<th>Name</th>' +
+        '<th>Date of Birth</th>' +
+        '<th>Living Together</th>' +
+        '<th>Salvation</th>' +
+        '<th>Remarks</th>' +
+      '</tr></thead>' +
+      '<tbody></tbody>';
+    var tbody = table.querySelector('tbody');
+
     var labels = [
       { key: 'Spouse', label: 'Spouse' },
       { key: 'Child1', label: 'Child 1' },
@@ -866,17 +936,28 @@
       { key: 'Child4', label: 'Child 4' },
       { key: 'Other',  label: 'Other' }
     ];
+
     labels.forEach(function (item) {
+      var name = d['famName_' + item.key] || '';
+      var dob = d['famDob_' + item.key] || '';
+      var living = d['famLiving_' + item.key] || '';
+      var salvation = d['famSalvation_' + item.key] || '';
+      var remarks = d['famRemarks_' + item.key] || '';
+      /* 이 행에 아무 데이터도 없으면 스킵 */
+      if (!name && !dob && !living && !salvation && !remarks) return;
+
       var tr = document.createElement('tr');
       tr.innerHTML =
         '<td class="row-label">' + item.label + '</td>' +
-        '<td>' + esc(d['famName_' + item.key] || '') + '</td>' +
-        '<td>' + esc(d['famDob_' + item.key] || '') + '</td>' +
-        '<td>' + esc(d['famLiving_' + item.key] || '') + '</td>' +
-        '<td>' + esc(d['famSalvation_' + item.key] || '') + '</td>' +
-        '<td class="text-left">' + esc(d['famRemarks_' + item.key] || '') + '</td>';
+        '<td>' + esc(name) + '</td>' +
+        '<td>' + esc(dob) + '</td>' +
+        '<td>' + esc(living) + '</td>' +
+        '<td>' + esc(salvation) + '</td>' +
+        '<td class="text-left">' + esc(remarks) + '</td>';
       tbody.appendChild(tr);
     });
+
+    wrapper.appendChild(table);
   }
 
   function buildPrintOverlay() {
